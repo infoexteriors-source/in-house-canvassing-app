@@ -1,0 +1,31 @@
+{
+  "name": "roofing-canvassing",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @canvass/dashboard",
+    "build": "npm run build -w @canvass/dashboard",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "vitest run",
+    "mobile": "npm run start -w @canvass/mobile",
+    "bootstrap": "node scripts/bootstrap.mjs",
+    "crm:work": "node scripts/crm-worker.mjs",
+    "check:server": "deno check --config supabase/functions/deno.json supabase/functions/sync/index.ts supabase/functions/owner-admin/index.ts supabase/functions/geocode/index.ts supabase/functions/jobnimbus-worker/index.ts",
+    "test:db": "node scripts/test-db.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "deno": "2.9.6",
+    "typescript": "5.9.3",
+    "vitest": "5.0.3"
+  },
+  "overrides": {
+    "xcode": {
+      "uuid": "11.1.1"
+    }
+  }
+}

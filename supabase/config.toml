@@ -1,0 +1,25 @@
+project_id = "fieldwork-canvassing"
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+[db]
+port = 54322
+major_version = 17
+[studio]
+enabled = true
+port = 54323
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://127.0.0.1:5173", "weroof://"]
+enable_signup = false
+[functions.sync]
+verify_jwt = false
+[functions.owner-admin]
+verify_jwt = false
+[functions.jobnimbus-worker]
+verify_jwt = false
+[functions.geocode]
+verify_jwt = false
