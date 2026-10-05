@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WE ROOF · My field hours</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#B23A25}a:hover{color:#8E2C1B}
+button{font:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F8F6F1; color: #26231F; font-family: 'DM Sans', system-ui, sans-serif; font-variant-numeric: tabular-nums; display: flex; flex-direction: column; overflow: hidden;">
+  <header style="padding: 54px 20px 18px; background: #1F1D1A; color: #FFFFFF; display: flex; flex-direction: column; gap: 6px;">
+    <div style="font-size: 12px; font-weight: 700; letter-spacing: 1.2px; color: #CFCAC2;">MY FIELD HOURS · TODAY</div>
+    <div style="display: flex; align-items: baseline; gap: 10px;"><span style="font-size: 44px; font-weight: 700; letter-spacing: -1.5px;">3h 12m</span><span style="font-size: 14px; color: #CFCAC2;">breaks excluded</span></div>
+    <div style="display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: #34312C; margin-top: 8px;" aria-label="Today: worked 8:02 to 10:30, break 10:30 to 10:45, worked 10:45 to now">
+      <span style="flex: 148; background: #5BC08F;"></span><span style="flex: 15; background: #F2C46B;"></span><span style="flex: 57; background: #5BC08F;"></span><span style="flex: 60; background: transparent;"></span>
+    </div>
+    <div style="display: flex; justify-content: space-between; font-size: 12px; color: #CFCAC2;"><span>8:00</span><span>10:00</span><span>12:00</span><span>1:00</span></div>
+  </header>
+
+  <div style="flex: 1; overflow: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 16px;">
+    <section aria-labelledby="tl" style="background: #FFFFFF; border: 1px solid #E4E0D8; border-radius: 14px; padding: 6px 16px;">
+      <h2 id="tl" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Today’s shift events</h2>
+      <sc-for list="{{events}}" as="e" hint-placeholder-count="4">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid #F1EEE8;">
+          <span style="{{e.dot}}"></span>
+          <span style="flex: 1; font-size: 15px; font-weight: 600;">{{e.label}}</span>
+          <span style="font-size: 14px; color: #3D3934;">{{e.time}}</span>
+        </div>
+      </sc-for>
+    </section>
+
+    <section aria-labelledby="wk" style="background: #FFFFFF; border: 1px solid #E4E0D8; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;"><h2 id="wk" style="margin: 0; font-size: 16px; font-weight: 700;">This week</h2><span style="font-size: 15px; font-weight: 700;">17h 48m</span></div>
+      <div style="display: flex; align-items: flex-end; gap: 10px; height: 96px;">
+        <sc-for list="{{week}}" as="d" hint-placeholder-count="6">
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end;">
+            <span style="{{d.bar}}"></span>
+            <span style="{{d.lab}}">{{d.day}}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-size: 13px; color: #5E5850; line-height: 1.45;">Approved corrections are added separately. Your original clock-ins are always kept.</div>
+    </section>
+
+    <sc-if value="{{open}}" hint-placeholder-val="{{false}}">
+      <section aria-labelledby="corr" style="background: #FFFFFF; border: 1.5px solid #26231F; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px;">
+        <h2 id="corr" style="margin: 0; font-size: 16px; font-weight: 700;">Request a correction</h2>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label for="min" style="font-size: 14px; font-weight: 700;">Minutes to add or subtract</label>
+          <input id="min" inputmode="numeric" value="+15" style="min-height: 52px; padding: 0 14px; border: 1.5px solid #CFC9BE; border-radius: 10px; font: inherit; font-size: 17px; color: #26231F;">
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label for="why" style="font-size: 14px; font-weight: 700;">Reason</label>
+          <textarea id="why" rows="2" style="border: 1.5px solid #CFC9BE; border-radius: 10px; padding: 12px; font: inherit; font-size: 16px; color: #26231F; resize: none;">Forgot to end my break at 10:45.</textarea>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button onClick="{{toggle}}" style="flex: 1; min-height: 52px; border-radius: 12px; border: 1.5px solid #CFC9BE; background: #FFFFFF; color: #26231F; font-size: 15px; font-weight: 700;">Cancel</button>
+          <button onClick="{{toggle}}" style="flex: 2; min-height: 52px; border-radius: 12px; border: 0; background: #B23A25; color: #FFFFFF; font-size: 15px; font-weight: 700;">Send to owner</button>
+        </div>
+      </section>
+    </sc-if>
+    <sc-if value="{{closed}}" hint-placeholder-val="{{true}}">
+      <button onClick="{{toggle}}" style="min-height: 52px; border-radius: 12px; border: 1.5px solid #CFC9BE; background: #FFFFFF; color: #26231F; font-size: 15px; font-weight: 700;">Request time correction</button>
+    </sc-if>
+    <button style="min-height: 56px; border-radius: 14px; border: 0; background: #26231F; color: #FFFFFF; font-size: 16px; font-weight: 700;">Clock out</button>
+  </div>
+
+  <nav aria-label="Field app" style="display: flex; background: #FFFFFF; border-top: 1px solid #E4E0D8; padding-bottom: 22px;">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+      <a href="{{t.href}}" aria-current="{{t.current}}" style="{{t.style}}">
+        <span style="position: relative; display: grid; place-items: center;"><span style="font-size: 18px; line-height: 22px;">{{t.glyph}}</span><sc-if value="{{t.badge}}" hint-placeholder-val="{{false}}"><span style="position: absolute; top: -6px; left: 14px; min-width: 18px; height: 18px; box-sizing: border-box; padding: 0 5px; border-radius: 9px; background: #B23A25; color: #FFFFFF; font-size: 11px; font-weight: 700; display: grid; place-items: center;">{{t.badge}}</span></sc-if></span>
+        <span>{{t.label}}</span>
+      </a>
+    </sc-for>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { open: false }; }
+  renderVals() {
+    var self = this;
+    var dot = function (c) { return 'width: 10px; height: 10px; border-radius: 50%; background: ' + c + '; flex-shrink: 0;'; };
+    var events = [
+      { label: 'Clocked in', time: '8:02 AM', dot: dot('#2E6A53') },
+      { label: 'Break started', time: '10:30 AM', dot: dot('#B27708') },
+      { label: 'Break ended', time: '10:45 AM', dot: dot('#B27708') },
+      { label: 'On shift now', time: '11:44 AM', dot: dot('#2E6A53') }
+    ];
+    var hrs = [['Mon', 3.2, true], ['Tue', 0, false], ['Wed', 4.6, false], ['Thu', 5.1, false], ['Fri', 4.9, false], ['Sat', 0, false]];
+    var week = hrs.map(function (h) {
+      var px = Math.max(4, Math.round(h[1] / 6 * 72));
+      return { day: h[0], bar: 'width: 100%; max-width: 30px; height: ' + px + 'px; border-radius: 6px; background: ' + (h[2] ? '#B23A25' : h[1] ? '#CFC9BE' : '#EFEBE3') + ';', lab: 'font-size: 12px; font-weight: ' + (h[2] ? '700' : '500') + '; color: ' + (h[2] ? '#26231F' : '#5E5850') + ';' };
+    });
+    var tabDefs = [['Map', '◎', 'Field.dc.html', ''], ['Doors', '☰', 'Doors.dc.html', ''], ['Hours', '◷', 'Hours.dc.html', ''], ['Sync', '⇅', 'Sync.dc.html', '3']];
+    var tabs = tabDefs.map(function (t, i) {
+      var on = i === 2;
+      return { label: t[0], glyph: t[1], href: t[2], badge: t[3], current: on ? 'page' : 'false', style: 'flex: 1; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; font-size: 12px; font-weight: ' + (on ? '700' : '600') + '; color: ' + (on ? '#B23A25' : '#5E5850') + '; box-shadow: ' + (on ? 'inset 0 3px 0 #B23A25' : 'none') + ';' };
+    });
+    return { events: events, week: week, tabs: tabs, open: this.state.open, closed: !this.state.open, toggle: function () { self.setState({ open: !self.state.open }); } };
+  }
+}
+</script>
+</body>
+</html>

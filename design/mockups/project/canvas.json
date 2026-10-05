@@ -1,0 +1,26 @@
+{
+  "v": 3,
+  "createdOnFiles": {"v": 1, "at": "2026-10-05T12:00:00Z"},
+  "title": "WE ROOF UI Mockups",
+  "launch": {"view": "canvas"},
+  "pages": [],
+  "boards": {
+    "Main.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 1560, "title": "Owner · Overview", "expand": "fill"},
+    "Leads.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 1060, "title": "Owner · Leads & CRM delivery", "expand": "fill", "is_interactive": true},
+    "Login.dc.html": {"x": 0, "y": 1980, "w": 390, "h": 844, "title": "Rep · Sign in", "is_interactive": true},
+    "Field.dc.html": {"x": 470, "y": 1980, "w": 390, "h": 844, "title": "Rep · Territory map (on shift)", "is_interactive": true},
+    "Record.dc.html": {"x": 940, "y": 1980, "w": 390, "h": 844, "title": "Rep · Record a door", "is_interactive": true},
+    "DoNotKnock.dc.html": {"x": 1410, "y": 1980, "w": 390, "h": 844, "title": "Rep · Do-not-knock warning", "is_interactive": true},
+    "Lead.dc.html": {"x": 1880, "y": 1980, "w": 390, "h": 844, "title": "Rep · Homeowner & inspection", "is_interactive": true},
+    "Doors.dc.html": {"x": 2350, "y": 1980, "w": 390, "h": 844, "title": "Rep · Recorded doors", "is_interactive": true},
+    "Hours.dc.html": {"x": 2820, "y": 1980, "w": 390, "h": 844, "title": "Rep · My field hours", "is_interactive": true},
+    "Sync.dc.html": {"x": 3290, "y": 1980, "w": 390, "h": 844, "title": "Rep · Offline & sync", "is_interactive": true}
+  },
+  "order": ["Main.dc.html", "Leads.dc.html", "Login.dc.html", "Field.dc.html", "Record.dc.html", "DoNotKnock.dc.html", "Lead.dc.html", "Doors.dc.html", "Hours.dc.html", "Sync.dc.html"],
+  "notes": {
+    "desktopTitle": {"x": 0, "y": -300, "text": "Owner dashboard · desktop", "kind": "title1", "maxW": 2960},
+    "mobileTitle": {"x": 0, "y": 1680, "text": "Canvasser app · iPhone & Android", "kind": "title1", "maxW": 3680},
+    "flowNote": {"x": 3760, "y": 1980, "w": 360, "text": "Prototype flow: Sign in → Map → Record door → (Interested / Inspection) → Homeowner details. Tab bar links Map, Doors, Hours, Sync. Press Play on any phone screen to click through.", "fill": "orange"}
+  },
+  "designSystems": []
+}

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WE ROOF · Record a door</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#B23A25}a:hover{color:#8E2C1B}
+button{font:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #5E5A53; color: #26231F; font-family: 'DM Sans', system-ui, sans-serif; font-variant-numeric: tabular-nums; display: flex; flex-direction: column; overflow: hidden;">
+  <div style="height: 64px; flex-shrink: 0;"></div>
+  <section aria-labelledby="addr" style="flex: 1; background: #F8F6F1; border-radius: 22px 22px 0 0; display: flex; flex-direction: column; overflow: hidden;">
+    <div style="display: grid; place-items: center; padding-top: 8px;"><span style="width: 40px; height: 5px; border-radius: 3px; background: #CFC9BE;"></span></div>
+    <div style="padding: 10px 20px 14px; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; border-bottom: 1px solid #E4E0D8;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: 1.2px; color: #5E5850;">RECORD A DOOR</div>
+        <h1 id="addr" style="margin: 0; font-size: 24px; letter-spacing: -0.6px; font-weight: 700;">1418 Maple Street</h1>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <span style="font-size: 12px; font-weight: 700; color: #1F4D3B; background: #E5F0EA; padding: 3px 8px; border-radius: 20px;">GPS ±6 m · 9 m from house</span>
+          <span style="font-size: 12px; font-weight: 700; color: #3D3934; background: #EFEBE3; padding: 3px 8px; border-radius: 20px;">Oakwood Heights</span>
+        </div>
+      </div>
+      <a href="Field.dc.html" aria-label="Close" style="width: 44px; height: 44px; border-radius: 22px; background: #EFEBE3; display: grid; place-items: center; color: #26231F; text-decoration: none; flex-shrink: 0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"></path></svg></a>
+    </div>
+
+    <div style="flex: 1; overflow: auto; padding: 14px 20px; display: flex; flex-direction: column; gap: 14px;">
+      <div style="display: flex; gap: 10px; align-items: center; background: #FFFFFF; border: 1px solid #E4E0D8; border-radius: 10px; padding: 10px 12px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5E5850" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l3 2"></path></svg>
+        <div style="font-size: 13px; line-height: 1.4;"><strong>Last visit Oct 3:</strong> No answer · Jordan D.</div>
+      </div>
+
+      <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px;">
+        <legend style="font-size: 15px; font-weight: 700; padding: 0; margin-bottom: 10px;">What happened at the door?</legend>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;">
+          <sc-for list="{{options}}" as="o" hint-placeholder-count="7">
+            <button aria-pressed="{{o.pressed}}" onClick="{{o.pick}}" style="{{o.style}}"><span style="{{o.swatch}}">{{o.mark}}</span><span style="flex: 1; text-align: left;">{{o.label}}</span></button>
+          </sc-for>
+        </div>
+      </fieldset>
+
+      <sc-if value="{{isFollow}}" hint-placeholder-val="{{false}}">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-size: 14px; font-weight: 700;">Follow up on</div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <span style="min-height: 44px; padding: 0 14px; border-radius: 22px; border: 2px solid #26231F; background: #26231F; color: #FFFFFF; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center;">Tomorrow</span>
+            <span style="min-height: 44px; padding: 0 14px; border-radius: 22px; border: 1.5px solid #CFC9BE; background: #FFFFFF; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center;">Fri Oct 9</span>
+            <span style="min-height: 44px; padding: 0 14px; border-radius: 22px; border: 1.5px solid #CFC9BE; background: #FFFFFF; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center;">Pick date</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <label for="notes" style="font-size: 14px; font-weight: 700;">Field notes <span style="font-weight: 500; color: #5E5850;">(optional)</span></label>
+        <textarea id="notes" rows="2" placeholder="Roof condition, best time, who answered" style="border: 1.5px solid #CFC9BE; border-radius: 10px; padding: 12px; font: inherit; font-size: 16px; background: #FFFFFF; color: #26231F; resize: none;"></textarea>
+      </div>
+    </div>
+
+    <div style="padding: 12px 20px 30px; background: #FFFFFF; border-top: 1px solid #E4E0D8; display: flex; flex-direction: column; gap: 8px;">
+      <a href="{{cta.href}}" style="{{cta.style}}">{{cta.label}}</a>
+      <div style="font-size: 12px; color: #5E5850; text-align: center;">Saves on your phone first. Sends when you have signal.</div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { pick: 'interested' }; }
+  renderVals() {
+    var self = this;
+    var defs = [
+      ['no_answer', '#64748b', 'No answer', ''], ['not_interested', '#a36547', 'Not interested', ''],
+      ['follow_up', '#b27708', 'Follow-up', ''], ['interested', '#147b70', 'Interested', ''],
+      ['inspection_requested', '#345bd6', 'Inspection', ''], ['existing_customer', '#7b52aa', 'Existing customer', ''],
+      ['do_not_knock', '#bd3e3e', 'Do not knock', '×']
+    ];
+    var options = defs.map(function (d) {
+      var on = self.state.pick === d[0];
+      return {
+        label: d[2], mark: on ? '✓' : d[3], pressed: on ? 'true' : 'false',
+        pick: function () { self.setState({ pick: d[0] }); },
+        style: 'min-height: 56px; display: flex; align-items: center; gap: 10px; padding: 0 12px; border-radius: 12px; font-size: 15px; font-weight: ' + (on ? '700' : '600') + '; color: #26231F; background: ' + (on ? '#FFFFFF' : '#FFFFFF') + '; border: ' + (on ? '2.5px solid ' + d[1] : '1.5px solid #D9D4CA') + '; box-shadow: ' + (on ? '0 0 0 3px ' + d[1] + '22' : 'none') + ';' + (d[0] === 'do_not_knock' ? ' grid-column: span 2;' : ''),
+        swatch: 'width: 22px; height: 22px; flex-shrink: 0; border-radius: ' + (d[0] === 'do_not_knock' ? '5px' : '50%') + '; background: ' + d[1] + '; color: #FFFFFF; font-size: 14px; font-weight: 700; display: grid; place-items: center;'
+      };
+    });
+    var p = this.state.pick;
+    var lead = p === 'interested' || p === 'inspection_requested';
+    var btn = function (bg) { return 'min-height: 58px; border-radius: 14px; background: ' + bg + '; color: #FFFFFF; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none;'; };
+    var cta = lead
+      ? { href: 'Lead.dc.html', label: 'Next: homeowner details', style: btn('#B23A25') }
+      : p === 'do_not_knock'
+        ? { href: 'Field.dc.html', label: 'Mark do not knock', style: btn('#8E2C1B') }
+        : { href: 'Field.dc.html', label: 'Save door', style: btn('#B23A25') };
+    return { options: options, isFollow: p === 'follow_up', cta: cta };
+  }
+}
+</script>
+</body>
+</html>

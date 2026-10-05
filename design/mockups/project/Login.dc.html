@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WE ROOF · Sign in</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#B23A25}a:hover{color:#8E2C1B}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #1F1D1A; color: #FFFFFF; font-family: 'DM Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+  <div style="padding: 72px 28px 32px; display: flex; flex-direction: column; gap: 18px;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="width: 44px; height: 44px; border-radius: 11px; background: #B23A25; display: grid; place-items: center;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"></path><path d="M5.5 9.5V20h13V9.5"></path><path d="M10 20v-5h4v5"></path></svg>
+      </div>
+      <span style="font-size: 26px; font-weight: 700; letter-spacing: -1px;">WE ROOF</span>
+    </div>
+    <h1 style="margin: 24px 0 0; font-size: 36px; line-height: 1.1; letter-spacing: -1.2px; font-weight: 700;">Your territory,<br>door by door.</h1>
+    <p style="margin: 0; font-size: 16px; line-height: 1.5; color: #CFCAC2;">Sign in with the account your company owner invited.</p>
+  </div>
+  <form style="flex: 1; background: #F8F6F1; color: #26231F; border-radius: 22px 22px 0 0; padding: 28px 24px 34px; display: flex; flex-direction: column; gap: 16px;">
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+      <label for="email" style="font-size: 14px; font-weight: 600;">Work email</label>
+      <input id="email" type="email" value="alex@weroof.example" style="min-height: 52px; padding: 0 14px; border: 1.5px solid #CFC9BE; border-radius: 10px; background: #FFFFFF; font: inherit; font-size: 17px; color: #26231F;">
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+      <label for="pw" style="font-size: 14px; font-weight: 600;">Password</label>
+      <input id="pw" type="password" value="password" style="min-height: 52px; padding: 0 14px; border: 1.5px solid #CFC9BE; border-radius: 10px; background: #FFFFFF; font: inherit; font-size: 17px; color: #26231F;">
+    </div>
+    <a href="Field.dc.html" style="margin-top: 8px; min-height: 56px; border-radius: 12px; background: #B23A25; color: #FFFFFF; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none;">Sign in</a>
+    <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #5E5850; text-align: center;">Forgot your password? Ask your owner to resend your invite.</p>
+    <div style="margin-top: auto; display: flex; gap: 12px; align-items: flex-start; background: #FFFFFF; border: 1px solid #E4E0D8; border-radius: 12px; padding: 14px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2E6A53" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M12 22s7-6.1 7-12a7 7 0 0 0-14 0c0 5.9 7 12 7 12z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+      <div style="font-size: 13px; line-height: 1.5; color: #3D3934;"><strong style="color: #26231F;">Location is only used while you are clocked in.</strong> Tracking stops on breaks and when you clock out.</div>
+    </div>
+  </form>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

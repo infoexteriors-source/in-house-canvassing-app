@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WE ROOF · Offline and sync</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#B23A25}a:hover{color:#8E2C1B}
+button{font:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F8F6F1; color: #26231F; font-family: 'DM Sans', system-ui, sans-serif; font-variant-numeric: tabular-nums; display: flex; flex-direction: column; overflow: hidden;">
+  <header style="padding: 54px 20px 14px; background: #FFFFFF; border-bottom: 1px solid #E4E0D8;">
+    <h1 style="margin: 0; font-size: 28px; letter-spacing: -0.8px; font-weight: 700;">Sync</h1>
+    <div style="font-size: 14px; color: #5E5850;">Everything is saved on your phone first.</div>
+  </header>
+
+  <div style="flex: 1; overflow: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 14px;">
+    <div role="status" style="{{bannerStyle}}">
+      <span style="{{bannerIcon}}">{{bannerGlyph}}</span>
+      <span style="flex: 1; display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-size: 16px; font-weight: 700;">{{bannerTitle}}</span>
+        <span style="font-size: 14px; line-height: 1.4;">{{bannerText}}</span>
+      </span>
+    </div>
+    <button onClick="{{toggle}}" style="min-height: 54px; border-radius: 14px; border: 0; background: #B23A25; color: #FFFFFF; font-size: 16px; font-weight: 700;">{{syncLabel}}</button>
+
+    <section aria-labelledby="q" style="background: #FFFFFF; border: 1px solid #E4E0D8; border-radius: 14px; overflow: hidden;">
+      <h2 id="q" style="margin: 0; padding: 14px 16px 10px; font-size: 16px; font-weight: 700;">Waiting to send</h2>
+      <sc-for list="{{queue}}" as="e" hint-placeholder-count="3">
+        <div style="display: flex; flex-direction: column; gap: 8px; padding: 12px 16px; border-top: 1px solid #F1EEE8;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="flex: 1; display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 15px; font-weight: 700;">{{e.title}}</span><span style="font-size: 13px; color: #5E5850;">{{e.sub}}</span></span>
+            <span style="{{e.pill}}">{{e.state}}</span>
+          </div>
+          <sc-if value="{{e.error}}" hint-placeholder-val="{{false}}">
+            <div style="background: #F8EBE6; border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px;">
+              <span style="font-size: 14px; color: #5C2A1F; line-height: 1.4;">{{e.error}}</span>
+              <div style="display: flex; gap: 8px;">
+                <a href="Lead.dc.html" style="min-height: 44px; padding: 0 14px; border-radius: 10px; background: #FFFFFF; border: 1.5px solid #E6B9AC; color: #7A2414; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; text-decoration: none;">Fix details</a>
+                <button style="min-height: 44px; padding: 0 14px; border-radius: 10px; background: transparent; border: 0; color: #7A2414; font-size: 14px; font-weight: 700;">Retry</button>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </section>
+
+    <section aria-labelledby="maps" style="background: #FFFFFF; border: 1px solid #E4E0D8; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px;">
+      <h2 id="maps" style="margin: 0; font-size: 16px; font-weight: 700;">Offline maps</h2>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="width: 36px; height: 36px; border-radius: 10px; background: #E5F0EA; color: #1F4D3B; display: grid; place-items: center; font-weight: 700;">✓</span>
+        <span style="flex: 1; display: flex; flex-direction: column;"><span style="font-size: 15px; font-weight: 600;">Oakwood Heights</span><span style="font-size: 13px; color: #5E5850;">Downloaded Oct 5 · 18 MB</span></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="width: 36px; height: 36px; border-radius: 10px; background: #EFEBE3; color: #4A453E; display: grid; place-items: center; font-weight: 700;">↓</span>
+        <span style="flex: 1; display: flex; flex-direction: column;"><span style="font-size: 15px; font-weight: 600;">Willow Lane (new)</span><span style="font-size: 13px; color: #5E5850;">Not downloaded · download on Wi-Fi</span></span>
+      </div>
+      <div style="font-size: 13px; color: #5E5850; line-height: 1.45;">Offline, type addresses by hand. Automatic address lookup needs signal.</div>
+    </section>
+
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 4px 2px 8px;">
+      <span style="font-size: 14px; color: #5E5850;">Signed in as Alex Morgan</span>
+      <a href="Login.dc.html" style="min-height: 44px; display: inline-flex; align-items: center; font-size: 14px; font-weight: 700;">Sign out</a>
+    </div>
+  </div>
+
+  <nav aria-label="Field app" style="display: flex; background: #FFFFFF; border-top: 1px solid #E4E0D8; padding-bottom: 22px;">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+      <a href="{{t.href}}" aria-current="{{t.current}}" style="{{t.style}}">
+        <span style="position: relative; display: grid; place-items: center;"><span style="font-size: 18px; line-height: 22px;">{{t.glyph}}</span><sc-if value="{{t.badge}}" hint-placeholder-val="{{false}}"><span style="position: absolute; top: -6px; left: 14px; min-width: 18px; height: 18px; box-sizing: border-box; padding: 0 5px; border-radius: 9px; background: #B23A25; color: #FFFFFF; font-size: 11px; font-weight: 700; display: grid; place-items: center;">{{t.badge}}</span></sc-if></span>
+        <span>{{t.label}}</span>
+      </a>
+    </sc-for>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { online: false }; }
+  renderVals() {
+    var self = this, on = this.state.online;
+    var pill = function (bg, fg) { return 'font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 20px; white-space: nowrap; background: ' + bg + '; color: ' + fg + ';'; };
+    var queue = on
+      ? [{ title: 'Lead · Dana Whitfield', sub: '1418 Maple Street · inspection request', state: 'Needs attention', pill: pill('#F8EBE6', '#8E2C1B'), error: 'Phone number is missing a digit. Fix it and the lead will send.' }]
+      : [
+        { title: 'Lead · Dana Whitfield', sub: '1418 Maple Street · inspection request', state: 'On phone', pill: pill('#FBF0DC', '#6B4307'), error: '' },
+        { title: 'Door · 1422 Maple Street', sub: 'No answer · 11:38 AM', state: 'On phone', pill: pill('#FBF0DC', '#6B4307'), error: '' },
+        { title: 'Door · 1430 Maple Street', sub: 'Not interested · 11:24 AM', state: 'On phone', pill: pill('#FBF0DC', '#6B4307'), error: '' }
+      ];
+    var tabDefs = [['Map', '◎', 'Field.dc.html', ''], ['Doors', '☰', 'Doors.dc.html', ''], ['Hours', '◷', 'Hours.dc.html', ''], ['Sync', '⇅', 'Sync.dc.html', on ? '1' : '3']];
+    var tabs = tabDefs.map(function (t, i) {
+      var cur = i === 3;
+      return { label: t[0], glyph: t[1], href: t[2], badge: t[3], current: cur ? 'page' : 'false', style: 'flex: 1; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; font-size: 12px; font-weight: ' + (cur ? '700' : '600') + '; color: ' + (cur ? '#B23A25' : '#5E5850') + '; box-shadow: ' + (cur ? 'inset 0 3px 0 #B23A25' : 'none') + ';' };
+    });
+    return {
+      queue: queue, tabs: tabs,
+      toggle: function () { self.setState({ online: !on }); },
+      syncLabel: on ? 'Synced · tap to simulate no signal' : 'Sync now',
+      bannerGlyph: on ? '✓' : '!',
+      bannerTitle: on ? 'Back online · 2 of 3 sent' : 'No signal',
+      bannerText: on ? 'Last sync 11:46 AM. One record needs a fix before it can send.' : '3 records saved on your phone. Keep working; they send when you reconnect.',
+      bannerStyle: 'display: flex; gap: 12px; align-items: flex-start; border-radius: 14px; padding: 14px; border: 1.5px solid ' + (on ? '#B8D6C5' : '#EBCB91') + '; background: ' + (on ? '#E5F0EA' : '#FBF0DC') + '; color: ' + (on ? '#1F4D3B' : '#5A3906') + ';',
+      bannerIcon: 'width: 32px; height: 32px; flex-shrink: 0; border-radius: 50%; display: grid; place-items: center; font-weight: 700; color: #FFFFFF; background: ' + (on ? '#2E6A53' : '#B27708') + ';'
+    };
+  }
+}
+</script>
+</body>
+</html>

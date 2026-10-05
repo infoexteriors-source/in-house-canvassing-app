@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WE ROOF · Recorded doors</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#B23A25}a:hover{color:#8E2C1B}
+button{font:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F8F6F1; color: #26231F; font-family: 'DM Sans', system-ui, sans-serif; font-variant-numeric: tabular-nums; display: flex; flex-direction: column; overflow: hidden;">
+  <header style="padding: 54px 20px 12px; background: #FFFFFF; border-bottom: 1px solid #E4E0D8; display: flex; flex-direction: column; gap: 12px;">
+    <div>
+      <h1 style="margin: 0; font-size: 28px; letter-spacing: -0.8px; font-weight: 700;">Doors</h1>
+      <div style="font-size: 14px; color: #5E5850;">Your visits and follow-ups in Oakwood Heights</div>
+    </div>
+    <label style="display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 12px; border: 1.5px solid #CFC9BE; border-radius: 10px; background: #FBFAF7; color: #5E5850;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Search addresses</span>
+      <input type="search" placeholder="Search address" style="border: 0; background: transparent; outline: none; flex: 1; font: inherit; font-size: 16px; color: #26231F; min-width: 0;">
+    </label>
+    <div role="tablist" aria-label="Filter doors" style="display: flex; gap: 8px; overflow-x: auto;">
+      <sc-for list="{{filters}}" as="f" hint-placeholder-count="4">
+        <button role="tab" aria-selected="{{f.on}}" onClick="{{f.pick}}" style="{{f.style}}">{{f.label}}</button>
+      </sc-for>
+    </div>
+  </header>
+
+  <ul style="list-style: none; margin: 0; padding: 0; flex: 1; overflow: auto;">
+    <sc-for list="{{rows}}" as="r" hint-placeholder-count="7">
+      <li style="border-bottom: 1px solid #ECE8E1; background: #FFFFFF;">
+        <a href="Record.dc.html" style="display: flex; gap: 12px; align-items: center; padding: 14px 20px; text-decoration: none; color: #26231F; min-height: 44px;">
+          <span style="{{r.swatch}}">{{r.mark}}</span>
+          <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 16px; font-weight: 700;">{{r.address}}</span>
+            <span style="font-size: 14px; color: #3D3934;">{{r.outcome}} · {{r.when}}</span>
+            <sc-if value="{{r.due}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; font-weight: 700; color: #6B4307;">{{r.due}}</span></sc-if>
+          </span>
+          <span style="{{r.syncStyle}}">{{r.sync}}</span>
+        </a>
+      </li>
+    </sc-for>
+  </ul>
+
+  <nav aria-label="Field app" style="display: flex; background: #FFFFFF; border-top: 1px solid #E4E0D8; padding-bottom: 22px;">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+      <a href="{{t.href}}" aria-current="{{t.current}}" style="{{t.style}}">
+        <span style="position: relative; display: grid; place-items: center;"><span style="font-size: 18px; line-height: 22px;">{{t.glyph}}</span><sc-if value="{{t.badge}}" hint-placeholder-val="{{false}}"><span style="position: absolute; top: -6px; left: 14px; min-width: 18px; height: 18px; box-sizing: border-box; padding: 0 5px; border-radius: 9px; background: #B23A25; color: #FFFFFF; font-size: 11px; font-weight: 700; display: grid; place-items: center;">{{t.badge}}</span></sc-if></span>
+        <span>{{t.label}}</span>
+      </a>
+    </sc-for>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { f: 'today' }; }
+  renderVals() {
+    var self = this;
+    var OC = { no_answer: ['#64748b', 'No answer', ''], not_interested: ['#a36547', 'Not interested', ''], follow_up: ['#b27708', 'Follow-up', ''], interested: ['#147b70', 'Interested', ''], inspection_requested: ['#345bd6', 'Inspection requested', ''], existing_customer: ['#7b52aa', 'Existing customer', ''], do_not_knock: ['#bd3e3e', 'Do not knock', '×'] };
+    var data = [
+      ['1418 Maple Street', 'inspection_requested', '11:42 AM', '', 'phone', 'today'],
+      ['1422 Maple Street', 'no_answer', '11:38 AM', '', 'phone', 'today'],
+      ['1430 Maple Street', 'not_interested', '11:24 AM', '', 'phone', 'today'],
+      ['1406 Maple Street', 'follow_up', '11:02 AM', 'Follow up tomorrow', 'synced', 'today'],
+      ['1302 Oakwood Avenue', 'interested', '10:51 AM', '', 'synced', 'today'],
+      ['1310 Oakwood Avenue', 'existing_customer', '10:40 AM', '', 'synced', 'today'],
+      ['1298 Oakwood Avenue', 'no_answer', '10:33 AM', '', 'synced', 'today'],
+      ['1215 Willow Lane', 'follow_up', 'Oct 2', 'Due today', 'synced', 'past'],
+      ['1221 Willow Lane', 'follow_up', 'Sep 30', 'Overdue · 2 days', 'synced', 'past']
+    ];
+    var counts = { today: 7, follow: 3, all: 9 };
+    var fdefs = [['today', 'Today · 7'], ['follow', 'Follow-ups · 3'], ['all', 'All']];
+    var filters = fdefs.map(function (f) {
+      var on = self.state.f === f[0];
+      return { label: f[1], on: on ? 'true' : 'false', pick: function () { self.setState({ f: f[0] }); }, style: 'min-height: 44px; padding: 0 14px; border-radius: 22px; font-size: 14px; font-weight: 600; white-space: nowrap; border: 1.5px solid ' + (on ? '#26231F' : '#CFC9BE') + '; background: ' + (on ? '#26231F' : '#FFFFFF') + '; color: ' + (on ? '#FFFFFF' : '#26231F') + ';' };
+    });
+    var keep = function (d) { return self.state.f === 'all' ? true : self.state.f === 'today' ? d[5] === 'today' : d[1] === 'follow_up'; };
+    var rows = data.filter(keep).map(function (d) {
+      var o = OC[d[1]], phone = d[4] === 'phone';
+      return {
+        address: d[0], outcome: o[1], when: d[2], due: d[3], mark: o[2],
+        swatch: 'width: 26px; height: 26px; flex-shrink: 0; border-radius: ' + (d[1] === 'do_not_knock' ? '6px' : '50%') + '; background: ' + o[0] + '; color: #FFFFFF; display: grid; place-items: center; font-weight: 700;',
+        sync: phone ? 'On phone' : 'Synced',
+        syncStyle: 'font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 20px; white-space: nowrap; background: ' + (phone ? '#FBF0DC' : '#E5F0EA') + '; color: ' + (phone ? '#6B4307' : '#1F4D3B') + ';'
+      };
+    });
+    var tabDefs = [['Map', '◎', 'Field.dc.html', ''], ['Doors', '☰', 'Doors.dc.html', ''], ['Hours', '◷', 'Hours.dc.html', ''], ['Sync', '⇅', 'Sync.dc.html', '3']];
+    var tabs = tabDefs.map(function (t, i) {
+      var on = i === 1;
+      return { label: t[0], glyph: t[1], href: t[2], badge: t[3], current: on ? 'page' : 'false', style: 'flex: 1; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; font-size: 12px; font-weight: ' + (on ? '700' : '600') + '; color: ' + (on ? '#B23A25' : '#5E5850') + '; box-shadow: ' + (on ? 'inset 0 3px 0 #B23A25' : 'none') + ';' };
+    });
+    return { filters: filters, rows: rows, tabs: tabs };
+  }
+}
+</script>
+</body>
+</html>

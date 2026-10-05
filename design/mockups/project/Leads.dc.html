@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WE ROOF · Leads</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F8F6F1}
+a{color:#B23A25}a:hover{color:#8E2C1B}
+button{font:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="display: flex; flex-wrap: wrap; min-height: 100vh; background: #F8F6F1; color: #26231F; font-family: 'DM Sans', system-ui, sans-serif; font-variant-numeric: tabular-nums;">
+
+  <nav aria-label="Main" style="flex: 1 1 232px; max-width: 100%; background: #1F1D1A; color: #E9E6E0; display: flex; flex-direction: column; padding: 24px 14px; box-sizing: border-box; gap: 4px;">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 8px 22px;">
+      <div style="width: 36px; height: 36px; border-radius: 9px; background: #B23A25; display: grid; place-items: center;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"></path><path d="M5.5 9.5V20h13V9.5"></path><path d="M10 20v-5h4v5"></path></svg>
+      </div>
+      <span style="font-size: 22px; font-weight: 700; letter-spacing: -0.8px;">WE ROOF</span>
+    </div>
+    <div style="font-size: 11px; font-weight: 600; letter-spacing: 1.4px; color: #A39E95; padding: 6px 12px 8px;">WORKSPACE</div>
+    <sc-for list="{{nav}}" as="item" hint-placeholder-count="6">
+      <a href="{{item.href}}" style="{{item.style}}">
+        <span style="width: 18px; height: 18px; display: grid; place-items: center; font-size: 13px;">{{item.glyph}}</span>
+        <span style="flex: 1;">{{item.label}}</span>
+        <sc-if value="{{item.count}}" hint-placeholder-val="{{true}}"><span style="font-size: 11px; font-weight: 600; background: #3A3732; color: #E9E6E0; padding: 2px 7px; border-radius: 10px;">{{item.count}}</span></sc-if>
+      </a>
+    </sc-for>
+  </nav>
+
+  <main style="flex: 999 1 560px; min-width: 0; display: flex; flex-wrap: wrap; align-items: stretch;">
+    <div style="flex: 999 1 520px; min-width: 0; padding: 28px 32px 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px;">
+      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px;">
+        <div>
+          <div style="font-size: 12px; font-weight: 600; letter-spacing: 1.4px; color: #6A645C;">HOMEOWNER LEADS</div>
+          <h1 style="margin: 6px 0 0; font-size: 32px; line-height: 1.15; letter-spacing: -1px; font-weight: 700;">Leads</h1>
+          <p style="margin: 6px 0 0; font-size: 14px; color: #6A645C;">Inspection requests go to the office through JobNimbus. The office confirms every appointment.</p>
+        </div>
+        <button style="min-height: 44px; padding: 0 16px; border: 1px solid #D9D4CA; background: #FFFFFF; border-radius: 8px; font-size: 14px; font-weight: 600; color: #26231F; display: inline-flex; align-items: center; gap: 8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>Export CSV</button>
+      </div>
+
+      <div role="tablist" aria-label="Filter leads" style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+          <button role="tab" aria-selected="{{t.on}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}} <span style="{{t.countStyle}}">{{t.count}}</span></button>
+        </sc-for>
+      </div>
+
+      <div style="background: #FFFFFF; border: 1px solid #E4E0D8; border-radius: 12px; overflow-x: auto;">
+        <table style="width: 100%; min-width: 720px; border-collapse: collapse; font-size: 14px;">
+          <thead>
+            <tr style="text-align: left; color: #6A645C; font-size: 12px; letter-spacing: 0.4px;">
+              <th style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid #E4E0D8;">HOMEOWNER</th>
+              <th style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid #E4E0D8;">STATUS</th>
+              <th style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid #E4E0D8;">REQUESTED WINDOW</th>
+              <th style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid #E4E0D8;">REP</th>
+              <th style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid #E4E0D8;">JOBNIMBUS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{rows}}" as="r" hint-placeholder-count="7">
+              <tr onClick="{{r.pick}}" style="{{r.rowStyle}}">
+                <td style="padding: 14px 16px; border-bottom: 1px solid #F1EEE8;"><div style="font-weight: 600;">{{r.name}}</div><div style="font-size: 13px; color: #6A645C;">{{r.address}}</div></td>
+                <td style="padding: 14px 16px; border-bottom: 1px solid #F1EEE8;"><span style="display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px;"><span style="{{r.dot}}"></span>{{r.status}}</span></td>
+                <td style="padding: 14px 16px; border-bottom: 1px solid #F1EEE8; color: #3D3934;">{{r.window}}</td>
+                <td style="padding: 14px 16px; border-bottom: 1px solid #F1EEE8; color: #3D3934;">{{r.rep}}</td>
+                <td style="padding: 14px 16px; border-bottom: 1px solid #F1EEE8;"><span style="{{r.crmStyle}}">{{r.crm}}</span></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <aside aria-label="Lead details" style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; border-left: 1px solid #E4E0D8; padding: 28px 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+        <div>
+          <div style="font-size: 12px; font-weight: 600; letter-spacing: 1.2px; color: #6A645C;">LEAD</div>
+          <h2 style="margin: 4px 0 0; font-size: 22px; letter-spacing: -0.5px;">{{sel.name}}</h2>
+          <div style="font-size: 14px; color: #6A645C; margin-top: 2px;">{{sel.address}}</div>
+        </div>
+        <span style="{{sel.crmStyle}}">{{sel.crm}}</span>
+      </div>
+      <sc-if value="{{sel.uncertain}}" hint-placeholder-val="{{false}}">
+        <div role="alert" style="background: #F8EBE6; border: 1px solid #E6B9AC; border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-size: 14px; font-weight: 700; color: #7A2414;">Delivery outcome unknown</div>
+          <div style="font-size: 13px; color: #5C2A1F; line-height: 1.5;">JobNimbus timed out after the request was sent. Check whether the contact exists before retrying, so no duplicate is created.</div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button style="min-height: 44px; padding: 0 14px; border: 0; background: #B23A25; color: #FFFFFF; border-radius: 8px; font-size: 13px; font-weight: 600;">Found in JobNimbus</button>
+            <button style="min-height: 44px; padding: 0 14px; border: 1px solid #D9D4CA; background: #FFFFFF; color: #26231F; border-radius: 8px; font-size: 13px; font-weight: 600;">Not found · retry</button>
+          </div>
+        </div>
+      </sc-if>
+      <dl style="margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; font-size: 14px;">
+        <div><dt style="font-size: 12px; color: #6A645C; font-weight: 600;">Phone</dt><dd style="margin: 2px 0 0; font-weight: 600;">{{sel.phone}}</dd></div>
+        <div><dt style="font-size: 12px; color: #6A645C; font-weight: 600;">Email</dt><dd style="margin: 2px 0 0; font-weight: 600; overflow-wrap: anywhere;">{{sel.email}}</dd></div>
+        <div><dt style="font-size: 12px; color: #6A645C; font-weight: 600;">Requested window</dt><dd style="margin: 2px 0 0; font-weight: 600;">{{sel.window}}</dd></div>
+        <div><dt style="font-size: 12px; color: #6A645C; font-weight: 600;">Recorded by</dt><dd style="margin: 2px 0 0; font-weight: 600;">{{sel.rep}}</dd></div>
+      </dl>
+      <div>
+        <div style="font-size: 12px; color: #6A645C; font-weight: 600; margin-bottom: 6px;">Rep notes</div>
+        <div style="font-size: 14px; line-height: 1.55; background: #FBFAF7; border: 1px solid #EEEAE3; border-radius: 8px; padding: 12px;">{{sel.notes}}</div>
+      </div>
+      <div>
+        <div style="font-size: 12px; color: #6A645C; font-weight: 600; margin-bottom: 10px;">Door history</div>
+        <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px;">
+          <sc-for list="{{sel.history}}" as="h" hint-placeholder-count="3">
+            <li style="display: flex; gap: 12px; font-size: 13px;"><span style="width: 86px; color: #6A645C; flex-shrink: 0;">{{h.when}}</span><span style="font-weight: 600;">{{h.what}}</span></li>
+          </sc-for>
+        </ol>
+      </div>
+      <div style="margin-top: auto; display: flex; gap: 8px; flex-wrap: wrap;">
+        <button style="flex: 1 1 140px; min-height: 44px; border: 1px solid #D9D4CA; background: #FFFFFF; color: #26231F; border-radius: 8px; font-size: 14px; font-weight: 600;">View on map</button>
+        <button style="flex: 1 1 140px; min-height: 44px; border: 1px solid #D9D4CA; background: #FFFFFF; color: #26231F; border-radius: 8px; font-size: 14px; font-weight: 600;">Open in JobNimbus</button>
+      </div>
+    </aside>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1060}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { tab: 'all', sel: 2 }; }
+  renderVals() {
+    var self = this;
+    var OC = { inspection_requested: ['#345bd6', 'Inspection requested'], interested: ['#147b70', 'Interested'], follow_up: ['#b27708', 'Follow-up'] };
+    var CRM = { 'Sent': ['#E5F0EA', '#1F4D3B'], 'Queued': ['#EFEBE3', '#4A453E'], 'Retrying': ['#FBF0DC', '#6B4307'], 'Needs reconciliation': ['#F8EBE6', '#8E2C1B'], 'Not sent': ['#EFEBE3', '#4A453E'] };
+    var leads = [
+      { name: 'Dana Whitfield', address: '1418 Maple Street', o: 'inspection_requested', window: 'Tue Oct 6 · Morning', rep: 'Alex Morgan', crm: 'Sent', phone: '(555) 014-2231', email: 'dana.w@example.com', notes: 'Shingles lifting on north slope after last week’s storm. Prefers a call before 10 AM.', history: [{ when: 'Oct 5 11:42', what: 'Inspection requested · Alex M.' }, { when: 'Oct 3 4:10', what: 'No answer · Jordan D.' }] },
+      { name: 'Luis Ortega', address: '207 Cedar Drive', o: 'interested', window: '—', rep: 'Casey Wilson', crm: 'Queued', phone: '(555) 019-8812', email: '—', notes: 'Asked for a quote on gutters too. Will be home after 5 PM weekdays.', history: [{ when: 'Oct 5 11:35', what: 'Interested · Casey W.' }] },
+      { name: 'Priya Natarajan', address: '1302 Oakwood Avenue', o: 'inspection_requested', window: 'Tue Oct 6 · Evening', rep: 'Jordan Davis', crm: 'Needs reconciliation', phone: '(555) 017-4420', email: 'priya.n@example.com', notes: 'Visible granule loss near the chimney. Has insurance claim number ready.', history: [{ when: 'Oct 5 10:58', what: 'Inspection requested · Jordan D.' }, { when: 'Sep 28 2:15', what: 'Follow-up · Jordan D.' }, { when: 'Sep 21 1:40', what: 'No answer · Alex M.' }] },
+      { name: 'Grace Mills', address: '64 Willow Lane', o: 'inspection_requested', window: 'Thu Oct 8 · Morning', rep: 'Alex Morgan', crm: 'Sent', phone: '(555) 013-0907', email: 'gmills@example.com', notes: 'Neighbor at 60 Willow had roof replaced; wants a comparison.', history: [{ when: 'Oct 5 9:47', what: 'Inspection requested · Alex M.' }] },
+      { name: 'Marcus Bell', address: '211 Cedar Drive', o: 'follow_up', window: 'Follow up Oct 9', rep: 'Casey Wilson', crm: 'Retrying', phone: '(555) 011-6634', email: '—', notes: 'Spouse decides. Come back Friday afternoon.', history: [{ when: 'Oct 5 11:31', what: 'Follow-up · Casey W. · GPS 210 m away' }] },
+      { name: 'Hannah Cole', address: '1430 Oakwood Avenue', o: 'interested', window: '—', rep: 'Jordan Davis', crm: 'Sent', phone: '(555) 016-2290', email: 'hcole@example.com', notes: 'Interested in metal roofing options.', history: [{ when: 'Oct 5 9:12', what: 'Interested · Jordan D.' }] },
+      { name: 'Ray Donovan', address: '19 Ridge Green', o: 'follow_up', window: 'Follow up Oct 7', rep: 'Taylor Reed', crm: 'Not sent', phone: '—', email: '—', notes: 'Renting. Gave landlord’s name; follow up with owner.', history: [{ when: 'Oct 5 10:05', what: 'Follow-up · Taylor R.' }] }
+    ];
+    var pill = function (s) { var c = CRM[s]; return 'font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; background: ' + c[0] + '; color: ' + c[1] + ';'; };
+    var filters = {
+      all: function () { return true; },
+      inspection: function (l) { return l.o === 'inspection_requested'; },
+      follow: function (l) { return l.o === 'follow_up'; },
+      crm: function (l) { return l.crm === 'Needs reconciliation' || l.crm === 'Retrying'; }
+    };
+    var tabDefs = [['all', 'All leads'], ['inspection', 'Inspection requests'], ['follow', 'Follow-ups'], ['crm', 'CRM issues']];
+    var tabs = tabDefs.map(function (t) {
+      var on = self.state.tab === t[0];
+      return {
+        label: t[1], on: on ? 'true' : 'false', count: String(leads.filter(filters[t[0]]).length),
+        pick: function () { self.setState({ tab: t[0] }); },
+        style: 'min-height: 44px; padding: 0 14px; border-radius: 22px; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; border: 1px solid ' + (on ? '#26231F' : '#D9D4CA') + '; background: ' + (on ? '#26231F' : '#FFFFFF') + '; color: ' + (on ? '#FFFFFF' : '#26231F') + ';',
+        countStyle: 'font-size: 12px; padding: 1px 7px; border-radius: 10px; background: ' + (on ? '#4A453E' : '#EFEBE3') + ';'
+      };
+    });
+    var rows = [];
+    leads.forEach(function (l, i) {
+      if (!filters[self.state.tab](l)) return;
+      var on = self.state.sel === i;
+      rows.push(Object.assign({}, l, {
+        status: OC[l.o][1], crmStyle: pill(l.crm),
+        dot: 'width: 10px; height: 10px; border-radius: 50%; background: ' + OC[l.o][0] + ';',
+        pick: function () { self.setState({ sel: i }); },
+        rowStyle: 'cursor: pointer; background: ' + (on ? '#FBF3EF' : 'transparent') + '; box-shadow: ' + (on ? 'inset 3px 0 0 #B23A25' : 'none') + ';'
+      }));
+    });
+    var s = leads[self.state.sel];
+    var sel = Object.assign({}, s, { crmStyle: pill(s.crm), uncertain: s.crm === 'Needs reconciliation' });
+    var navItems = [
+      { label: 'Overview', glyph: '▦', href: 'Main.dc.html' },
+      { label: 'Live map', glyph: '◎', href: '#' },
+      { label: 'Team', glyph: '◍', href: '#', count: '5' },
+      { label: 'Territories', glyph: '⬚', href: '#' },
+      { label: 'Leads', glyph: '⚑', href: 'Leads.dc.html', count: '14', on: true },
+      { label: 'Timesheets', glyph: '◷', href: '#' }
+    ];
+    var nav = navItems.map(function (n) {
+      return Object.assign({}, n, { style: 'display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: ' + (n.on ? '700' : '500') + '; color: ' + (n.on ? '#FFFFFF' : '#D9D5CE') + '; background: ' + (n.on ? '#B23A25' : 'transparent') + ';' });
+    });
+    return { nav: nav, tabs: tabs, rows: rows, sel: sel };
+  }
+}
+</script>
+</body>
+</html>

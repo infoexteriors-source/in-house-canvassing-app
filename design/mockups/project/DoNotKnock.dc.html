@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WE ROOF · Do-not-knock warning</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#B23A25}a:hover{color:#8E2C1B}
+button{font:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #5E5A53; color: #26231F; font-family: 'DM Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+  <div style="height: 64px; flex-shrink: 0;"></div>
+  <section aria-labelledby="dnk-h" style="flex: 1; background: #F8F6F1; border-radius: 22px 22px 0 0; display: flex; flex-direction: column; overflow: hidden;">
+    <div role="alert" style="background: #9E2B22; color: #FFFFFF; padding: 22px 20px 20px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 48px; height: 48px; border-radius: 10px; background: #FFFFFF; color: #9E2B22; display: grid; place-items: center; flex-shrink: 0;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M5.6 5.6l12.8 12.8"></path></svg>
+        </div>
+        <div>
+          <div style="font-size: 13px; font-weight: 700; letter-spacing: 1.4px;">STOP</div>
+          <h1 id="dnk-h" style="margin: 0; font-size: 26px; letter-spacing: -0.6px; font-weight: 700;">Do not knock</h1>
+        </div>
+      </div>
+      <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #FBE3DE;">This house is marked company-wide. Only your owner can clear it.</p>
+    </div>
+    <div style="padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; flex: 1;">
+      <div style="font-size: 22px; font-weight: 700; letter-spacing: -0.4px;">88 Ridge Green</div>
+      <dl style="margin: 0; background: #FFFFFF; border: 1px solid #E4E0D8; border-radius: 12px; padding: 4px 14px;">
+        <div style="display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid #F1EEE8;"><dt style="font-size: 14px; color: #5E5850;">Marked by</dt><dd style="margin: 0; font-size: 14px; font-weight: 600;">Taylor Reed</dd></div>
+        <div style="display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid #F1EEE8;"><dt style="font-size: 14px; color: #5E5850;">Date</dt><dd style="margin: 0; font-size: 14px; font-weight: 600;">Sep 14</dd></div>
+        <div style="display: flex; flex-direction: column; gap: 4px; padding: 12px 0;"><dt style="font-size: 14px; color: #5E5850;">Note</dt><dd style="margin: 0; font-size: 15px; line-height: 1.5;">Homeowner asked not to be contacted again. No soliciting sign on door.</dd></div>
+      </dl>
+      <label style="display: flex; gap: 12px; align-items: flex-start; background: #FFFFFF; border: 1.5px solid #CFC9BE; border-radius: 12px; padding: 14px; cursor: pointer;">
+        <input type="checkbox" checked="{{ack}}" onChange="{{toggle}}" style="width: 24px; height: 24px; margin: 0; accent-color: #9E2B22; flex-shrink: 0;">
+        <span style="font-size: 15px; line-height: 1.45;">I understand. I won’t knock, but I need to record a visit here (for example, the homeowner flagged me down).</span>
+      </label>
+      <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding-bottom: 20px;">
+        <a href="Field.dc.html" style="min-height: 58px; border-radius: 14px; background: #26231F; color: #FFFFFF; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none;">Skip this house</a>
+        <a href="{{recordHref}}" aria-disabled="{{disabled}}" style="{{recordStyle}}">Record anyway</a>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { ack: false }; }
+  renderVals() {
+    var self = this, a = this.state.ack;
+    return {
+      ack: a,
+      toggle: function () { self.setState({ ack: !a }); },
+      disabled: a ? 'false' : 'true',
+      recordHref: a ? 'Record.dc.html' : '#',
+      recordStyle: 'min-height: 54px; border-radius: 14px; border: 1.5px solid ' + (a ? '#9E2B22' : '#CFC9BE') + '; background: #FFFFFF; color: ' + (a ? '#9E2B22' : '#8A847B') + '; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none;' + (a ? '' : ' pointer-events: none;')
+    };
+  }
+}
+</script>
+</body>
+</html>

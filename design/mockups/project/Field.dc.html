@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WE ROOF · Territory map</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#B23A25}a:hover{color:#8E2C1B}
+button{font:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #ECE8DF; color: #26231F; font-family: 'DM Sans', system-ui, sans-serif; font-variant-numeric: tabular-nums; display: flex; flex-direction: column; overflow: hidden; position: relative;">
+
+  <header style="background: #1F1D1A; color: #FFFFFF; padding: 54px 18px 16px; display: flex; flex-direction: column; gap: 12px; z-index: 2;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+      <div style="display: flex; flex-direction: column; gap: 2px;">
+        <span style="{{statusStyle}}"><span style="{{statusDot}}"></span>{{statusLabel}}</span>
+        <span style="font-size: 30px; font-weight: 700; letter-spacing: -1px;">{{timer}}</span>
+        <span style="font-size: 13px; color: #CFCAC2;">field time today · breaks excluded</span>
+      </div>
+      <button onClick="{{toggleBreak}}" style="{{breakBtn}}">{{breakLabel}}</button>
+    </div>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; background: #2B2925; padding: 6px 10px; border-radius: 20px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#E9E6E0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 7 6-3 6 3 6-3v13l-6 3-6-3-6 3z"></path><path d="M9 4v13M15 7v13"></path></svg>Oakwood Heights</span>
+      <span style="{{gpsChip}}">{{gpsLabel}}</span>
+    </div>
+  </header>
+
+  <sc-if value="{{onBreak}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="background: #FBF0DC; color: #5A3906; font-size: 14px; font-weight: 600; padding: 12px 18px; border-bottom: 1px solid #EBCB91; z-index: 2;">Break started. Location tracking is paused and break time is not counted.</div>
+  </sc-if>
+
+  <div style="flex: 1; position: relative; overflow: hidden;">
+    <sc-for list="{{streetsH}}" as="s" hint-placeholder-count="4"><div style="{{s.style}}"></div></sc-for>
+    <sc-for list="{{streetsV}}" as="s" hint-placeholder-count="3"><div style="{{s.style}}"></div></sc-for>
+    <div style="position: absolute; left: 20px; top: 30px; width: 350px; height: 390px; border: 2px dashed #2E6A53; border-radius: 6px; background: rgba(46,106,83,0.06);"></div>
+    <div style="position: absolute; left: 28px; top: 100px; font-size: 11px; font-weight: 700; color: #3D3934; letter-spacing: 0.6px;">MAPLE STREET</div>
+    <div style="position: absolute; left: 28px; top: 236px; font-size: 11px; font-weight: 700; color: #3D3934; letter-spacing: 0.6px;">OAKWOOD AVENUE</div>
+    <sc-for list="{{pins}}" as="p" hint-placeholder-count="24">
+      <a href="{{p.href}}" aria-label="{{p.label}}" style="{{p.hit}}"><span style="{{p.style}}">{{p.mark}}</span></a>
+    </sc-for>
+    <div style="position: absolute; left: 150px; top: 182px; width: 64px; height: 64px; border-radius: 50%; background: rgba(52,91,214,0.14); border: 1px solid rgba(52,91,214,0.35);"></div>
+    <div aria-label="Your location" style="position: absolute; left: 172px; top: 204px; width: 20px; height: 20px; box-sizing: border-box; border-radius: 50%; background: #345BD6; border: 3px solid #FFFFFF; box-shadow: 0 1px 4px rgba(0,0,0,0.35);"></div>
+
+    <div style="position: absolute; left: 14px; top: 14px; display: flex; gap: 8px;">
+      <span style="background: #FFFFFF; border: 1px solid #D9D4CA; border-radius: 10px; padding: 8px 12px; font-size: 13px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);"><strong>38</strong> doors · <strong>4</strong> leads</span>
+    </div>
+    <div style="position: absolute; right: 14px; top: 14px; display: flex; flex-direction: column; gap: 8px;">
+      <button aria-label="Center on my location" style="width: 48px; height: 48px; background: #FFFFFF; border: 1px solid #D9D4CA; border-radius: 12px; display: grid; place-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); color: #26231F;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg></button>
+      <button aria-label="Map key" style="width: 48px; height: 48px; background: #FFFFFF; border: 1px solid #D9D4CA; border-radius: 12px; display: grid; place-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); color: #26231F;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5z"></path><path d="m3 13 9 5 9-5"></path></svg></button>
+    </div>
+
+    <div style="position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="background: #FFFFFF; border-radius: 12px; padding: 10px 12px; display: flex; flex-wrap: wrap; gap: 6px 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <sc-for list="{{legend}}" as="l" hint-placeholder-count="4"><span style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600;"><span style="{{l.swatch}}">{{l.mark}}</span>{{l.label}}</span></sc-for>
+      </div>
+      <a href="Record.dc.html" style="min-height: 60px; border-radius: 14px; background: #B23A25; color: #FFFFFF; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; box-shadow: 0 6px 16px rgba(178,58,37,0.35);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Record door here</a>
+    </div>
+  </div>
+
+  <nav aria-label="Field app" style="display: flex; background: #FFFFFF; border-top: 1px solid #E4E0D8; padding-bottom: 22px;">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+      <a href="{{t.href}}" aria-current="{{t.current}}" style="{{t.style}}">
+        <span style="position: relative; display: grid; place-items: center;"><span style="font-size: 18px; line-height: 22px;">{{t.glyph}}</span><sc-if value="{{t.badge}}" hint-placeholder-val="{{false}}"><span style="position: absolute; top: -6px; left: 14px; min-width: 18px; height: 18px; box-sizing: border-box; padding: 0 5px; border-radius: 9px; background: #B23A25; color: #FFFFFF; font-size: 11px; font-weight: 700; display: grid; place-items: center;">{{t.badge}}</span></sc-if></span>
+        <span>{{t.label}}</span>
+      </a>
+    </sc-for>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { onBreak: false }; }
+  renderVals() {
+    var self = this;
+    var b = this.state.onBreak;
+    var OC = {
+      no_answer: ['#64748b', 'No answer', ''], not_interested: ['#a36547', 'Not interested', ''], follow_up: ['#b27708', 'Follow-up', ''],
+      interested: ['#147b70', 'Interested', ''], inspection_requested: ['#345bd6', 'Inspection', ''], existing_customer: ['#7b52aa', 'Customer', ''], do_not_knock: ['#bd3e3e', 'Do not knock', '×']
+    };
+    var streetsH = [110, 246, 380].map(function (y) { return { style: 'position: absolute; left: 0; top: ' + y + 'px; width: 390px; height: 18px; background: #FFFFFF;' }; });
+    var streetsV = [96, 290].map(function (x) { return { style: 'position: absolute; top: 0; left: ' + x + 'px; width: 18px; height: 520px; background: #FFFFFF;' }; });
+    var seq = ['no_answer', null, 'interested', 'no_answer', 'not_interested', null, 'follow_up', 'inspection_requested', 'no_answer', null, 'do_not_knock', 'existing_customer', null, 'no_answer', 'not_interested', null, 'no_answer', 'follow_up'];
+    var pins = [], k = 0;
+    [76, 156, 212, 292, 346].forEach(function (y) {
+      [44, 140, 186, 232, 336].forEach(function (x) {
+        var o = seq[k % seq.length]; k++;
+        var hit = 'position: absolute; left: ' + (x - 14) + 'px; top: ' + (y - 14) + 'px; width: 28px; height: 28px; display: grid; place-items: center; text-decoration: none;';
+        if (!o) { pins.push({ href: 'Record.dc.html', label: 'Not visited', mark: '', hit: hit, style: 'width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; background: #FFFFFF; border: 2.5px solid #8A847B;' }); return; }
+        var d = OC[o], dnk = o === 'do_not_knock';
+        pins.push({ href: dnk ? 'DoNotKnock.dc.html' : 'Record.dc.html', label: d[1], mark: d[2], hit: hit, style: 'width: 18px; height: 18px; box-sizing: border-box; border-radius: ' + (dnk ? '4px' : '50%') + '; background: ' + d[0] + '; border: 2px solid #FFFFFF; box-shadow: 0 0 0 1px rgba(0,0,0,0.2); color: #FFFFFF; font-size: 13px; line-height: 13px; text-align: center; font-weight: 700;' });
+      });
+    });
+    var legend = ['no_answer', 'interested', 'follow_up', 'inspection_requested', 'do_not_knock'].map(function (key) {
+      var d = OC[key];
+      return { label: d[1], mark: d[2], swatch: 'width: 12px; height: 12px; border-radius: ' + (key === 'do_not_knock' ? '3px' : '50%') + '; background: ' + d[0] + '; color: #FFFFFF; font-size: 11px; line-height: 11px; text-align: center;' };
+    });
+    legend.push({ label: 'Not visited', mark: '', swatch: 'width: 12px; height: 12px; box-sizing: border-box; border-radius: 50%; background: #FFFFFF; border: 2px solid #8A847B;' });
+    var tabDefs = [['Map', '◎', 'Field.dc.html', ''], ['Doors', '☰', 'Doors.dc.html', ''], ['Hours', '◷', 'Hours.dc.html', ''], ['Sync', '⇅', 'Sync.dc.html', '3']];
+    var tabs = tabDefs.map(function (t, i) {
+      var on = i === 0;
+      return { label: t[0], glyph: t[1], href: t[2], badge: t[3], current: on ? 'page' : 'false', style: 'flex: 1; min-height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; font-size: 12px; font-weight: ' + (on ? '700' : '600') + '; color: ' + (on ? '#B23A25' : '#5E5850') + '; box-shadow: ' + (on ? 'inset 0 3px 0 #B23A25' : 'none') + ';' };
+    });
+    return {
+      onBreak: b,
+      timer: b ? '3h 12m' : '3h 12m',
+      statusLabel: b ? 'ON BREAK · 0:06' : 'ON SHIFT · SINCE 8:02 AM',
+      statusStyle: 'display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: 1px; color: ' + (b ? '#F2C46B' : '#8FD9B4') + ';',
+      statusDot: 'width: 8px; height: 8px; border-radius: 50%; background: ' + (b ? '#F2C46B' : '#5BC08F') + ';',
+      breakLabel: b ? 'End break' : 'Take break',
+      breakBtn: 'min-height: 48px; padding: 0 18px; border-radius: 12px; font-size: 15px; font-weight: 700; border: 1.5px solid ' + (b ? '#F2C46B' : '#5E5850') + '; background: ' + (b ? '#F2C46B' : 'transparent') + '; color: ' + (b ? '#3D2A05' : '#FFFFFF') + ';',
+      toggleBreak: function () { self.setState({ onBreak: !b }); },
+      gpsLabel: b ? 'Tracking paused' : 'GPS fresh · 8s ago · ±6 m',
+      gpsChip: 'display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 20px; background: ' + (b ? '#3A3226' : '#22362D') + '; color: ' + (b ? '#F2C46B' : '#8FD9B4') + ';',
+      streetsH: streetsH, streetsV: streetsV, pins: pins, legend: legend, tabs: tabs
+    };
+  }
+}
+</script>
+</body>
+</html>
