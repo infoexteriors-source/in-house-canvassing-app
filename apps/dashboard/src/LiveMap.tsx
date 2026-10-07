@@ -22,5 +22,5 @@ export default function LiveMap(props:MapProps&{token:string}) {
  if(m.isStyleLoaded())update();else m.once('load',update);
  return()=>{m.off('load',update);markers.forEach(marker=>marker.remove());};
  },[props.data,props.focusedRep,props.selectedTerritory,props.showRoutes,props.drawPoints]);
- return <div className="live-map" ref={container}/>;
+ return <div className="size-full" ref={container}/>;
 }
