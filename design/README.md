@@ -2,7 +2,7 @@
 
 Design prototype for the WE ROOF owner dashboard (desktop) and the canvasser field app (iPhone/Android, 390×844). It follows the brand in `DESIGN.md`: charcoal navigation, roofing red for primary actions, warm light surfaces for outdoor contrast, and the outcome colors from `packages/core`, each paired with a text label.
 
-Each screen is a self-contained `.dc.html` file in `mockups/project/`. `canvas.json` sets out the screens. They are reference designs and are not wired into `apps/`.
+Each screen is a self-contained `.dc.html` file in `mockups/project/`. `canvas.json` sets out the screens. The two desktop screens mirror the shadcn/ui dashboard in `apps/dashboard`. The phone screens are reference designs for the React Native app, styled to match the same components.
 
 | Screen | File | Interactive |
 | --- | --- | --- |

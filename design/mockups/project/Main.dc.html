@@ -8,370 +8,218 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Instrument+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#F6F3EC}
-a{color:#B5361F}a:hover{color:#8C2715}
+body{margin:0;background:#F5F2EB}
+a{color:#B23A21}a:hover{color:#8C2715}
 button{font:inherit;cursor:pointer}
-@keyframes wr-pulse{0%{transform:scale(.6);opacity:.55}100%{transform:scale(2.4);opacity:0}}
-.wr-pulse{animation:wr-pulse 2s ease-out infinite}
-@media (prefers-reduced-motion:reduce){.wr-pulse{animation:none;opacity:0}}
 </style>
 </helmet>
-<div style="display: flex; flex-wrap: wrap; min-height: 100vh; background: #F6F3EC; color: #1E1B18; font-family: 'Instrument Sans', system-ui, sans-serif; font-variant-numeric: tabular-nums;">
+<div style="display: flex; flex-wrap: wrap; min-height: 100vh; background: #F5F2EB; color: #1E1B18; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 14px; font-variant-numeric: tabular-nums;">
 
-  <nav aria-label="Main" style="flex: 1 1 236px; max-width: 100%; background: #1A1816; color: #EDE9E2; display: flex; flex-direction: column; padding: 22px 14px; box-sizing: border-box; gap: 2px; background-image: linear-gradient(180deg, #211E1B 0%, #1A1816 40%);">
-    <div style="display: flex; align-items: center; gap: 10px; padding: 2px 8px 24px;">
-      <div style="width: 38px; height: 38px; border-radius: 10px; background: #B5361F; display: grid; place-items: center; box-shadow: inset 0 -3px 0 rgba(0,0,0,0.18), 0 4px 12px rgba(181,54,31,0.35);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 13 12 5l9.5 8"></path><path d="M6 11v8.5h12V11"></path></svg>
-      </div>
-      <div style="display: flex; flex-direction: column; line-height: 1;">
-        <span style="font-family: 'Barlow Condensed', sans-serif; font-size: 25px; font-weight: 700; letter-spacing: 0.5px;">WE ROOF</span>
-        <span style="font-size: 11px; color: #A8A298; font-weight: 600; letter-spacing: 1.2px; margin-top: 3px;">FIELD OPERATIONS</span>
-      </div>
+  <nav aria-label="Workspace navigation" style="flex: 1 1 256px; max-width: 100%; background: #1A1816; color: #ECE8E1; display: flex; flex-direction: column; padding: 8px; box-sizing: border-box; gap: 8px;">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 8px;">
+      <span style="width: 36px; height: 36px; border-radius: 8px; background: #B23A21; display: grid; place-items: center; box-shadow: inset 0 -3px 0 rgba(0,0,0,0.18);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg></span>
+      <span style="font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: 0.5px; line-height: 1;">WE ROOF</span>
     </div>
-
-    <div style="font-size: 11px; font-weight: 700; letter-spacing: 1.6px; color: #8E887E; padding: 4px 12px 8px;">WORKSPACE</div>
-    <a href="Main.dc.html" aria-current="page" style="position: relative; display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 9px; text-decoration: none; font-size: 14px; font-weight: 700; color: #FFFFFF; background: #2C2824; box-shadow: inset 3px 0 0 #E0563B;">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F08A70" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg>Overview</a>
-    <a href="#" style="display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 9px; text-decoration: none; font-size: 14px; font-weight: 500; color: #D7D2CA;">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"></circle><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19.1 4.9a10 10 0 0 1 0 14.2M4.9 19.1a10 10 0 0 1 0-14.2"></path></svg>Live map</a>
-    <a href="#" style="display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 9px; text-decoration: none; font-size: 14px; font-weight: 500; color: #D7D2CA;">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"></path></svg><span style="flex: 1;">Team</span><span style="font-size: 12px; font-weight: 600; color: #A8A298;">5</span></a>
-    <a href="#" style="display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 9px; text-decoration: none; font-size: 14px; font-weight: 500; color: #D7D2CA;">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 10 5-10 5L2 7z"></path><path d="m2 17 10 5 10-5"></path><path d="m2 12 10 5 10-5"></path></svg>Territories</a>
-    <a href="Leads.dc.html" style="display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 9px; text-decoration: none; font-size: 14px; font-weight: 500; color: #D7D2CA;">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V4c1-.7 2.3-1 4-1 3 0 5 2 8 2 1.6 0 3-.4 4-1v11c-1 .6-2.4 1-4 1-3 0-5-2-8-2-1.7 0-3 .3-4 1"></path></svg><span style="flex: 1;">Leads</span><span style="font-size: 11px; font-weight: 700; background: #3A3530; color: #EDE9E2; padding: 2px 8px; border-radius: 10px;">14</span></a>
-    <a href="#" style="display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 9px; text-decoration: none; font-size: 14px; font-weight: 500; color: #D7D2CA;">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>Timesheets</a>
-
-    <div style="height: 1px; background: #312D29; margin: 14px 6px;"></div>
-    <a href="#review" style="display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 9px; color: #EDE9E2; text-decoration: none; font-size: 14px; font-weight: 600; background: rgba(242,190,92,0.08); border: 1px solid rgba(242,190,92,0.22);">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F2BE5C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6z"></path><path d="M12 8v5"></path><path d="M12 16h.01"></path></svg>
-      <span style="flex: 1;">Needs review</span>
-      <span style="font-size: 12px; font-weight: 700; background: #F2BE5C; color: #2E1F03; padding: 2px 8px; border-radius: 10px;">6</span>
-    </a>
-
-    <div style="margin-top: auto; padding-top: 28px; display: flex; flex-direction: column; gap: 12px;">
-      <div style="background: #24211E; border: 1px solid #312D29; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px;">
-        <div style="display: flex; align-items: center; justify-content: space-between;">
-          <span style="font-size: 12px; font-weight: 700; letter-spacing: 1.2px; color: #A8A298;">CRM</span>
-          <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: #86D4AE;"><span style="width: 7px; height: 7px; border-radius: 50%; background: #4CBF8A;"></span>Connected</span>
-        </div>
-        <div style="font-size: 14px; font-weight: 600;">JobNimbus</div>
-        <div style="font-size: 12px; color: #A8A298; line-height: 1.5;">Last delivery 2 min ago<br>1 needs reconciliation</div>
+    <div style="padding: 0 8px; display: flex; flex-direction: column; gap: 4px;">
+      <div style="height: 32px; display: flex; align-items: center; font-size: 12px; font-weight: 500; color: rgba(236,232,225,0.7);">Workspace</div>
+      <a href="Main.dc.html" aria-current="page" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 8px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: 500; color: #FFFFFF; background: #2D2925; box-shadow: inset 3px 0 0 #CF5232;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#CF5232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>Overview</a>
+      <a href="#" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 8px; border-radius: 6px; text-decoration: none; font-size: 14px; color: #ECE8E1;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.1 5.1a2 2 0 0 0 1.8 0l3.7-1.9A1 1 0 0 1 21 4.1v12.8a1 1 0 0 1-.6.9l-4.5 2.3a2 2 0 0 1-1.8 0l-4.2-2.1a2 2 0 0 0-1.8 0l-3.7 1.9A1 1 0 0 1 3 19.9V7.1a1 1 0 0 1 .6-.9l4.5-2.3a2 2 0 0 1 1.8 0z"></path><path d="M15 5.8v15M9 3.2v15"></path></svg>Live map</a>
+      <a href="#" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 8px; border-radius: 6px; text-decoration: none; font-size: 14px; color: #ECE8E1;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"></path></svg>Team</a>
+      <a href="#" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 8px; border-radius: 6px; text-decoration: none; font-size: 14px; color: #ECE8E1;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.8 2.2a2 2 0 0 0-1.6 0L2.6 6.1a1 1 0 0 0 0 1.8l8.6 3.9a2 2 0 0 0 1.6 0l8.6-3.9a1 1 0 0 0 0-1.8z"></path><path d="m2 12 9.2 4.2a2 2 0 0 0 1.6 0L22 12"></path><path d="m2 17 9.2 4.2a2 2 0 0 0 1.6 0L22 17"></path></svg>Territories</a>
+      <a href="Leads.dc.html" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 8px; border-radius: 6px; text-decoration: none; font-size: 14px; color: #ECE8E1;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4h3a2 2 0 0 1 2 2v14"></path><path d="M2 20h3M13 20h9M10 12v.01"></path><path d="M13 4.6v16.2a.5.5 0 0 1-.6.5L5.8 20A1 1 0 0 1 5 19V5.6a1 1 0 0 1 .8-1l6.6-1.5a.5.5 0 0 1 .6.5z"></path></svg><span style="flex: 1;">Leads</span><span style="font-size: 12px; font-weight: 500; background: #2D2925; padding: 1px 7px; border-radius: 10px;">14</span></a>
+      <a href="#" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 8px; border-radius: 6px; text-decoration: none; font-size: 14px; color: #ECE8E1;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>Timesheets</a>
+    </div>
+    <div style="padding: 8px;">
+      <a href="#" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 8px; border-radius: 6px; text-decoration: none; font-size: 14px; color: #ECE8E1; background: rgba(252,211,77,0.1); border: 1px solid rgba(252,211,77,0.25);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FCD34D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.7 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg><span style="flex: 1;">Needs review</span><span style="font-size: 12px; font-weight: 600; background: #FCD34D; color: #451A03; padding: 1px 7px; border-radius: 10px;">6</span></a>
+    </div>
+    <div style="margin-top: auto; display: flex; flex-direction: column; gap: 8px;">
+      <div style="border: 1px solid #37322D; background: rgba(45,41,37,0.6); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#CF5232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2"></rect><path d="M12 18h.01"></path></svg>Built for the field</div>
+        <div style="font-size: 14px; color: rgba(236,232,225,0.65); line-height: 1.45;">Your reps’ territories and tools, right in their pocket.</div>
+        <a href="#" style="font-size: 13px; font-weight: 500; color: #CF5232; text-decoration: none;">Field app setup ↗</a>
       </div>
-      <div style="display: flex; align-items: center; gap: 10px; padding: 12px 6px 0; border-top: 1px solid #312D29;">
-        <div style="width: 36px; height: 36px; border-radius: 50%; background: #F9E9E3; color: #8C2715; display: grid; place-items: center; font-size: 12px; font-weight: 700;">CO</div>
-        <div style="flex: 1; min-width: 0;"><div style="font-size: 13px; font-weight: 600;">Company Owner</div><div style="font-size: 12px; color: #A8A298;">Administrator</div></div>
-        <button aria-label="Settings" style="width: 44px; height: 44px; border: 0; background: transparent; color: #D7D2CA; border-radius: 9px; display: grid; place-items: center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg></button>
-      </div>
+      <a href="#" style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 8px; border-radius: 6px; text-decoration: none; font-size: 14px; color: #ECE8E1;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg>Settings &amp; connections</a>
+      <a href="#" style="display: flex; align-items: center; gap: 8px; height: 48px; padding: 0 8px; border-radius: 6px; text-decoration: none; color: #ECE8E1;"><span style="width: 32px; height: 32px; border-radius: 50%; background: rgba(178,58,33,0.15); color: #CF5232; display: grid; place-items: center; font-size: 12px; font-weight: 600;">CO</span><span style="flex: 1; display: grid; line-height: 1.25;"><span style="font-size: 14px; font-weight: 600;">Company Owner</span><span style="font-size: 12px; color: rgba(236,232,225,0.6);">Administrator</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 17 5-5-5-5M21 12H9M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg></a>
     </div>
   </nav>
 
   <main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column;">
-    <header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 32px; background: rgba(255,255,255,0.86); border-bottom: 1px solid #E2DDD3;">
-      <label style="display: flex; align-items: center; gap: 10px; flex: 0 1 380px; min-height: 44px; padding: 0 8px 0 14px; border: 1px solid #E2DDD3; border-radius: 10px; color: #5F5951; background: #FBF9F5;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
-        <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Search</span>
-        <input type="search" placeholder="Search addresses, homeowners, reps" style="border: 0; background: transparent; outline: none; flex: 1; font: inherit; font-size: 14px; color: #1E1B18; min-width: 0;">
-        <kbd style="font-family: inherit; font-size: 12px; font-weight: 600; color: #5F5951; border: 1px solid #E2DDD3; background: #FFFFFF; border-radius: 6px; padding: 2px 7px;">⌘K</kbd>
-      </label>
-      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-        <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: #1B4E3B; background: #E3F0E8; padding: 7px 12px; border-radius: 20px; font-weight: 600;">
-          <span style="position: relative; width: 8px; height: 8px;"><span class="wr-pulse" style="position: absolute; inset: 0; border-radius: 50%; background: #24684F;"></span><span style="position: absolute; inset: 0; border-radius: 50%; background: #24684F;"></span></span>Live · updated 14s ago</span>
-        <button aria-label="Notifications" style="position: relative; width: 44px; height: 44px; border: 1px solid #E2DDD3; background: #FFFFFF; border-radius: 10px; display: grid; place-items: center; color: #1E1B18;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"></path></svg><span style="position: absolute; top: 9px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: #B5361F; border: 2px solid #FFFFFF;"></span></button>
+    <header style="height: 64px; display: flex; align-items: center; gap: 12px; padding: 0 24px; border-bottom: 1px solid #E3DED4; background: rgba(245,242,235,0.9); box-sizing: border-box;">
+      <button aria-label="Toggle Sidebar" style="width: 36px; height: 36px; border: 0; border-radius: 6px; background: transparent; display: grid; place-items: center; color: #1E1B18;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path></svg></button>
+      <span style="width: 1px; height: 20px; background: #E3DED4;"></span>
+      <span style="font-weight: 600;">Overview</span>
+      <div style="margin-left: auto; display: flex; gap: 8px; align-items: center;">
+        <label style="position: relative; display: flex; align-items: center;"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Search records</span><svg style="position: absolute; left: 12px;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#625C54" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><input placeholder="Search doors, leads, people…" style="height: 40px; width: 320px; max-width: 46vw; box-sizing: border-box; padding: 0 12px 0 36px; border: 1px solid #D9D3C8; border-radius: 6px; background: #FFFFFF; font: inherit; color: #1E1B18; box-shadow: 0 1px 2px rgba(0,0,0,0.05);"></label>
+        <button aria-label="Open review notifications" style="position: relative; width: 40px; height: 40px; border: 1px solid #D9D3C8; border-radius: 6px; background: #F5F2EB; display: grid; place-items: center; color: #1E1B18; box-shadow: 0 1px 2px rgba(0,0,0,0.05);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"></path><path d="M3.3 15.3A1 1 0 0 0 4 17h16a1 1 0 0 0 .7-1.7C19.4 14 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.4 6-2.7 7.3"></path></svg><span style="position: absolute; top: 8px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: #B23A21; box-shadow: 0 0 0 2px #F5F2EB;"></span></button>
       </div>
     </header>
 
-    <div style="padding: 28px 32px 44px; display: flex; flex-direction: column; gap: 22px; max-width: 1480px; width: 100%; box-sizing: border-box;">
-      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px;">
+    <div style="padding: 24px; display: flex; flex-direction: column; gap: 20px; max-width: 1600px; width: 100%; box-sizing: border-box;">
+      <section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px;">
         <div>
-          <div style="display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; letter-spacing: 1.6px; color: #5F5951;"><span style="width: 18px; height: 2px; background: #B5361F;"></span>MONDAY, OCTOBER 5</div>
-          <h1 style="margin: 6px 0 0; font-family: 'Barlow Condensed', sans-serif; font-size: 46px; line-height: 1; letter-spacing: -0.5px; font-weight: 700;">Field overview</h1>
+          <p style="margin: 0; display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: 1.9px; color: #625C54;"><span style="width: 20px; height: 2px; background: #B23A21;"></span>YOUR FIELD OPERATIONS</p>
+          <h1 style="margin: 6px 0 0; font-family: 'Barlow Condensed', sans-serif; font-size: 48px; line-height: 1; font-weight: 700;">Field overview</h1>
+          <p style="margin: 8px 0 0; color: #625C54;">Your team, territories, and opportunities. All in one place.</p>
         </div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <div role="group" aria-label="Date range" style="display: inline-flex; padding: 3px; border: 1px solid #DCD6CB; background: #FFFFFF; border-radius: 10px;">
-            <button aria-pressed="true" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 7px; background: #1E1B18; color: #FFFFFF; font-size: 13px; font-weight: 600;">Today</button>
-            <button aria-pressed="false" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 7px; background: transparent; color: #1E1B18; font-size: 13px; font-weight: 600;">Week</button>
-            <button aria-pressed="false" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 7px; background: transparent; color: #1E1B18; font-size: 13px; font-weight: 600;">Month</button>
-          </div>
-          <button style="min-height: 46px; padding: 0 16px; border: 1px solid #DCD6CB; background: #FFFFFF; border-radius: 10px; font-size: 14px; font-weight: 600; color: #1E1B18; display: inline-flex; align-items: center; gap: 8px;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>Export CSV</button>
-          <button style="min-height: 46px; padding: 0 18px; border: 0; background: #B5361F; border-radius: 10px; font-size: 14px; font-weight: 700; color: #FFFFFF; display: inline-flex; align-items: center; gap: 8px; box-shadow: inset 0 -2px 0 rgba(0,0,0,0.18), 0 4px 12px rgba(181,54,31,0.28);">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Invite rep</button>
+        <div style="display: flex; gap: 8px;">
+          <button style="height: 40px; padding: 0 16px; border: 1px solid #D9D3C8; border-radius: 6px; background: #F5F2EB; font-weight: 500; color: #1E1B18; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V3M6 11l6 6 6-6M19 21H5"></path></svg>Export</button>
+          <button style="height: 40px; padding: 0 16px; border: 1px solid #D9D3C8; border-radius: 6px; background: #F5F2EB; font-weight: 500; color: #1E1B18; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg>Today</button>
         </div>
-      </div>
+      </section>
 
-      <section aria-label="Today at a glance" style="display: flex; flex-wrap: wrap; gap: 14px;">
+      <section aria-label="Daily field metrics" style="display: flex; flex-wrap: wrap; gap: 16px;">
         <sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
-          <div style="flex: 1 1 210px; background: #FFFFFF; border: 1px solid #E2DDD3; border-radius: 14px; padding: 18px 20px 16px; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 1px 0 rgba(30,27,24,0.04), 0 8px 24px -16px rgba(30,27,24,0.18);">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span style="font-size: 12px; font-weight: 700; letter-spacing: 1.2px; color: #5F5951;">{{k.label}}</span>
-              <span style="{{k.deltaStyle}}">{{k.delta}}</span>
-            </div>
-            <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 10px;">
-              <div style="display: flex; align-items: baseline; gap: 6px;"><span style="font-family: 'Barlow Condensed', sans-serif; font-size: 56px; line-height: 1; font-weight: 700; letter-spacing: -0.5px;">{{k.value}}</span><span style="font-size: 15px; color: #5F5951; font-weight: 600;">{{k.unit}}</span></div>
-              <div aria-hidden="true" style="display: flex; align-items: flex-end; gap: 3px; height: 40px; padding-bottom: 6px;">
-                <sc-for list="{{k.bars}}" as="b" hint-placeholder-count="8"><span style="{{b}}"></span></sc-for>
-              </div>
-            </div>
-            <div style="font-size: 13px; color: #5F5951;">{{k.sub}}</div>
+          <div style="flex: 1 1 220px; background: #FFFFFF; border: 1px solid #E3DED4; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;"><span style="font-size: 12px; font-weight: 600; letter-spacing: 1.4px; color: #625C54;">{{k.label}}</span><span style="width: 36px; height: 36px; border-radius: 8px; background: #EFEBE3; display: grid; place-items: center; color: #625C54; font-size: 15px;">{{k.glyph}}</span></div>
+            <div style="display: flex; align-items: baseline; gap: 6px;"><span style="font-family: 'Barlow Condensed', sans-serif; font-size: 48px; line-height: 1; font-weight: 700;">{{k.value}}</span><span style="font-weight: 600; color: #625C54;">{{k.unit}}</span></div>
+            <div style="color: #625C54;">{{k.sub}}</div>
           </div>
         </sc-for>
       </section>
 
-      <section id="review" aria-labelledby="review-h" style="background: #FFFFFF; border: 1px solid #E2DDD3; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 24px -18px rgba(30,27,24,0.2);">
-        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; padding: 14px 20px; border-bottom: 1px solid #EDE8E0; background: #FCFAF6;">
-          <h2 id="review-h" style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 0.2px;">Needs your review</h2>
-          <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #5F5951;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg>GPS is evidence for review, not proof a door was knocked.</span>
-        </div>
-        <div style="display: flex; flex-wrap: wrap;">
-          <sc-for list="{{reviews}}" as="r" hint-placeholder-count="3">
-            <div style="flex: 1 1 280px; padding: 18px 20px; display: flex; gap: 14px; align-items: center; border-right: 1px solid #EDE8E0;">
-              <div style="{{r.iconStyle}}">{{r.count}}</div>
-              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
-                <div style="font-size: 15px; font-weight: 700;">{{r.title}}</div>
-                <div style="font-size: 13px; color: #5F5951; line-height: 1.45;">{{r.detail}}</div>
-              </div>
-              <button aria-label="{{r.aria}}" style="min-height: 44px; min-width: 44px; padding: 0 14px; border: 1px solid #DCD6CB; background: #FFFFFF; border-radius: 10px; font-size: 13px; font-weight: 700; color: #1E1B18; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;">Review<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg></button>
-            </div>
-          </sc-for>
-        </div>
-      </section>
-
-      <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch;">
-        <section aria-labelledby="map-h" style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border: 1px solid #E2DDD3; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 8px 24px -18px rgba(30,27,24,0.2);">
-          <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px;">
-            <div>
-              <h2 id="map-h" style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 0.2px;">Territories &amp; live positions</h2>
-              <div style="font-size: 13px; color: #5F5951; margin-top: 2px;">Every rep shows location age. Routes break across tracking gaps.</div>
-            </div>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <label style="display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 12px; border: 1px solid #DCD6CB; border-radius: 10px; font-size: 13px; font-weight: 600;">
-                <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Territory</span>
-                <select style="border: 0; background: transparent; font: inherit; color: #1E1B18; outline: none;"><option>All territories</option><option>Oakwood Heights</option><option>Cedar Ridge</option></select>
-              </label>
-              <button aria-pressed="true" style="min-height: 44px; padding: 0 14px; border: 1px solid #EBC2B5; background: #F9E9E3; border-radius: 10px; font-size: 13px; font-weight: 700; color: #8C2715; display: inline-flex; align-items: center; gap: 6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.5"></circle><circle cx="18" cy="5" r="2.5"></circle><path d="M8.5 19H16a3.5 3.5 0 0 0 0-7H8a3.5 3.5 0 0 1 0-7h7.5"></path></svg>Routes</button>
-              <button style="min-height: 44px; padding: 0 14px; border: 1px solid #DCD6CB; background: #FFFFFF; border-radius: 10px; font-size: 13px; font-weight: 700; color: #1E1B18; display: inline-flex; align-items: center; gap: 6px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>Draw territory</button>
+      <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: stretch;">
+        <section aria-labelledby="map-h" style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border: 1px solid #E3DED4; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+          <div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 16px 24px; border-bottom: 1px solid #E3DED4;">
+            <div><h2 id="map-h" style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; line-height: 1.1; font-weight: 700;">Territory overview</h2><p style="margin: 4px 0 0; color: #625C54;">Know where your team is working. Routes break across tracking gaps.</p></div>
+            <div style="display: flex; gap: 8px;">
+              <button style="height: 36px; width: 176px; padding: 0 12px; border: 1px solid #D9D3C8; border-radius: 6px; background: #FFFFFF; font: inherit; color: #1E1B18; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">All territories<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9C958B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button>
+              <button aria-pressed="true" style="height: 36px; padding: 0 12px; border: 1px solid rgba(178,58,33,0.3); border-radius: 6px; background: #FBEDE8; font: inherit; font-weight: 500; color: #B23A21; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"></circle><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"></path><circle cx="18" cy="5" r="3"></circle></svg>Routes</button>
             </div>
           </div>
-          <div style="position: relative; height: 500px; background: #E9E4D9; overflow: hidden; border-top: 1px solid #E2DDD3;">
-            <div style="position: absolute; left: 0; top: 0; width: 980px; height: 500px;">
-              <div style="position: absolute; left: 24px; top: 336px; width: 126px; height: 126px; background: #CFDDBF; border-radius: 14px;"></div>
-              <div style="position: absolute; left: 44px; top: 380px; font-size: 11px; font-weight: 700; letter-spacing: 1px; color: #4F6B3A;">OAKWOOD PARK</div>
-              <div style="position: absolute; left: 830px; top: 30px; width: 130px; height: 110px; background: #CFDDBF; border-radius: 14px;"></div>
-              <div style="position: absolute; left: 868px; top: 200px; width: 120px; height: 300px; background: #C9DCE6; border-radius: 40px 0 0 60px;"></div>
+          <div style="position: relative; height: 460px; background: #EBE8DF; overflow: hidden;">
+            <div style="position: absolute; left: 0; top: 0; width: 980px; height: 460px;">
+              <div style="position: absolute; left: 24px; top: 336px; width: 126px; height: 110px; background: #D4DFC4; border-radius: 14px;"></div>
+              <div style="position: absolute; left: 868px; top: 200px; width: 120px; height: 260px; background: #CCE4E1; border-radius: 40px 0 0 60px;"></div>
               <sc-for list="{{houses}}" as="h" hint-placeholder-count="40"><div style="{{h}}"></div></sc-for>
-              <sc-for list="{{roads}}" as="s" hint-placeholder-count="11"><div style="{{s.style}}"></div></sc-for>
-              <sc-for list="{{roadLabels}}" as="l" hint-placeholder-count="5"><div style="{{l.style}}">{{l.text}}</div></sc-for>
-              <div style="position: absolute; left: 60px; top: 70px; width: 410px; height: 330px; border: 2px dashed #24684F; border-radius: 8px; background: repeating-linear-gradient(135deg, rgba(36,104,79,0.07) 0 8px, rgba(36,104,79,0.02) 8px 16px);"></div>
-              <div style="position: absolute; left: 70px; top: 50px; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: #133D2E; background: #FFFFFF; padding: 4px 9px; border-radius: 6px; border: 1px solid #BFD8CA; box-shadow: 0 2px 6px rgba(0,0,0,0.08);"><span style="width: 8px; height: 8px; border-radius: 2px; background: #24684F;"></span>Oakwood Heights · 2 reps</div>
-              <div style="position: absolute; left: 520px; top: 110px; width: 300px; height: 300px; border: 2px dashed #345BD6; border-radius: 8px; background: repeating-linear-gradient(135deg, rgba(52,91,214,0.07) 0 8px, rgba(52,91,214,0.02) 8px 16px);"></div>
-              <div style="position: absolute; left: 530px; top: 90px; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: #1F368C; background: #FFFFFF; padding: 4px 9px; border-radius: 6px; border: 1px solid #C6D1F2; box-shadow: 0 2px 6px rgba(0,0,0,0.08);"><span style="width: 8px; height: 8px; border-radius: 2px; background: #345BD6;"></span>Cedar Ridge · 2 reps</div>
-              <svg style="position: absolute; left: 0; top: 0;" width="980" height="500" viewBox="0 0 980 500" fill="none" aria-hidden="true">
-                <path d="M100 360 L100 250 L196 250 L196 150 L292 150 L292 210" stroke="#1E1B18" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"></path>
-                <path d="M388 360 L388 300 L340 300" stroke="#1E1B18" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"></path>
-                <path d="M560 380 L560 260 L656 260" stroke="#1E1B18" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"></path>
-                <path d="M656 260 L704 260" stroke="#9A5B00" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="1 9"></path>
-                <path d="M704 260 L752 260 L752 350" stroke="#1E1B18" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"></path>
-              </svg>
+              <sc-for list="{{roads}}" as="s" hint-placeholder-count="11"><div style="{{s}}"></div></sc-for>
+              <div style="position: absolute; left: 60px; top: 70px; width: 410px; height: 330px; border: 2px dashed #147B70; border-radius: 4px; background: rgba(20,123,112,0.07);"></div>
+              <div style="position: absolute; left: 72px; top: 80px; font-size: 13px; font-weight: 650; color: #147B70;">Oakwood Heights</div>
+              <div style="position: absolute; left: 520px; top: 110px; width: 300px; height: 300px; border: 2px dashed #546EB6; border-radius: 4px; background: rgba(84,110,182,0.07);"></div>
+              <div style="position: absolute; left: 532px; top: 120px; font-size: 13px; font-weight: 650; color: #546EB6;">Cedar Ridge</div>
+              <svg style="position: absolute; left: 0; top: 0;" width="980" height="460" viewBox="0 0 980 460" fill="none" aria-hidden="true"><path d="M100 360 L100 250 L196 250 L196 150 L292 150 L292 210" stroke="#258671" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.6"></path><path d="M560 380 L560 260 L656 260" stroke="#258671" stroke-width="3" stroke-linecap="round" stroke-opacity="0.6"></path><path d="M704 260 L752 260 L752 350" stroke="#258671" stroke-width="3" stroke-linecap="round" stroke-opacity="0.6"></path></svg>
               <sc-for list="{{pins}}" as="p" hint-placeholder-count="40"><div title="{{p.label}}" style="{{p.style}}">{{p.mark}}</div></sc-for>
-              <sc-for list="{{pucks}}" as="r" hint-placeholder-count="4">
-                <div style="{{r.wrap}}">
-                  <div style="position: relative; width: 40px; height: 40px;">
-                    <sc-if value="{{r.live}}" hint-placeholder-val="{{true}}"><span class="wr-pulse" style="position: absolute; inset: 4px; border-radius: 50%; background: rgba(36,104,79,0.45);"></span></sc-if>
-                    <div style="{{r.ring}}">{{r.initials}}</div>
-                  </div>
-                  <div style="{{r.tag}}">{{r.age}}</div>
-                </div>
-              </sc-for>
-              <div style="position: absolute; left: 668px; top: 232px; font-size: 11px; font-weight: 700; color: #5A3400; background: #FCEFD6; border: 1px solid #E8C786; padding: 2px 7px; border-radius: 5px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">Gap 9:41–9:58</div>
+              <sc-for list="{{pucks}}" as="r" hint-placeholder-count="3"><div style="{{r.style}}">{{r.initials}}</div></sc-for>
             </div>
-            <div style="position: absolute; right: 14px; top: 14px; display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #DCD6CB; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-              <button aria-label="Zoom in" style="width: 44px; height: 44px; background: transparent; border: 0; border-bottom: 1px solid #EDE8E0; display: grid; place-items: center; color: #1E1B18;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></button>
-              <button aria-label="Zoom out" style="width: 44px; height: 44px; background: transparent; border: 0; display: grid; place-items: center; color: #1E1B18;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"></path></svg></button>
-            </div>
+            <div style="position: absolute; left: 12px; top: 12px; display: flex; align-items: center; gap: 6px; border: 1px solid #E3DED4; background: #FFFFFF; border-radius: 6px; padding: 6px 10px; font-size: 12px; font-weight: 500; box-shadow: 0 1px 2px rgba(0,0,0,0.05);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.8 2.2a2 2 0 0 0-1.6 0L2.6 6.1a1 1 0 0 0 0 1.8l8.6 3.9a2 2 0 0 0 1.6 0l8.6-3.9a1 1 0 0 0 0-1.8z"></path><path d="m2 12 9.2 4.2a2 2 0 0 0 1.6 0L22 12"></path></svg>Assigned territories</div>
+            <div style="position: absolute; right: 12px; bottom: 32px; display: flex; flex-direction: column; border: 1px solid #E3DED4; background: #FFFFFF; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05);"><button aria-label="Zoom in" style="width: 36px; height: 36px; border: 0; border-bottom: 1px solid #E3DED4; background: transparent; font-size: 18px; color: #1E1B18;">+</button><button aria-label="Zoom out" style="width: 36px; height: 36px; border: 0; background: transparent; font-size: 18px; color: #1E1B18;">−</button></div>
           </div>
-          <div style="display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 14px 20px; border-top: 1px solid #E2DDD3; background: #FCFAF6;">
-            <sc-for list="{{legend}}" as="l" hint-placeholder-count="8">
-              <span style="display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; color: #36322D;"><span style="{{l.swatch}}">{{l.mark}}</span>{{l.label}}</span>
-            </sc-for>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 12px 24px; background: rgba(239,235,227,0.4); border-top: 1px solid #E3DED4;">
+            <sc-for list="{{legend}}" as="l" hint-placeholder-count="7"><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: #625C54;"><span style="{{l.swatch}}"></span>{{l.label}}</span></sc-for>
           </div>
         </section>
 
-        <section aria-labelledby="team-h" style="flex: 1 1 330px; min-width: 0; background: #FFFFFF; border: 1px solid #E2DDD3; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 8px 24px -18px rgba(30,27,24,0.2);">
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid #EDE8E0;">
-            <h2 id="team-h" style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 0.2px;">Team in the field</h2>
-            <span style="font-size: 12px; font-weight: 700; color: #5F5951; background: #F1EDE6; padding: 4px 9px; border-radius: 20px;">3 of 5 active</span>
-          </div>
-          <sc-for list="{{reps}}" as="r" hint-placeholder-count="5">
-            <a href="#" style="display: flex; gap: 12px; padding: 14px 20px; border-bottom: 1px solid #EDE8E0; text-decoration: none; color: #1E1B18;">
-              <div style="{{r.avatar}}">{{r.initials}}</div>
-              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px;">
-                <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                  <span style="font-size: 15px; font-weight: 700;">{{r.name}}</span>
-                  <span style="{{r.chip}}">{{r.status}}</span>
-                </div>
-                <div style="font-size: 13px; color: #5F5951;">{{r.territory}}</div>
-                <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px;">
-                  <span style="background: #F6F3EC; border-radius: 8px; padding: 5px 8px; display: flex; flex-direction: column;"><span style="font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.05;">{{r.doors}}</span><span style="font-size: 11px; font-weight: 600; color: #5F5951;">doors</span></span>
-                  <span style="background: #F6F3EC; border-radius: 8px; padding: 5px 8px; display: flex; flex-direction: column;"><span style="font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.05;">{{r.time}}</span><span style="font-size: 11px; font-weight: 600; color: #5F5951;">field</span></span>
-                  <span style="background: #F6F3EC; border-radius: 8px; padding: 5px 8px; display: flex; flex-direction: column;"><span style="font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.05;">{{r.leads}}</span><span style="font-size: 11px; font-weight: 600; color: #5F5951;">leads</span></span>
-                </div>
-                <div style="{{r.locStyle}}">{{r.loc}}</div>
-              </div>
+        <section aria-labelledby="team-h" style="flex: 1 1 340px; min-width: 0; background: #FFFFFF; border: 1px solid #E3DED4; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-bottom: 1px solid #E3DED4;"><h2 id="team-h" style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 700;">Team in the field</h2><span style="font-size: 12px; font-weight: 500; background: #EFEBE3; padding: 2px 8px; border-radius: 999px;">4 reps</span></div>
+          <sc-for list="{{reps}}" as="r" hint-placeholder-count="3">
+            <a href="#" style="display: flex; flex-direction: column; gap: 10px; padding: 16px 20px; border-bottom: 1px solid #E3DED4; text-decoration: none; color: #1E1B18;">
+              <div style="display: flex; align-items: center; gap: 12px;"><span style="{{r.avatar}}">{{r.initials}}</span><span style="flex: 1; display: grid;"><span style="font-weight: 600;">{{r.name}}</span><span style="{{r.stateStyle}}">{{r.state}}</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9C958B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></div>
+              <div style="font-size: 12px; color: #625C54;">⌖ {{r.territory}}</div>
+              <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;"><span style="background: #EFEBE3; border-radius: 6px; padding: 6px 10px;"><span style="display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.2;">{{r.doors}}</span><span style="font-size: 12px; color: #625C54;">doors</span></span><span style="background: #EFEBE3; border-radius: 6px; padding: 6px 10px;"><span style="display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.2;">{{r.time}}</span><span style="font-size: 12px; color: #625C54;">field time</span></span></div>
+              <span style="{{r.locStyle}}">{{r.loc}}</span>
             </a>
           </sc-for>
+          <div style="padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; margin-top: auto;"><a href="#" style="height: 36px; padding: 0 12px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; color: #1E1B18; text-decoration: none; font-weight: 500;">View all team members<span>→</span></a><p style="margin: 0; font-size: 12px; color: #625C54; display: flex; gap: 8px;"><span style="color: #24684F;">✓</span>Locations include their last update time. Breaks pause tracking.</p></div>
         </section>
       </div>
 
-      <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-        <section aria-labelledby="act-h" style="flex: 999 1 520px; min-width: 0; background: #FFFFFF; border: 1px solid #E2DDD3; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 24px -18px rgba(30,27,24,0.2);">
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid #EDE8E0;">
-            <h2 id="act-h" style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 0.2px;">Door activity</h2>
-            <a href="#" style="font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; min-height: 44px;">View all doors</a>
-          </div>
-          <sc-for list="{{activity}}" as="a" hint-placeholder-count="6">
-            <div style="display: flex; align-items: center; gap: 14px; padding: 11px 20px; border-bottom: 1px solid #F2EEE7;">
-              <span style="width: 66px; font-size: 13px; font-weight: 600; color: #5F5951;">{{a.time}}</span>
-              <span style="{{a.badge}}"><span style="{{a.dot}}">{{a.mark}}</span>{{a.outcome}}</span>
-              <span style="flex: 1; min-width: 0; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{a.address}}</span>
-              <span style="font-size: 13px; color: #5F5951;">{{a.rep}}</span>
-              <span style="{{a.flagStyle}}">{{a.flag}}</span>
+      <section aria-labelledby="act-h" style="background: #FFFFFF; border: 1px solid #E3DED4; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+        <div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 16px 24px; border-bottom: 1px solid #E3DED4;">
+          <div><h2 id="act-h" style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 700;">{{activityTitle}}</h2><p style="margin: 4px 0 0; color: #625C54;">{{activitySub}}</p></div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <div role="group" aria-label="Activity filter" style="display: inline-flex; border-radius: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+              <button aria-pressed="{{allOn}}" onClick="{{showAll}}" style="{{allStyle}}">All activity</button>
+              <button aria-pressed="{{followOn}}" onClick="{{showFollow}}" style="{{followStyle}}">Follow-ups</button>
             </div>
-          </sc-for>
-        </section>
-        <section aria-labelledby="insp-h" style="flex: 1 1 330px; min-width: 0; background: #FFFFFF; border: 1px solid #E2DDD3; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 24px -18px rgba(30,27,24,0.2);">
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid #EDE8E0;">
-            <h2 id="insp-h" style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 0.2px;">Inspection requests</h2>
-            <a href="Leads.dc.html" style="font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; min-height: 44px;">All leads</a>
+            <button style="height: 32px; padding: 0 12px; border: 0; border-radius: 6px; background: transparent; font: inherit; font-weight: 500; color: #1E1B18;">2 location flags ›</button>
           </div>
-          <sc-for list="{{inspections}}" as="i" hint-placeholder-count="4">
-            <div style="padding: 13px 20px; border-bottom: 1px solid #F2EEE7; display: flex; gap: 12px;">
-              <div style="width: 44px; flex-shrink: 0; border-radius: 9px; background: #EDF1FC; color: #1F368C; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px 0;"><span style="font-size: 10px; font-weight: 700; letter-spacing: 0.8px;">{{i.dow}}</span><span style="font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; line-height: 1;">{{i.day}}</span></div>
-              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
-                <div style="display: flex; justify-content: space-between; gap: 8px;"><span style="font-size: 14px; font-weight: 700;">{{i.name}}</span><span style="{{i.crmStyle}}">{{i.crm}}</span></div>
-                <div style="font-size: 13px; color: #5F5951;">{{i.address}}</div>
-                <div style="font-size: 13px; color: #36322D;">{{i.window}} · {{i.rep}}</div>
-              </div>
-            </div>
-          </sc-for>
-        </section>
-      </div>
+        </div>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; min-width: 760px; border-collapse: collapse;">
+            <thead><tr style="text-align: left;"><th style="height: 40px; padding: 0 8px 0 24px; font-weight: 500; border-bottom: 1px solid #E3DED4;">Property</th><th style="padding: 0 8px; font-weight: 500; border-bottom: 1px solid #E3DED4;">Canvasser</th><th style="padding: 0 8px; font-weight: 500; border-bottom: 1px solid #E3DED4;">Outcome</th><th style="padding: 0 8px; font-weight: 500; border-bottom: 1px solid #E3DED4;">Time</th><th style="padding: 0 24px 0 8px; border-bottom: 1px solid #E3DED4;"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">History</span></th></tr></thead>
+            <tbody>
+              <sc-for list="{{rows}}" as="a" hint-placeholder-count="6">
+                <tr>
+                  <td style="padding: 8px 8px 8px 24px; border-bottom: 1px solid #E3DED4;"><div style="display: flex; align-items: center; gap: 12px;"><span style="width: 36px; height: 36px; border-radius: 8px; background: #EFEBE3; display: grid; place-items: center; color: #625C54;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg></span><span style="display: grid;"><span style="font-weight: 600;">{{a.address}}</span><span style="font-size: 12px; color: #625C54;">Winchester, VA</span></span></div></td>
+                  <td style="padding: 8px; border-bottom: 1px solid #E3DED4;"><span style="display: inline-flex; align-items: center; gap: 8px;"><span style="width: 28px; height: 28px; border-radius: 50%; background: #EFEBE3; display: grid; place-items: center; font-size: 11px; font-weight: 600;">{{a.initials}}</span>{{a.rep}}</span></td>
+                  <td style="padding: 8px; border-bottom: 1px solid #E3DED4;"><span style="display: inline-flex; align-items: center; gap: 8px; font-weight: 500;"><span style="{{a.dot}}"></span>{{a.outcome}}</span></td>
+                  <td style="padding: 8px; border-bottom: 1px solid #E3DED4; color: #625C54;">{{a.time}}<sc-if value="{{a.ret}}" hint-placeholder-val="{{false}}"><span style="display: block; font-size: 12px; font-weight: 600; color: #8A5A0B;">{{a.ret}}</span></sc-if></td>
+                  <td style="padding: 8px 24px 8px 8px; border-bottom: 1px solid #E3DED4; text-align: right;"><button aria-label="View history" style="width: 36px; height: 36px; border: 0; border-radius: 6px; background: transparent; color: #1E1B18; font-size: 18px;">⋯</button></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <footer style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 12px; color: #625C54;"><span>✓ Tracking during active field time only</span><span>America / New York · WE ROOF</span></footer>
     </div>
   </main>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1560}}'>
 class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { filter: 'all' }; }
   renderVals() {
-    var OC = {
-      no_answer: { c: '#64748b', l: 'No answer', m: '' },
-      not_interested: { c: '#a36547', l: 'Not interested', m: '' },
-      follow_up: { c: '#b27708', l: 'Follow-up', m: '' },
-      interested: { c: '#147b70', l: 'Interested', m: '' },
-      inspection_requested: { c: '#345bd6', l: 'Inspection requested', m: '' },
-      existing_customer: { c: '#7b52aa', l: 'Existing customer', m: '' },
-      do_not_knock: { c: '#bd3e3e', l: 'Do not knock', m: '×' }
-    };
-    var bars = function (vals, color) {
-      var max = Math.max.apply(null, vals);
-      return vals.map(function (v, i) { return 'width: 6px; border-radius: 2px; height: ' + Math.max(3, Math.round(v / max * 32)) + 'px; background: ' + (i === vals.length - 1 ? color : '#E2DDD3') + ';'; });
-    };
-    var delta = function (up) { return 'font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 20px; background: ' + (up ? '#E3F0E8' : '#F1EDE6') + '; color: ' + (up ? '#1B4E3B' : '#5F5951') + ';'; };
+    var self = this;
+    var OC = { no_answer: ['#64748b', 'No answer'], not_interested: ['#a36547', 'Not interested'], follow_up: ['#b27708', 'Follow-up'], interested: ['#147b70', 'Interested'], inspection_requested: ['#345bd6', 'Inspection requested'], existing_customer: ['#7b52aa', 'Existing customer'], do_not_knock: ['#bd3e3e', 'Do not knock'] };
     var kpis = [
-      { label: 'REPS ON SHIFT', value: '3', unit: '/ 5', sub: '1 on break · 1 off shift', delta: 'Live', deltaStyle: delta(true), bars: bars([1, 2, 3, 3, 3, 2, 3, 3], '#B5361F') },
-      { label: 'DOORS KNOCKED', value: '126', unit: '', sub: '118 unique properties', delta: '+14 vs last Mon', deltaStyle: delta(true), bars: bars([8, 14, 19, 22, 17, 21, 15, 10], '#B5361F') },
-      { label: 'NEW LEADS', value: '11', unit: '', sub: '4 inspection requests', delta: '+3', deltaStyle: delta(true), bars: bars([1, 2, 1, 3, 1, 2, 0, 1], '#B5361F') },
-      { label: 'FIELD HOURS', value: '14.2', unit: 'hrs', sub: 'Breaks excluded', delta: 'Same', deltaStyle: delta(false), bars: bars([2, 3, 3, 3, 2, 3, 3, 2], '#B5361F') }
+      { label: 'ACTIVE CANVASSERS', glyph: '◍', value: '2', unit: '/ 4', sub: 'Current shift status' },
+      { label: 'DOORS KNOCKED', glyph: '▯', value: '47', unit: '', sub: '47 unique properties' },
+      { label: 'NEW LEADS', glyph: '⚑', value: '14', unit: '', sub: '7 inspection requests' },
+      { label: 'FIELD HOURS', glyph: '◷', value: '9.6', unit: 'hrs', sub: 'Breaks excluded' }
     ];
-    var ic = function (bg, fg) { return 'width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; flex-shrink: 0; font-family: \'Barlow Condensed\', sans-serif; font-size: 26px; font-weight: 700; background: ' + bg + '; color: ' + fg + ';'; };
-    var reviews = [
-      { count: '3', aria: 'Review GPS exceptions', iconStyle: ic('#FCEFD6', '#5A3400'), title: 'GPS exceptions', detail: 'Doors recorded 180 m+ from the house or outside an assigned territory.' },
-      { count: '2', aria: 'Review time corrections', iconStyle: ic('#EDF1FC', '#1F368C'), title: 'Time corrections', detail: 'Jordan D. +15 min (forgot to end break) · Taylor R. −10 min.' },
-      { count: '1', aria: 'Review CRM delivery', iconStyle: ic('#F9E9E3', '#8C2715'), title: 'CRM delivery uncertain', detail: 'JobNimbus timed out after write. Confirm before retrying.' }
-    ];
-    var road = 'background: #FFFFFF; box-shadow: 0 0 0 1px #D8D1C4;';
-    var roads = [60, 160, 240, 330, 440].map(function (y) { return { style: 'position: absolute; left: 0; top: ' + y + 'px; width: 980px; height: 14px; ' + road }; })
-      .concat([40, 172, 316, 492, 640, 790].map(function (x) { return { style: 'position: absolute; top: 0; left: ' + x + 'px; width: 14px; height: 500px; ' + road }; }));
-    roads.push({ style: 'position: absolute; left: -40px; top: 470px; width: 1100px; height: 22px; background: #FFFFFF; box-shadow: 0 0 0 1px #D8D1C4; transform: rotate(-24deg); transform-origin: left center;' });
-    var lab = function (x, y, t, v) { return { text: t, style: 'position: absolute; left: ' + x + 'px; top: ' + y + 'px; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #7A7268; white-space: nowrap;' + (v ? ' transform: rotate(90deg); transform-origin: left top;' : '') }; };
-    var roadLabels = [lab(200, 61, 'MAPLE STREET'), lab(560, 161, 'CEDAR DRIVE'), lab(200, 241, 'OAKWOOD AVENUE'), lab(700, 331, 'RIDGE GREEN'), lab(54, 444, 'WILLOW LANE')];
+    var road = ' background: #F8F7F1; box-shadow: 0 0 0 2px #D3D2C7;';
+    var roads = [60, 160, 240, 330, 430].map(function (y) { return 'position: absolute; left: 0; top: ' + y + 'px; width: 980px; height: 14px;' + road; })
+      .concat([40, 172, 316, 492, 640, 790].map(function (x) { return 'position: absolute; top: 0; left: ' + x + 'px; width: 14px; height: 460px;' + road; }));
     var houses = [];
     [[90, 430], [560, 780]].forEach(function (b) {
       [96, 120, 192, 214, 274, 296, 368, 392].forEach(function (y) {
-        for (var x = b[0]; x <= b[1]; x += 40) houses.push('position: absolute; left: ' + (x - 12) + 'px; top: ' + (y - 8) + 'px; width: 24px; height: 16px; border-radius: 3px; background: #DAD3C6;');
+        for (var x = b[0]; x <= b[1]; x += 40) houses.push('position: absolute; left: ' + (x - 12) + 'px; top: ' + (y - 8) + 'px; width: 24px; height: 16px; border-radius: 2px; background: #D3D1C5; border: 1px solid #C3C2B5; box-sizing: border-box;');
       });
     });
-    var seq = ['no_answer', 'not_interested', 'no_answer', 'interested', null, 'follow_up', 'no_answer', 'inspection_requested', null, 'existing_customer', 'no_answer', 'do_not_knock', 'not_interested', null, 'follow_up', 'no_answer', 'interested', null];
+    var seq = ['no_answer', 'not_interested', 'follow_up', 'interested', 'inspection_requested', 'existing_customer', 'do_not_knock'];
     var pins = [], k = 0;
-    var addBlock = function (x0, x1, rows) {
-      rows.forEach(function (y) {
-        for (var x = x0; x <= x1; x += 40) {
+    [[90, 430, [108, 204, 286, 380]], [560, 780, [204, 286, 380]]].forEach(function (b) {
+      b[2].forEach(function (y) {
+        for (var x = b[0]; x <= b[1]; x += 40) {
           var o = seq[k % seq.length]; k++;
-          if (!o) { pins.push({ label: 'Not visited', mark: '', style: 'position: absolute; left: ' + (x - 6) + 'px; top: ' + (y - 6) + 'px; width: 12px; height: 12px; box-sizing: border-box; border-radius: 50%; background: #FFFFFF; border: 2px solid #9B958B;' }); continue; }
-          var d = OC[o], dnk = o === 'do_not_knock';
-          pins.push({ label: d.l, mark: d.m, style: 'position: absolute; left: ' + (x - 8) + 'px; top: ' + (y - 8) + 'px; width: 16px; height: 16px; box-sizing: border-box; border-radius: ' + (dnk ? '3px' : '50%') + '; background: ' + d.c + '; border: 2px solid #FFFFFF; box-shadow: 0 1px 3px rgba(0,0,0,0.3); color: #FFFFFF; font-size: 12px; line-height: 11px; text-align: center; font-weight: 700;' });
+          pins.push({ label: OC[o][1], mark: o === 'do_not_knock' ? '×' : o === 'inspection_requested' ? '✓' : '', style: 'position: absolute; left: ' + (x - 9) + 'px; top: ' + (y - 9) + 'px; width: 18px; height: 18px; box-sizing: border-box; border-radius: 50%; background: ' + OC[o][0] + '; border: 2.5px solid #FAFBF7; color: #FAFBF7; font-size: 10px; line-height: 13px; text-align: center; font-weight: 700;' });
         }
       });
-    };
-    addBlock(90, 430, [108, 204, 286, 380]);
-    addBlock(560, 780, [204, 286, 380]);
-    var puck = function (x, y, initials, age, tone) {
-      var ring = tone === 'fresh' ? '#24684F' : tone === 'break' ? '#C98A12' : '#8A847B';
-      return {
-        initials: initials, age: age, live: tone === 'fresh',
-        wrap: 'position: absolute; left: ' + (x - 20) + 'px; top: ' + (y - 20) + 'px; display: flex; flex-direction: column; align-items: center; gap: 3px;',
-        ring: 'position: absolute; inset: 0; box-sizing: border-box; border-radius: 50%; background: ' + (tone === 'stale' ? '#5E5850' : '#1A1816') + '; color: #FFFFFF; font-size: 12px; font-weight: 700; display: grid; place-items: center; border: 3px ' + (tone === 'stale' ? 'dashed' : 'solid') + ' ' + ring + '; box-shadow: 0 0 0 2px #FFFFFF, 0 4px 10px rgba(0,0,0,0.3);',
-        tag: 'font-size: 11px; font-weight: 700; background: ' + (tone === 'fresh' ? '#24684F' : tone === 'break' ? '#FCEFD6' : '#FFFFFF') + '; color: ' + (tone === 'fresh' ? '#FFFFFF' : tone === 'break' ? '#5A3400' : '#36322D') + '; padding: 1px 7px; border-radius: 5px; border: 1px solid ' + (tone === 'fresh' ? '#24684F' : '#DCD6CB') + '; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,0.12);'
-      };
-    };
-    var pucks = [puck(292, 210, 'AM', '12s ago', 'fresh'), puck(340, 300, 'JD', 'On break', 'break'), puck(752, 350, 'CW', '20s ago', 'fresh'), puck(560, 380, 'TR', 'Stale · 9 min', 'stale')];
-    var legend = Object.keys(OC).map(function (key) {
-      var d = OC[key];
-      return { label: d.l, mark: d.m, swatch: 'width: 14px; height: 14px; box-sizing: border-box; border-radius: ' + (key === 'do_not_knock' ? '3px' : '50%') + '; background: ' + d.c + '; color: #FFFFFF; font-size: 11px; line-height: 12px; text-align: center; font-weight: 700; box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 3px rgba(0,0,0,0.12);' };
     });
-    legend.push({ label: 'Not visited', mark: '', swatch: 'width: 14px; height: 14px; box-sizing: border-box; border-radius: 50%; background: #FFFFFF; border: 2px solid #9B958B;' });
-    var chip = function (bg, fg) { return 'font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; background: ' + bg + '; color: ' + fg + ';'; };
-    var av = function (ring) { return 'width: 42px; height: 42px; border-radius: 50%; background: #F1EDE6; color: #36322D; display: grid; place-items: center; font-size: 13px; font-weight: 700; flex-shrink: 0; box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px ' + ring + ';'; };
-    var loc = function (stale) { return 'display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: ' + (stale ? '#5A3400' : '#5F5951') + ';'; };
+    var puck = function (x, y, i) { return { initials: i, style: 'position: absolute; left: ' + (x - 15) + 'px; top: ' + (y - 15) + 'px; width: 30px; height: 30px; box-sizing: border-box; border-radius: 50%; background: #174C3C; border: 3px solid #FAFBF7; color: #FAFBF7; font-size: 10px; font-weight: 700; display: grid; place-items: center; box-shadow: 0 0 0 8px rgba(20,123,112,0.12);' }; };
+    var pucks = [puck(292, 210, 'AM'), puck(340, 300, 'JD'), puck(752, 350, 'CW')];
+    var legend = seq.map(function (o) { return { label: OC[o][1], swatch: 'width: 10px; height: 10px; border-radius: 50%; background: ' + OC[o][0] + '; box-shadow: 0 0 0 2px #FFFFFF;' }; });
+    var stateStyle = function (c) { return 'font-size: 12px; color: #625C54; display: flex; align-items: center; gap: 6px;'; };
+    var av = function (ring) { return 'width: 40px; height: 40px; border-radius: 50%; background: #EFEBE3; display: grid; place-items: center; font-size: 12px; font-weight: 600; box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px ' + ring + ';'; };
     var reps = [
-      { initials: 'AM', name: 'Alex Morgan', status: 'On shift', chip: chip('#E3F0E8', '#1B4E3B'), avatar: av('#24684F'), territory: 'Oakwood Heights', doors: '38', time: '3:12', leads: '4', loc: 'Location 12s ago · ±8 m', locStyle: loc(false) },
-      { initials: 'JD', name: 'Jordan Davis', status: 'On break', chip: chip('#FCEFD6', '#5A3400'), avatar: av('#C98A12'), territory: 'Oakwood Heights', doors: '29', time: '2:51', leads: '2', loc: 'Tracking paused for break · 6 min', locStyle: loc(false) },
-      { initials: 'CW', name: 'Casey Wilson', status: 'On shift', chip: chip('#E3F0E8', '#1B4E3B'), avatar: av('#24684F'), territory: 'Cedar Ridge', doors: '33', time: '3:05', leads: '3', loc: 'Location 20s ago · ±12 m', locStyle: loc(false) },
-      { initials: 'TR', name: 'Taylor Reed', status: 'Tracking gap', chip: chip('#F9E9E3', '#8C2715'), avatar: av('#B5361F'), territory: 'Cedar Ridge', doors: '26', time: '2:40', leads: '2', loc: 'Stale · last location 9 min ago', locStyle: loc(true) },
-      { initials: 'SK', name: 'Sam Kim', status: 'Off shift', chip: chip('#F1EDE6', '#4A453E'), avatar: av('#DCD6CB'), territory: 'Unassigned', doors: '0', time: '0:00', leads: '0', loc: 'No location recorded today', locStyle: loc(false) }
+      { initials: 'AM', name: 'Alex Morgan', state: '◉ In the field', stateStyle: stateStyle(), avatar: av('#24684F'), territory: 'Oakwood Heights', doors: '12', time: '2h 35m', loc: 'Last location · 2:49 PM', locStyle: 'font-size: 12px; font-weight: 500; color: #625C54;' },
+      { initials: 'JD', name: 'Jordan Davis', state: 'Ⅱ On break', stateStyle: stateStyle(), avatar: av('#D97706'), territory: 'Oakwood Heights', doors: '12', time: '2h 26m', loc: 'Last location · 2:37 PM', locStyle: 'font-size: 12px; font-weight: 500; color: #625C54;' },
+      { initials: 'CW', name: 'Casey Wilson', state: '◉ In the field', stateStyle: stateStyle(), avatar: av('#B23A21'), territory: 'Cedar Ridge', doors: '12', time: '2h 31m', loc: 'Stale location · 2:31 PM', locStyle: 'font-size: 12px; font-weight: 500; color: #8A5A0B;' }
     ];
-    var act = [
-      ['11:42 AM', 'inspection_requested', '1418 Maple Street', 'Alex M.', ''],
-      ['11:38 AM', 'no_answer', '1422 Maple Street', 'Alex M.', ''],
-      ['11:35 AM', 'interested', '207 Cedar Drive', 'Casey W.', ''],
-      ['11:31 AM', 'follow_up', '211 Cedar Drive', 'Casey W.', 'GPS 210 m away'],
-      ['11:24 AM', 'not_interested', '1430 Maple Street', 'Alex M.', ''],
-      ['11:20 AM', 'do_not_knock', '88 Ridge Green', 'Taylor R.', 'Outside territory']
+    var f = this.state.filter;
+    var data = [
+      ['204 Oakwood Avenue', 'AM', 'Alex Morgan', 'no_answer', '2:44 PM', ''],
+      ['206 Willow Lane', 'JD', 'Jordan Davis', 'not_interested', '2:41 PM', ''],
+      ['208 Maple Street', 'CW', 'Casey Wilson', 'follow_up', '2:39 PM', 'Return 2026-10-08'],
+      ['210 Oakwood Avenue', 'TR', 'Taylor Reed', 'interested', '2:36 PM', ''],
+      ['212 Willow Lane', 'AM', 'Alex Morgan', 'inspection_requested', '2:34 PM', ''],
+      ['222 Oakwood Avenue', 'JD', 'Jordan Davis', 'follow_up', '2:22 PM', 'Return 2026-10-08'],
+      ['216 Oakwood Avenue', 'CW', 'Casey Wilson', 'do_not_knock', '2:29 PM', '']
     ];
-    var activity = act.map(function (a) {
-      var d = OC[a[1]];
-      return {
-        time: a[0], outcome: d.l, mark: d.m, address: a[2], rep: a[3], flag: a[4],
-        badge: 'display: inline-flex; align-items: center; gap: 8px; width: 176px; font-size: 13px; font-weight: 600; color: #1E1B18;',
-        dot: 'width: 12px; height: 12px; border-radius: ' + (a[1] === 'do_not_knock' ? '3px' : '50%') + '; background: ' + d.c + '; flex-shrink: 0; color: #FFFFFF; font-size: 10px; line-height: 11px; text-align: center; font-weight: 700;',
-        flagStyle: a[4] ? 'font-size: 12px; font-weight: 700; color: #5A3400; background: #FCEFD6; padding: 3px 8px; border-radius: 5px;' : 'display: none;'
-      };
+    var rows = data.filter(function (d) { return f === 'all' || d[3] === 'follow_up'; }).map(function (d) {
+      return { address: d[0], initials: d[1], rep: d[2], outcome: OC[d[3]][1], time: d[4], ret: d[5], dot: 'width: 10px; height: 10px; border-radius: 50%; background: ' + OC[d[3]][0] + '; box-shadow: 0 0 0 2px #FFFFFF;' };
     });
-    var crm = function (s) {
-      var m = { 'Sent': ['#E3F0E8', '#1B4E3B'], 'Queued': ['#F1EDE6', '#4A453E'], 'Check': ['#F9E9E3', '#8C2715'] }[s];
-      return 'font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; white-space: nowrap; align-self: flex-start; background: ' + m[0] + '; color: ' + m[1] + ';';
+    var tg = function (on, first) { return 'height: 36px; padding: 0 12px; border: 1px solid #D9D3C8; ' + (first ? 'border-radius: 6px 0 0 6px;' : 'border-left: 0; border-radius: 0 6px 6px 0;') + ' background: ' + (on ? '#EFEBE3' : 'transparent') + '; font: inherit; font-weight: 500; color: #1E1B18;'; };
+    return {
+      kpis: kpis, roads: roads, houses: houses, pins: pins, pucks: pucks, legend: legend, reps: reps, rows: rows,
+      activityTitle: f === 'all' ? 'Recent door activity' : 'Homeowner follow-ups',
+      activitySub: f === 'all' ? 'A record of every conversation.' : 'Properties whose latest visit needs a return.',
+      allOn: f === 'all' ? 'true' : 'false', followOn: f === 'all' ? 'false' : 'true',
+      allStyle: tg(f === 'all', true), followStyle: tg(f !== 'all', false),
+      showAll: function () { self.setState({ filter: 'all' }); }, showFollow: function () { self.setState({ filter: 'follow' }); }
     };
-    var inspections = [
-      { dow: 'TUE', day: '6', name: 'Dana Whitfield', address: '1418 Maple Street', window: 'Morning', rep: 'Alex M.', crm: 'Sent' },
-      { dow: 'WED', day: '7', name: 'Luis Ortega', address: '207 Cedar Drive', window: 'Afternoon', rep: 'Casey W.', crm: 'Queued' },
-      { dow: 'TUE', day: '6', name: 'Priya Natarajan', address: '1302 Oakwood Avenue', window: 'Evening', rep: 'Jordan D.', crm: 'Check' },
-      { dow: 'THU', day: '8', name: 'Grace Mills', address: '64 Willow Lane', window: 'Morning', rep: 'Alex M.', crm: 'Sent' }
-    ].map(function (i) { return Object.assign({}, i, { crmStyle: crm(i.crm), crm: i.crm === 'Sent' ? 'In JobNimbus' : i.crm === 'Queued' ? 'Queued' : 'Needs check' }); });
-    return { kpis: kpis, reviews: reviews, roads: roads, roadLabels: roadLabels, houses: houses, pins: pins, pucks: pucks, legend: legend, reps: reps, activity: activity, inspections: inspections };
   }
 }
 </script>
