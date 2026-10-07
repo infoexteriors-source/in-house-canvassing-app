@@ -8,55 +8,58 @@
 <body>
 <x-dc>
 <helmet>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Instrument+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0}
-a{color:#B23A25}a:hover{color:#8E2C1B}
+a{color:#B5361F}a:hover{color:#8C2715}
 button{font:inherit;cursor:pointer}
 </style>
 </helmet>
-<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F8F6F1; color: #26231F; font-family: 'DM Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
-  <header style="padding: 54px 12px 12px; display: flex; align-items: center; gap: 6px; background: #FFFFFF; border-bottom: 1px solid #E4E0D8;">
-    <a href="Record.dc.html" aria-label="Back" style="width: 44px; height: 44px; display: grid; place-items: center; color: #26231F; text-decoration: none;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"></path></svg></a>
-    <div style="flex: 1;">
-      <h1 style="margin: 0; font-size: 19px; font-weight: 700; letter-spacing: -0.3px;">Homeowner details</h1>
-      <div style="font-size: 13px; color: #5E5850;">1418 Maple Street · Interested</div>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F6F3EC; color: #1E1B18; font-family: 'Instrument Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+  <header style="padding: 52px 12px 12px; display: flex; flex-direction: column; gap: 12px; background: #FFFFFF; border-bottom: 1px solid #E2DDD3;">
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <a href="Record.dc.html" aria-label="Back" style="width: 44px; height: 44px; border-radius: 22px; display: grid; place-items: center; color: #1E1B18; text-decoration: none; background: #F1EDE6;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"></path></svg></a>
+      <div style="flex: 1; padding-left: 6px;">
+        <h1 style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: 26px; line-height: 1; font-weight: 700;">Homeowner details</h1>
+        <div style="font-size: 13px; color: #5F5951; margin-top: 2px;">1418 Maple Street · Interested</div>
+      </div>
     </div>
-    <span style="font-size: 12px; font-weight: 700; color: #5E5850; padding-right: 8px;">2 of 2</span>
+    <div aria-label="Step 2 of 2" style="display: flex; gap: 6px; padding: 0 8px;">
+      <span style="flex: 1; height: 4px; border-radius: 2px; background: #B5361F;"></span>
+      <span style="flex: 1; height: 4px; border-radius: 2px; background: #B5361F;"></span>
+    </div>
   </header>
 
   <form style="flex: 1; overflow: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 14px;">
     <div style="display: flex; flex-direction: column; gap: 6px;">
-      <label for="name" style="font-size: 14px; font-weight: 700;">Homeowner name</label>
-      <input id="name" value="Dana Whitfield" autocomplete="name" style="min-height: 52px; padding: 0 14px; border: 1.5px solid #CFC9BE; border-radius: 10px; background: #FFFFFF; font: inherit; font-size: 17px; color: #26231F;">
+      <label for="name" style="font-size: 13px; font-weight: 700;">Homeowner name</label>
+      <input id="name" value="Dana Whitfield" autocomplete="name" style="min-height: 54px; padding: 0 16px; border: 1.5px solid #CFC8BB; border-radius: 12px; background: #FFFFFF; font: inherit; font-size: 17px; color: #1E1B18;">
     </div>
-    <div style="display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 14px;">
-      <div style="display: flex; flex-direction: column; gap: 6px;">
-        <label for="phone" style="font-size: 14px; font-weight: 700;">Mobile phone</label>
-        <input id="phone" type="tel" value="(555) 014-2231" autocomplete="tel" style="min-height: 52px; padding: 0 14px; border: 1.5px solid #CFC9BE; border-radius: 10px; background: #FFFFFF; font: inherit; font-size: 17px; color: #26231F;">
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 6px;">
-        <label for="email" style="font-size: 14px; font-weight: 700;">Email <span style="font-weight: 500; color: #5E5850;">(optional)</span></label>
-        <input id="email" type="email" placeholder="name@example.com" style="min-height: 52px; padding: 0 14px; border: 1.5px solid #CFC9BE; border-radius: 10px; background: #FFFFFF; font: inherit; font-size: 17px; color: #26231F;">
-      </div>
-      <div style="font-size: 13px; color: #5E5850; margin-top: -6px;">A phone number or email is required for the office to follow up.</div>
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+      <label for="phone" style="font-size: 13px; font-weight: 700;">Mobile phone</label>
+      <input id="phone" type="tel" value="(555) 014-2231" autocomplete="tel" style="min-height: 54px; padding: 0 16px; border: 1.5px solid #CFC8BB; border-radius: 12px; background: #FFFFFF; font: inherit; font-size: 17px; color: #1E1B18;">
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+      <label for="email" style="font-size: 13px; font-weight: 700;">Email <span style="font-weight: 500; color: #5F5951;">(optional)</span></label>
+      <input id="email" type="email" placeholder="name@example.com" style="min-height: 54px; padding: 0 16px; border: 1.5px solid #CFC8BB; border-radius: 12px; background: #FFFFFF; font: inherit; font-size: 17px; color: #1E1B18;">
+      <div style="font-size: 13px; color: #5F5951;">A phone number or email is required so the office can follow up.</div>
     </div>
 
-    <div style="background: #FFFFFF; border: 1.5px solid {{inspBorder}}; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 12px;">
+    <div style="{{inspCard}}">
       <label style="display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer;">
-        <span style="display: flex; flex-direction: column; gap: 2px;">
-          <span style="font-size: 16px; font-weight: 700;">Request a roof inspection</span>
-          <span style="font-size: 13px; color: #5E5850;">The office confirms the appointment.</span>
+        <span style="display: flex; gap: 12px; align-items: center;">
+          <span style="width: 40px; height: 40px; border-radius: 11px; background: #EDF1FC; color: #345BD6; display: grid; place-items: center; flex-shrink: 0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 13 12 5l9.5 8"></path><path d="M6 11v8.5h12V11"></path><path d="m10 15 1.5 1.5L15 13"></path></svg></span>
+          <span style="display: flex; flex-direction: column; gap: 2px;"><span style="font-size: 16px; font-weight: 700;">Request roof inspection</span><span style="font-size: 13px; color: #5F5951;">The office confirms the appointment.</span></span>
         </span>
         <input type="checkbox" checked="{{insp}}" onChange="{{toggleInsp}}" style="width: 26px; height: 26px; margin: 0; accent-color: #345BD6; flex-shrink: 0;">
       </label>
       <sc-if value="{{insp}}" hint-placeholder-val="{{true}}">
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-          <div style="font-size: 14px; font-weight: 700;">Preferred day</div>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <sc-for list="{{days}}" as="d" hint-placeholder-count="3"><button type="button" aria-pressed="{{d.pressed}}" onClick="{{d.pick}}" style="{{d.style}}">{{d.label}}</button></sc-for>
+        <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 4px; border-top: 1px solid #E6EBF8;">
+          <div style="font-size: 13px; font-weight: 700; margin-top: 8px;">Preferred day</div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
+            <sc-for list="{{days}}" as="d" hint-placeholder-count="3"><button type="button" aria-pressed="{{d.pressed}}" onClick="{{d.pick}}" style="{{d.style}}"><span style="font-size: 11px; font-weight: 700; letter-spacing: 1px;">{{d.dow}}</span><span style="font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 700; line-height: 1;">{{d.num}}</span></button></sc-for>
           </div>
-          <div style="font-size: 14px; font-weight: 700; margin-top: 4px;">Time window</div>
+          <div style="font-size: 13px; font-weight: 700; margin-top: 4px;">Time window</div>
           <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;">
             <sc-for list="{{windows}}" as="w" hint-placeholder-count="3"><button type="button" aria-pressed="{{w.pressed}}" onClick="{{w.pick}}" style="{{w.style}}"><span>{{w.label}}</span><span style="font-size: 12px; font-weight: 500;">{{w.hours}}</span></button></sc-for>
           </div>
@@ -65,14 +68,14 @@ button{font:inherit;cursor:pointer}
     </div>
 
     <div style="display: flex; flex-direction: column; gap: 6px;">
-      <label for="ln" style="font-size: 14px; font-weight: 700;">Notes for the office</label>
-      <textarea id="ln" rows="2" style="border: 1.5px solid #CFC9BE; border-radius: 10px; padding: 12px; font: inherit; font-size: 16px; background: #FFFFFF; color: #26231F; resize: none;">Shingles lifting on north slope. Call before 10 AM.</textarea>
+      <label for="ln" style="font-size: 13px; font-weight: 700;">Notes for the office</label>
+      <textarea id="ln" rows="2" style="border: 1.5px solid #CFC8BB; border-radius: 12px; padding: 12px 14px; font: inherit; font-size: 16px; background: #FFFFFF; color: #1E1B18; resize: none;">Shingles lifting on north slope. Call before 10 AM.</textarea>
     </div>
   </form>
 
-  <div style="padding: 12px 20px 30px; background: #FFFFFF; border-top: 1px solid #E4E0D8; display: flex; flex-direction: column; gap: 8px;">
-    <a href="Field.dc.html" style="min-height: 58px; border-radius: 14px; background: #B23A25; color: #FFFFFF; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none;">{{saveLabel}}</a>
-    <div style="font-size: 12px; color: #5E5850; text-align: center;">Sent to JobNimbus automatically when you are online.</div>
+  <div style="padding: 12px 20px 30px; background: #FFFFFF; border-top: 1px solid #E2DDD3; display: flex; flex-direction: column; gap: 8px;">
+    <a href="Field.dc.html" style="min-height: 60px; border-radius: 16px; background: #B5361F; color: #FFFFFF; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2), 0 8px 18px -6px #B5361F;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg>{{saveLabel}}</a>
+    <div style="font-size: 12px; color: #5F5951; text-align: center;">Sent to JobNimbus automatically when you’re online.</div>
   </div>
 </div>
 </x-dc>
@@ -81,18 +84,17 @@ class Component extends DCLogic {
   constructor(props) { super(props); this.state = { insp: true, day: 0, win: 0 }; }
   renderVals() {
     var self = this, st = this.state;
-    var chip = function (on) { return 'min-height: 44px; padding: 0 14px; border-radius: 22px; font-size: 14px; font-weight: 600; border: ' + (on ? '2px solid #345BD6' : '1.5px solid #CFC9BE') + '; background: ' + (on ? '#EAF0FC' : '#FFFFFF') + '; color: ' + (on ? '#1E3A8A' : '#26231F') + ';'; };
-    var days = ['Tue Oct 6', 'Wed Oct 7', 'Thu Oct 8'].map(function (l, i) {
-      return { label: l, pressed: st.day === i ? 'true' : 'false', pick: function () { self.setState({ day: i }); }, style: chip(st.day === i) };
+    var tile = function (on) { return 'min-height: 58px; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border: ' + (on ? '2px solid #345BD6' : '1.5px solid #CFC8BB') + '; background: ' + (on ? '#345BD6' : '#FFFFFF') + '; color: ' + (on ? '#FFFFFF' : '#1E1B18') + '; font-size: 14px; font-weight: 700; box-shadow: ' + (on ? '0 6px 14px -6px #345BD6' : 'none') + ';'; };
+    var days = [['TUE', '6'], ['WED', '7'], ['THU', '8']].map(function (d, i) {
+      return { dow: d[0], num: d[1], pressed: st.day === i ? 'true' : 'false', pick: function () { self.setState({ day: i }); }, style: tile(st.day === i) };
     });
     var windows = [['Morning', '8–12'], ['Afternoon', '12–4'], ['Evening', '4–7']].map(function (w, i) {
-      var on = st.win === i;
-      return { label: w[0], hours: w[1], pressed: on ? 'true' : 'false', pick: function () { self.setState({ win: i }); }, style: 'min-height: 56px; border-radius: 12px; font-size: 14px; font-weight: 700; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; border: ' + (on ? '2px solid #345BD6' : '1.5px solid #CFC9BE') + '; background: ' + (on ? '#EAF0FC' : '#FFFFFF') + '; color: ' + (on ? '#1E3A8A' : '#26231F') + ';' };
+      return { label: w[0], hours: w[1], pressed: st.win === i ? 'true' : 'false', pick: function () { self.setState({ win: i }); }, style: tile(st.win === i) };
     });
     return {
       insp: st.insp,
       toggleInsp: function () { self.setState({ insp: !st.insp }); },
-      inspBorder: st.insp ? '#345BD6' : '#E4E0D8',
+      inspCard: 'background: #FFFFFF; border: ' + (st.insp ? '2px solid #345BD6' : '1.5px solid #E2DDD3') + '; border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px; box-shadow: ' + (st.insp ? '0 10px 24px -16px #345BD6' : 'none') + ';',
       days: days, windows: windows,
       saveLabel: st.insp ? 'Save & request inspection' : 'Save lead'
     };

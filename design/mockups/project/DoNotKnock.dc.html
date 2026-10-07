@@ -8,43 +8,40 @@
 <body>
 <x-dc>
 <helmet>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Instrument+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
 body{margin:0}
-a{color:#B23A25}a:hover{color:#8E2C1B}
+a{color:#B5361F}a:hover{color:#8C2715}
 button{font:inherit;cursor:pointer}
 </style>
 </helmet>
-<div style="width: 390px; height: 844px; box-sizing: border-box; background: #5E5A53; color: #26231F; font-family: 'DM Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
-  <div style="height: 64px; flex-shrink: 0;"></div>
-  <section aria-labelledby="dnk-h" style="flex: 1; background: #F8F6F1; border-radius: 22px 22px 0 0; display: flex; flex-direction: column; overflow: hidden;">
-    <div role="alert" style="background: #9E2B22; color: #FFFFFF; padding: 22px 20px 20px; display: flex; flex-direction: column; gap: 10px;">
-      <div style="display: flex; align-items: center; gap: 12px;">
-        <div style="width: 48px; height: 48px; border-radius: 10px; background: #FFFFFF; color: #9E2B22; display: grid; place-items: center; flex-shrink: 0;">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M5.6 5.6l12.8 12.8"></path></svg>
-        </div>
-        <div>
-          <div style="font-size: 13px; font-weight: 700; letter-spacing: 1.4px;">STOP</div>
-          <h1 id="dnk-h" style="margin: 0; font-size: 26px; letter-spacing: -0.6px; font-weight: 700;">Do not knock</h1>
-        </div>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #3B1510; color: #1E1B18; font-family: 'Instrument Sans', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+  <div role="alert" aria-labelledby="dnk-h" style="position: relative; padding: 64px 22px 26px; color: #FFFFFF; display: flex; flex-direction: column; gap: 14px; background: #9E2419; background-image: repeating-linear-gradient(-45deg, rgba(0,0,0,0.14) 0 14px, transparent 14px 28px);">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <div style="width: 60px; height: 60px; border-radius: 16px; background: #FFFFFF; color: #9E2419; display: grid; place-items: center; flex-shrink: 0; box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M5.6 5.6l12.8 12.8"></path></svg>
       </div>
-      <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #FBE3DE;">This house is marked company-wide. Only your owner can clear it.</p>
+      <div>
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #FFD9D1;">STOP</div>
+        <h1 id="dnk-h" style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: 44px; line-height: 0.95; font-weight: 700; text-transform: uppercase;">Do not knock</h1>
+      </div>
     </div>
-    <div style="padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; flex: 1;">
-      <div style="font-size: 22px; font-weight: 700; letter-spacing: -0.4px;">88 Ridge Green</div>
-      <dl style="margin: 0; background: #FFFFFF; border: 1px solid #E4E0D8; border-radius: 12px; padding: 4px 14px;">
-        <div style="display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid #F1EEE8;"><dt style="font-size: 14px; color: #5E5850;">Marked by</dt><dd style="margin: 0; font-size: 14px; font-weight: 600;">Taylor Reed</dd></div>
-        <div style="display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid #F1EEE8;"><dt style="font-size: 14px; color: #5E5850;">Date</dt><dd style="margin: 0; font-size: 14px; font-weight: 600;">Sep 14</dd></div>
-        <div style="display: flex; flex-direction: column; gap: 4px; padding: 12px 0;"><dt style="font-size: 14px; color: #5E5850;">Note</dt><dd style="margin: 0; font-size: 15px; line-height: 1.5;">Homeowner asked not to be contacted again. No soliciting sign on door.</dd></div>
-      </dl>
-      <label style="display: flex; gap: 12px; align-items: flex-start; background: #FFFFFF; border: 1.5px solid #CFC9BE; border-radius: 12px; padding: 14px; cursor: pointer;">
-        <input type="checkbox" checked="{{ack}}" onChange="{{toggle}}" style="width: 24px; height: 24px; margin: 0; accent-color: #9E2B22; flex-shrink: 0;">
-        <span style="font-size: 15px; line-height: 1.45;">I understand. I won’t knock, but I need to record a visit here (for example, the homeowner flagged me down).</span>
-      </label>
-      <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding-bottom: 20px;">
-        <a href="Field.dc.html" style="min-height: 58px; border-radius: 14px; background: #26231F; color: #FFFFFF; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none;">Skip this house</a>
-        <a href="{{recordHref}}" aria-disabled="{{disabled}}" style="{{recordStyle}}">Record anyway</a>
-      </div>
+    <p style="margin: 0; font-size: 16px; line-height: 1.5; color: #FFE8E3; font-weight: 500;">This house is marked company-wide. Only your owner can clear it.</p>
+  </div>
+  <section style="flex: 1; background: #F6F3EC; border-radius: 24px 24px 0 0; margin-top: -14px; padding: 22px 20px 30px; display: flex; flex-direction: column; gap: 14px; position: relative;">
+    <div style="font-family: 'Barlow Condensed', sans-serif; font-size: 32px; line-height: 1; font-weight: 700;">88 Ridge Green</div>
+    <dl style="margin: 0; background: #FFFFFF; border: 1px solid #E2DDD3; border-radius: 14px; padding: 2px 16px;">
+      <div style="display: flex; justify-content: space-between; gap: 12px; padding: 13px 0; border-bottom: 1px solid #F2EEE7;"><dt style="font-size: 14px; color: #5F5951;">Marked by</dt><dd style="margin: 0; font-size: 14px; font-weight: 700;">Taylor Reed</dd></div>
+      <div style="display: flex; justify-content: space-between; gap: 12px; padding: 13px 0; border-bottom: 1px solid #F2EEE7;"><dt style="font-size: 14px; color: #5F5951;">Date</dt><dd style="margin: 0; font-size: 14px; font-weight: 700;">Sep 14</dd></div>
+      <div style="display: flex; flex-direction: column; gap: 4px; padding: 13px 0;"><dt style="font-size: 14px; color: #5F5951;">Note</dt><dd style="margin: 0; font-size: 15px; line-height: 1.5;">Homeowner asked not to be contacted again. No-soliciting sign on door.</dd></div>
+    </dl>
+    <label style="{{ackBox}}">
+      <input type="checkbox" checked="{{ack}}" onChange="{{toggle}}" style="width: 24px; height: 24px; margin: 0; accent-color: #9E2419; flex-shrink: 0;">
+      <span style="font-size: 15px; line-height: 1.45;">I won’t knock, but I need to record a visit here (for example, the homeowner flagged me down).</span>
+    </label>
+    <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px;">
+      <a href="Field.dc.html" style="min-height: 60px; border-radius: 16px; background: #1A1816; color: #FFFFFF; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; box-shadow: inset 0 -3px 0 rgba(0,0,0,0.3);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>Skip this house</a>
+      <a href="{{recordHref}}" aria-disabled="{{disabled}}" style="{{recordStyle}}">Record anyway</a>
     </div>
   </section>
 </div>
@@ -59,7 +56,8 @@ class Component extends DCLogic {
       toggle: function () { self.setState({ ack: !a }); },
       disabled: a ? 'false' : 'true',
       recordHref: a ? 'Record.dc.html' : '#',
-      recordStyle: 'min-height: 54px; border-radius: 14px; border: 1.5px solid ' + (a ? '#9E2B22' : '#CFC9BE') + '; background: #FFFFFF; color: ' + (a ? '#9E2B22' : '#8A847B') + '; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none;' + (a ? '' : ' pointer-events: none;')
+      ackBox: 'display: flex; gap: 12px; align-items: flex-start; background: ' + (a ? '#FDF3EF' : '#FFFFFF') + '; border: ' + (a ? '2px solid #9E2419' : '1.5px solid #CFC8BB') + '; border-radius: 14px; padding: 14px; cursor: pointer;',
+      recordStyle: 'min-height: 54px; border-radius: 16px; border: 1.5px solid ' + (a ? '#9E2419' : '#DCD6CB') + '; background: #FFFFFF; color: ' + (a ? '#9E2419' : '#8A847B') + '; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-decoration: none;' + (a ? '' : ' pointer-events: none;')
     };
   }
 }
