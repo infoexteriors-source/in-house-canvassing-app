@@ -145,3 +145,17 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Mapbox markers are plain DOM nodes created in LiveMap.tsx, so they are styled here. */
+@layer components {
+  .live-door {
+    @apply grid size-5 cursor-pointer place-items-center rounded-full border-2 border-white p-0 text-xs font-bold text-white shadow-md;
+  }
+  .live-door:focus-visible { @apply ring-[3px] ring-ring/60 outline-none; }
+  .live-rep {
+    @apply grid size-[34px] place-items-center rounded-full border-[3px] border-white bg-sidebar text-[10px] font-semibold text-white shadow-md;
+  }
+  .live-hail {
+    @apply grid place-items-center rounded-full border-2 border-white bg-cyan-600/85 text-[10px] font-bold text-white shadow-md;
+  }
+}

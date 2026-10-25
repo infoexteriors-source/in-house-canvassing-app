@@ -5,8 +5,8 @@ import Mapbox from '@rnmapbox/maps';
 import * as Location from 'expo-location';
 import * as Network from 'expo-network';
 import * as Crypto from 'expo-crypto';
-import {outcomes,outcomeLabels,outcomeColors,latestVisit,shiftState,fieldMinutes,validateLead,dayKey,type Outcome,type Property,type Position,type ShiftAction,type QueueEntry} from '@canvass/core';
-import {configured,supabase,loadState,refresh,latestEvents,command,submit,sync,outbox,updateState,clearLocal,repairProjection,type LocalState} from './runtime';
+import {outcomes,outcomeLabels,outcomeColors,latestVisit,shiftState,fieldMinutes,validateLead,dayKey,defaultGoals,goalProgress,hailLabel,type Outcome,type Property,type Position,type ShiftAction,type QueueEntry} from '@canvass/core';
+import {configured,supabase,loadState,refresh,latestEvents,command,submit,sync,outbox,updateState,clearLocal,repairProjection,loadBoard,fetchBoard,loadHail,fetchHail,type LocalState,type TeamBoard,type HailCache} from './runtime';
 import {reconcileTracking,stopTracking,startTracking} from './tracking';
 import {Alert,Badge,Button,Card,Field,SectionLabel,Tabs,Title,c,ui} from './ui';
 const mapToken=process.env.EXPO_PUBLIC_MAPBOX_TOKEN;if(mapToken)Mapbox.setAccessToken(mapToken);
@@ -16,8 +16,13 @@ const outcomeTints:Record<Outcome,string>={no_answer:'#f0f2f5',not_interested:'#
 function Brand({inverse=false}:{inverse?:boolean}){return <View style={s.brand}><View style={s.brandMark}><Text style={s.brandMarkText}>⌂</Text></View><Text style={[s.wordmark,inverse?{color:'#ffffff'}:null]}>WE ROOF</Text></View>;}
 export default function App(){return <SafeAreaProvider><FieldApp/></SafeAreaProvider>;}
 function FieldApp(){
- const [state,setState]=useState<LocalState|null>(null),[entries,setEntries]=useState<QueueEntry[]>([]),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[screen,setScreen]=useState<'map'|'doors'|'time'|'sync'>('map'),[selected,setSelected]=useState<Property|null>(null),[offline,setOffline]=useState(false),[newPassword,setNewPassword]=useState(false);
+ const [state,setState]=useState<LocalState|null>(null),[entries,setEntries]=useState<QueueEntry[]>([]),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[screen,setScreen]=useState<'map'|'doors'|'team'|'time'|'sync'>('map'),[selected,setSelected]=useState<Property|null>(null),[offline,setOffline]=useState(false),[newPassword,setNewPassword]=useState(false);
+ const [period,setPeriod]=useState<'day'|'week'>('day'),[board,setBoard]=useState<TeamBoard|null>(null),[hail,setHail]=useState<HailCache|null>(null),[showHail,setShowHail]=useState(true),[boardError,setBoardError]=useState('');
  const viewRefresh=useCallback(async()=>{setState(await loadState());setEntries(await outbox.entries());},[]);
+ // Rankings and hail reports are nice-to-have: show the cached copy first, then refresh when online.
+ const loadTeam=useCallback(async(p:'day'|'week')=>{setBoard(await loadBoard(p));if(!configured)return;try{setBoard(await fetchBoard(p));setBoardError('');}catch(e){setBoardError(e instanceof Error?e.message:'Leaderboard unavailable.');}},[]);
+ useEffect(()=>{if(state?.user)void loadTeam(period);},[state?.user,period,loadTeam]);
+ useEffect(()=>{if(!state?.user)return;void loadHail().then(setHail);if(configured)void fetchHail().then(setHail).catch(()=>{});},[state?.user]);
  const connect=useCallback(async()=>{let failure='';try{await sync();}catch(e){failure=e instanceof Error?e.message:'Work saved on your phone.';}try{await refresh();}catch(e){failure=e instanceof Error?e.message:failure;}const current=await loadState();if(current.user&&!current.user.active)await stopTracking();setMessage(failure);await viewRefresh();},[viewRefresh]);
  useEffect(()=>{let alive=true;void(async()=>{await repairProjection();if(alive)await viewRefresh();if(configured){try{await refresh();await reconcileTracking();}catch{}if(alive)await viewRefresh();}})();const timer=setInterval(()=>{void Network.getNetworkStateAsync().then(n=>{setOffline(n.isInternetReachable===false);if(n.isInternetReachable!==false)void connect();else void viewRefresh();});},30000);const app=AppState.addEventListener('change',status=>{if(status==='active'){supabase?.auth.startAutoRefresh();void(async()=>{await connect();await reconcileTracking();await viewRefresh();})();}else supabase?.auth.stopAutoRefresh();});return()=>{alive=false;clearInterval(timer);app.remove();};},[connect,viewRefresh]);
  useEffect(()=>{async function handle(url:string){const hash=url.split('#')[1]??url.split('?')[1]??'';const params=new URLSearchParams(hash);const access_token=params.get('access_token'),refresh_token=params.get('refresh_token');if(access_token&&refresh_token){await supabase?.auth.setSession({access_token,refresh_token});setNewPassword(true);}}void Linking.getInitialURL().then(url=>{if(url)void handle(url);});const subscription=Linking.addEventListener('url',e=>void handle(e.url));return()=>subscription.remove();},[]);
@@ -35,17 +40,15 @@ function FieldApp(){
  async function download(){if(!mapToken)throw Error('Mapbox is not configured.');for(const t of state!.data.territories.filter(t=>!t.archived)){const ring=t.boundary.coordinates[0],lons=ring.map(p=>p[0]),lats=ring.map(p=>p[1]);const name=`territory-${t.id}`;const pack=await Mapbox.offlineManager.getPack(name);if(pack)await Mapbox.offlineManager.deletePack(name);
  await new Promise<void>((resolve,reject)=>{void Mapbox.offlineManager.createPack({name,styleURL:Mapbox.StyleURL.Street,minZoom:10,maxZoom:18,bounds:[[Math.max(...lons),Math.max(...lats)],[Math.min(...lons),Math.min(...lats)]]},(_region,progress)=>{if(progress.percentage>=100)resolve();},(_region,error)=>reject(Error(String(error)))).catch(reject);});await updateState(st=>({...st,downloaded_territory_ids:[...new Set([...st.downloaded_territory_ids,t.id])]}));}setMessage('Assigned maps downloaded. Door history is saved on this phone.');}
  if(selected)return <DoorForm state={state} property={selected} busy={busy} cancel={()=>setSelected(null)} save={(payload)=>void run(async()=>{await submit(command('visit',{...payload,shift_id:events[0].shift_id}));setSelected(null);setMessage('Door recorded.');try{await sync();}catch{};})}/>;
- const syncLabel=offline?'Offline':entries.length?`${entries.length} pending`:'Saved';
  const statusLabel=!state.user.active?'ACCOUNT DEACTIVATED':active?'IN THE FIELD':status==='break'?'ON BREAK':'OFF SHIFT';
  const statusColor=active?'#86d4ae':status==='break'?'#f2be5c':'#cfc9bf';
- const territoryName=state.data.territories.find(t=>!t.archived)?.name;
+ const today=dayKey(new Date()),mine=state.data.visits.filter(v=>v.user_id===state.user!.user_id&&dayKey(v.occurred_at)===today),myDoors=mine.length,myLeads=state.data.leads.filter(l=>mine.some(v=>v.id===l.visit_id)).length,myInspections=mine.filter(v=>v.outcome==='inspection_requested').length;
+ const goals=board?.goals??defaultGoals,hailReports=hail?.reports??[];
  return <SafeAreaView style={s.root} edges={['top','left','right','bottom']}>
+  {/* Persistent recording bar, after Strava: status and timer always visible, primary shift action on the right. */}
   <View style={s.shiftHeader}>
-   <View style={s.rowBetween}><Brand inverse/><Pressable accessibilityRole="button" accessibilityLabel={`Sync status: ${syncLabel}`} onPress={()=>setScreen('sync')} style={[s.syncChip,offline?{backgroundColor:'rgba(242,190,92,0.15)',borderColor:'rgba(242,190,92,0.35)'}:null]}><View style={[s.dot,{backgroundColor:offline?'#f2be5c':entries.length?'#f2be5c':'#4cbf8a'}]}/><Text style={[s.syncChipText,offline?{color:'#f2be5c'}:null]}>{syncLabel}</Text></Pressable></View>
-   <View style={s.rowBetween}>
-    <View style={{flexShrink:1}}><View style={s.row}><View style={[s.dot,{backgroundColor:statusColor}]}/><Text style={[s.statusLabel,{color:statusColor}]}>{statusLabel}</Text></View><Text style={s.timer}>{fmt(fieldMinutes(events))}</Text><Text style={s.timerHint}>{state.user.name} · breaks excluded</Text></View>
-    <View style={s.headerActions}>{!state.user.active?null:status==='active'||status==='break'?<><Button title={active?'Take break':'End break'} disabled={busy} variant={active?'inverse':'default'} onPress={()=>void run(()=>shift(active?'break_start':'break_end'))}/><Button title="Clock out" disabled={busy} variant="inverse" onPress={()=>NativeAlert.alert('End your shift?','Field time and location tracking will stop.',[{text:'Keep working',style:'cancel'},{text:'Clock out',onPress:()=>void run(()=>shift('clock_out'))}])}/></>:<Button title="Clock in" size="lg" disabled={busy} onPress={()=>void run(()=>shift('clock_in'))}/>}</View>
-   </View>
+   <View style={{flexShrink:1}}><View style={s.row}><View style={[s.dot,{backgroundColor:statusColor}]}/><Text style={[s.statusLabel,{color:statusColor}]}>{statusLabel}</Text>{offline?<Text style={s.offlinePill}>OFFLINE</Text>:null}</View><Text style={s.timer} accessibilityLabel={`Field time ${fmt(fieldMinutes(events))}`}>{fmt(fieldMinutes(events))}</Text></View>
+   <View style={s.headerActions}>{!state.user.active?null:status==='active'||status==='break'?<><Button title={active?'Break':'Resume'} size="sm" disabled={busy} variant={active?'inverse':'default'} onPress={()=>void run(()=>shift(active?'break_start':'break_end'))}/><Button title="Clock out" size="sm" disabled={busy} variant="inverse" onPress={()=>NativeAlert.alert('End your shift?','Field time and location tracking will stop.',[{text:'Keep working',style:'cancel'},{text:'Clock out',onPress:()=>void run(()=>shift('clock_out'))}])}/></>:<Button title="Clock in" disabled={busy} onPress={()=>void run(()=>shift('clock_in'))}/>}</View>
   </View>
   {status==='break'?<View style={s.banner}><Text style={s.bannerText}>Location tracking is paused. Break time isn’t counted.</Text></View>:null}
   {state.tracking_error&&active||message?<View style={s.notices}>
@@ -54,12 +57,25 @@ function FieldApp(){
   </View>:null}
 
   {screen==='map'?<View style={s.flex}>
-   <View style={s.mapHeading}><View style={{flexShrink:1}}><Text style={s.h2}>{territoryName??'Your assigned territory'}</Text><Text style={s.muted}>Tap a house to record a door.</Text></View>{territoryName?<Badge label="Assigned" tone="success"/>:null}</View>
-   {mapToken?<Mapbox.MapView style={s.flex} styleURL={Mapbox.StyleURL.Street} onPress={e=>{if(e.geometry.type==='Point')void run(()=>addDoor(e.geometry.coordinates[0],e.geometry.coordinates[1]));}}><Mapbox.Camera zoomLevel={14} centerCoordinate={state.data.territories[0]?.boundary.coordinates[0][0]??[-78.166,39.174]}/>{active?<Mapbox.LocationPuck/>:null}<Mapbox.ShapeSource id="territories" shape={{type:'FeatureCollection',features:state.data.territories.filter(t=>!t.archived).map(t=>({type:'Feature',properties:{color:t.color},geometry:t.boundary}))}}><Mapbox.FillLayer id="areas" style={{fillColor:['get','color'],fillOpacity:.1}}/><Mapbox.LineLayer id="boundaries" style={{lineColor:['get','color'],lineWidth:2,lineDasharray:[3,2]}}/></Mapbox.ShapeSource><Mapbox.ShapeSource id="doors" shape={{type:'FeatureCollection',features:state.data.properties.map(p=>{const v=latestVisit(state.data.visits,p.id),o=p.do_not_knock?'do_not_knock':v?.outcome;return {type:'Feature',id:p.id,properties:{id:p.id,color:o?outcomeColors[o]:'#64748b',label:o?outcomeLabels[o]:'No visits',symbol:o==='do_not_knock'?'×':o==='inspection_requested'?'✓':''},geometry:{type:'Point',coordinates:[p.longitude,p.latitude]}};})}} onPress={e=>{const p=state.data.properties.find(p=>p.id===e.features[0]?.properties?.id);if(p&&active)setSelected(p);}}><Mapbox.CircleLayer id="door-pins" style={{circleRadius:8,circleColor:['get','color'],circleStrokeWidth:2.5,circleStrokeColor:'#ffffff'}}/><Mapbox.SymbolLayer id="door-labels" minZoomLevel={16} style={{textField:['get','label'],textSize:11,textOffset:[0,1.4],textColor:c.foreground,textHaloColor:'#ffffff',textHaloWidth:2}}/><Mapbox.SymbolLayer id="door-symbols" style={{textField:['get','symbol'],textSize:12,textColor:'#ffffff',textAllowOverlap:true}}/></Mapbox.ShapeSource></Mapbox.MapView>:<View style={[s.flex,s.center,s.pad]}><Card style={{alignItems:'center'}}><Text style={s.h2}>Map setup required</Text><Text style={[s.muted,{textAlign:'center'}]}>Add the company’s Mapbox token to show streets and house pins.</Text></Card></View>}
-   <View style={s.mapActions}>
-    <View style={s.legend}>{(['no_answer','interested','follow_up','inspection_requested','do_not_knock'] as const).map(o=><View key={o} style={s.row}><View style={[s.legendDot,{backgroundColor:outcomeColors[o]}]}/><Text style={s.legendText}>{outcomeLabels[o]}</Text></View>)}</View>
-    <Button title="Record a door at my location" size="lg" disabled={busy||!active} onPress={()=>void run(()=>addDoor())}/>
-    <Button title={busy?'Downloading…':'Download assigned maps'} variant="outline" disabled={busy||offline} onPress={()=>void run(download)}/>
+   {mapToken?<Mapbox.MapView style={s.flex} styleURL={Mapbox.StyleURL.Street} scaleBarEnabled={false} onPress={e=>{if(e.geometry.type==='Point')void run(()=>addDoor(e.geometry.coordinates[0],e.geometry.coordinates[1]));}}><Mapbox.Camera zoomLevel={14} centerCoordinate={state.data.territories[0]?.boundary.coordinates[0][0]??[-78.166,39.174]}/>{active?<Mapbox.LocationPuck pulsing={{isEnabled:true,color:c.info}}/>:null}<Mapbox.ShapeSource id="territories" shape={{type:'FeatureCollection',features:state.data.territories.filter(t=>!t.archived).map(t=>({type:'Feature',properties:{color:t.color},geometry:t.boundary}))}}><Mapbox.FillLayer id="areas" style={{fillColor:['get','color'],fillOpacity:.1}}/><Mapbox.LineLayer id="boundaries" style={{lineColor:['get','color'],lineWidth:2,lineDasharray:[3,2]}}/></Mapbox.ShapeSource>
+    {showHail&&hailReports.length?<Mapbox.ShapeSource id="hail" shape={{type:'FeatureCollection',features:hailReports.map(h=>({type:'Feature',id:h.id,properties:{size:h.size_in,label:h.size_in.toFixed(1)},geometry:{type:'Point',coordinates:[h.longitude,h.latitude]}}))}}><Mapbox.CircleLayer id="hail-area" style={{circleRadius:['interpolate',['linear'],['get','size'],0.75,18,2.75,42],circleColor:'#0891b2',circleOpacity:.16,circleStrokeColor:'#0891b2',circleStrokeWidth:1.5}}/><Mapbox.CircleLayer id="hail-core" style={{circleRadius:11,circleColor:'#0e7490',circleStrokeColor:'#ffffff',circleStrokeWidth:2}}/><Mapbox.SymbolLayer id="hail-size" style={{textField:['get','label'],textSize:10,textColor:'#ffffff',textAllowOverlap:true}}/></Mapbox.ShapeSource>:null}
+    <Mapbox.ShapeSource id="doors" shape={{type:'FeatureCollection',features:state.data.properties.map(p=>{const v=latestVisit(state.data.visits,p.id),o=p.do_not_knock?'do_not_knock':v?.outcome;return {type:'Feature',id:p.id,properties:{id:p.id,color:o?outcomeColors[o]:'#64748b',label:o?outcomeLabels[o]:'No visits',symbol:o==='do_not_knock'?'×':o==='inspection_requested'?'✓':''},geometry:{type:'Point',coordinates:[p.longitude,p.latitude]}};})}} onPress={e=>{const p=state.data.properties.find(p=>p.id===e.features[0]?.properties?.id);if(p&&active)setSelected(p);}}><Mapbox.CircleLayer id="door-pins" style={{circleRadius:8,circleColor:['get','color'],circleStrokeWidth:2.5,circleStrokeColor:'#ffffff'}}/><Mapbox.SymbolLayer id="door-labels" minZoomLevel={16} style={{textField:['get','label'],textSize:11,textOffset:[0,1.4],textColor:c.foreground,textHaloColor:'#ffffff',textHaloWidth:2}}/><Mapbox.SymbolLayer id="door-symbols" style={{textField:['get','symbol'],textSize:12,textColor:'#ffffff',textAllowOverlap:true}}/></Mapbox.ShapeSource></Mapbox.MapView>:<View style={[s.flex,s.center,s.pad,{backgroundColor:'#ebe8df'}]}><Card style={{alignItems:'center'}}><Text style={s.h2}>Map setup required</Text><Text style={[s.muted,{textAlign:'center'}]}>Add the company’s Mapbox token to show streets and house pins.</Text></Card></View>}
+   {/* Floating chips over the map, after Apple Maps: context on the left, layer toggles on the right. */}
+   <View style={s.mapChips} pointerEvents="box-none">
+    <View style={s.chip}><Text style={s.chipText} numberOfLines={1}>{state.data.territories.find(t=>!t.archived)?.name??'No territory assigned'}</Text></View>
+    <Pressable accessibilityRole="switch" accessibilityState={{checked:showHail}} accessibilityLabel={`Hail reports, ${hailReports.length} in the last 7 days`} onPress={()=>setShowHail(v=>!v)} style={[s.chip,showHail?s.chipOn:null]}><Text style={[s.chipText,showHail?{color:'#155e75'}:null]}>Hail · {hailReports.length}</Text></Pressable>
+   </View>
+   {/* Bottom sheet, after Uber/Apple Maps: today's goal progress and the one primary action. */}
+   <View style={s.sheet}>
+    <View style={s.grabber}/>
+    <View style={s.goalRow}>
+     {([['Doors',myDoors,goals.daily_doors],['Leads',myLeads,goals.daily_leads],['Inspections',myInspections,goals.daily_inspections]] as const).map(([label,value,goal])=><View key={label} style={s.goal} accessibilityLabel={`${label}: ${value} of ${goal}`}><Text style={s.goalValue}>{value}<Text style={s.goalOf}> / {goal}</Text></Text><View style={s.goalTrack}><View style={[s.goalFill,{width:`${goalProgress(value,goal)*100}%`}]}/></View><Text style={s.goalLabel}>{label}</Text></View>)}
+    </View>
+    <View style={s.legend} accessibilityLabel="Map key">{(['no_answer','interested','follow_up','inspection_requested','do_not_knock'] as const).map(o=><View key={o} style={s.row}><View style={[s.legendDot,{backgroundColor:outcomeColors[o]}]}/><Text style={s.legendText}>{outcomeLabels[o]}</Text></View>)}</View>
+    {showHail&&hailReports[0]?<Text style={s.hailNote} numberOfLines={1}>Latest hail: {hailLabel(hailReports[0].size_in)} · {hailReports[0].location} · {new Date(hailReports[0].occurred_at).toLocaleDateString([], {month:'short',day:'numeric'})}</Text>:null}
+    <Button title="Record door here" size="lg" disabled={busy||!active} onPress={()=>void run(()=>addDoor())}/>
+    {!active?<Text style={[s.muted,{textAlign:'center',fontSize:13}]}>Clock in to record doors.</Text>:null}
+    <Button title={busy?'Downloading…':'Download maps for offline'} variant="ghost" size="sm" disabled={busy||offline} onPress={()=>void run(download)}/>
    </View>
   </View>:null}
 
@@ -83,7 +99,9 @@ function FieldApp(){
    <View style={s.rowBetween}><Text style={s.muted}>Signed in as {state.user.name}</Text><Button title="Sign out" variant="ghost" size="sm" disabled={busy} onPress={()=>void run(async()=>{if(active||status==='break')throw Error('Clock out before signing out.');await sync();await stopTracking();await clearLocal();})}/></View>
   </ScrollView>:null}
 
-  <Tabs value={screen} onChange={setScreen} items={[{value:'map',label:'Map'},{value:'doors',label:'Doors'},{value:'time',label:'Hours'},{value:'sync',label:'Sync',badge:entries.length}]}/>
+  {screen==='team'?<TeamScreen board={board} period={period} onPeriod={setPeriod} userId={state.user.user_id} error={boardError} offline={offline} onRefresh={()=>void loadTeam(period)}/>:null}
+
+  <Tabs value={screen} onChange={setScreen} items={[{value:'map',label:'Map'},{value:'doors',label:'Doors'},{value:'team',label:'Team'},{value:'time',label:'Hours'},{value:'sync',label:'Sync',badge:entries.length}]}/>
  </SafeAreaView>;
 }
 function AuthShell({title,subtitle,children}:{title:string;subtitle:string;children:ReactNode}){return <SafeAreaView style={[s.root,{backgroundColor:c.sidebar}]} edges={['top','left','right']}><KeyboardAvoidingView style={s.flex} behavior={Platform.OS==='ios'?'padding':undefined}><ScrollView contentContainerStyle={{flexGrow:1}} keyboardShouldPersistTaps="handled"><View style={s.authHero}><Brand inverse/><Text style={s.authTitle}>{title}</Text><Text style={s.authSubtitle}>{subtitle}</Text></View><View style={s.authSheet}>{children}</View></ScrollView></KeyboardAvoidingView></SafeAreaView>;}
@@ -126,13 +144,13 @@ const s=StyleSheet.create({
  dot:{width:8,height:8,borderRadius:4},
  brand:{flexDirection:'row',alignItems:'center',gap:10},brandMark:{width:36,height:36,borderRadius:8,backgroundColor:c.primary,alignItems:'center',justifyContent:'center'},brandMarkText:{color:'#ffffff',fontSize:20,fontWeight:'700',marginTop:-2},
  wordmark:{fontSize:24,fontWeight:'800',letterSpacing:.5,color:c.foreground},
- shiftHeader:{backgroundColor:c.sidebar,paddingHorizontal:18,paddingTop:10,paddingBottom:18,gap:16},
+ shiftHeader:{backgroundColor:c.sidebar,paddingHorizontal:16,paddingTop:8,paddingBottom:12,flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:12},
  syncChip:{flexDirection:'row',alignItems:'center',gap:7,minHeight:36,paddingHorizontal:12,borderRadius:18,backgroundColor:'rgba(76,191,138,0.12)',borderWidth:1,borderColor:'rgba(76,191,138,0.3)'},
  syncChipText:{fontSize:13,fontWeight:'600',color:'#86d4ae'},
  statusLabel:{fontSize:12,fontWeight:'700',letterSpacing:1.3},
- timer:{fontSize:44,fontWeight:'800',color:'#ffffff',letterSpacing:-.5,marginTop:2,fontVariant:['tabular-nums']},
+ timer:{fontSize:32,fontWeight:'800',color:'#ffffff',letterSpacing:-.5,marginTop:2,fontVariant:['tabular-nums']},
  timerHint:{fontSize:13,color:'#cfc9bf'},
- headerActions:{gap:8,alignItems:'stretch'},
+ headerActions:{flexDirection:'row',gap:8,alignItems:'center'},
  banner:{backgroundColor:c.warningSoft,borderBottomWidth:1,borderBottomColor:'#e8c786',paddingHorizontal:18,paddingVertical:12},bannerText:{color:'#4a2b00',fontSize:14,fontWeight:'600'},
  notices:{paddingHorizontal:14,paddingTop:12,gap:8},
  h2:{fontSize:20,fontWeight:'700',color:c.foreground},
@@ -157,4 +175,34 @@ const s=StyleSheet.create({
  footer:{backgroundColor:c.card,borderTopWidth:1,borderTopColor:c.border,padding:16,gap:6},
  shiftTotal:{fontSize:24,fontWeight:'800',color:c.foreground,fontVariant:['tabular-nums']},
  eventRow:{flexDirection:'row',alignItems:'center',gap:10,paddingVertical:4},eventText:{flex:1,fontSize:15,fontWeight:'600',color:c.foreground},eventTime:{fontSize:14,color:'#36322d',fontVariant:['tabular-nums']},
+ offlinePill:{marginLeft:6,fontSize:10,fontWeight:'800',letterSpacing:1,color:'#2e1f03',backgroundColor:'#f2be5c',paddingHorizontal:6,paddingVertical:2,borderRadius:4,overflow:'hidden'},
+ mapChips:{position:'absolute',top:12,left:12,right:12,flexDirection:'row',justifyContent:'space-between',gap:8},
+ chip:{minHeight:40,justifyContent:'center',paddingHorizontal:14,borderRadius:20,backgroundColor:c.card,borderWidth:1,borderColor:c.border,flexShrink:1,shadowColor:'#000',shadowOpacity:.12,shadowRadius:8,shadowOffset:{width:0,height:2},elevation:3},
+ chipOn:{backgroundColor:'#ecfeff',borderColor:'#67e8f9'},chipText:{fontSize:14,fontWeight:'600',color:c.foreground},
+ sheet:{position:'absolute',left:0,right:0,bottom:0,backgroundColor:c.card,borderTopLeftRadius:20,borderTopRightRadius:20,paddingHorizontal:16,paddingTop:8,paddingBottom:12,gap:10,shadowColor:'#000',shadowOpacity:.15,shadowRadius:16,shadowOffset:{width:0,height:-4},elevation:12},
+ grabber:{alignSelf:'center',width:40,height:5,borderRadius:3,backgroundColor:c.input},
+ goalRow:{flexDirection:'row',gap:12},goal:{flex:1,gap:4},goalValue:{fontSize:22,fontWeight:'800',color:c.foreground,fontVariant:['tabular-nums']},goalOf:{fontSize:14,fontWeight:'600',color:c.mutedForeground},
+ goalTrack:{height:6,borderRadius:3,backgroundColor:c.muted,overflow:'hidden'},goalFill:{height:6,borderRadius:3,backgroundColor:c.primary},goalLabel:{fontSize:12,fontWeight:'600',color:c.mutedForeground},
+ hailNote:{fontSize:13,fontWeight:'600',color:'#155e75',backgroundColor:'#ecfeff',paddingHorizontal:10,paddingVertical:6,borderRadius:8,overflow:'hidden'},
+ segment:{flexDirection:'row',backgroundColor:c.muted,borderRadius:10,padding:4,gap:4},segmentItem:{flex:1,minHeight:40,alignItems:'center',justifyContent:'center',borderRadius:8},segmentOn:{backgroundColor:c.card,shadowColor:'#000',shadowOpacity:.08,shadowRadius:3,shadowOffset:{width:0,height:1},elevation:1},segmentText:{fontSize:14,fontWeight:'700',color:c.mutedForeground},
+ rankCard:{backgroundColor:c.sidebar,borderRadius:16,padding:18,gap:10},rankKicker:{fontSize:12,fontWeight:'800',letterSpacing:1.4,color:'#cfc9bf'},rankBig:{fontSize:44,fontWeight:'800',color:'#ffffff'},rankOf:{fontSize:16,fontWeight:'600',color:'#cfc9bf'},rankDoors:{fontSize:30,fontWeight:'800',color:'#ffffff',fontVariant:['tabular-nums']},rankDoorsLabel:{fontSize:13,color:'#cfc9bf'},rankHint:{fontSize:14,fontWeight:'600',color:'#ece8e1'},
+ boardRow:{flexDirection:'row',alignItems:'center',gap:12,paddingHorizontal:14,paddingVertical:12,borderBottomWidth:1,borderBottomColor:c.border},
+ rankBadge:{width:32,height:32,borderRadius:16,backgroundColor:c.muted,alignItems:'center',justifyContent:'center'},rankBadgeText:{fontSize:15,fontWeight:'800',color:c.mutedForeground},
+ boardDoors:{fontSize:20,fontWeight:'800',color:c.foreground,fontVariant:['tabular-nums']},boardSub:{fontSize:12,color:c.mutedForeground},
 });
+
+/** Club leaderboard, after Strava: your standing first, then the ranked list. Counts only. */
+function TeamScreen({board,period,onPeriod,userId,error,offline,onRefresh}:{board:TeamBoard|null;period:'day'|'week';onPeriod:(p:'day'|'week')=>void;userId:string;error:string;offline:boolean;onRefresh:()=>void}){
+ const rows=board?.rows??[],scale=period==='day'?1:5,goals=board?.goals??defaultGoals,meIndex=rows.findIndex(r=>r.user_id===userId),me=rows[meIndex],ahead=meIndex>0?rows[meIndex-1]:null;
+ const updated=board?new Date(board.fetched_at).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'}):null;
+ return <ScrollView style={s.flex} contentContainerStyle={s.scroll}><Title>Team</Title>
+  <View style={s.segment} accessibilityRole="tablist">{(['day','week'] as const).map(p=><Pressable key={p} accessibilityRole="tab" accessibilityState={{selected:period===p}} onPress={()=>onPeriod(p)} style={[s.segmentItem,period===p?s.segmentOn:null]}><Text style={[s.segmentText,period===p?{color:c.foreground}:null]}>{p==='day'?'Today':'This week'}</Text></Pressable>)}</View>
+  {me?<View style={s.rankCard}><Text style={s.rankKicker}>YOUR RANK</Text><View style={s.rowBetween}><Text style={s.rankBig}>#{meIndex+1}<Text style={s.rankOf}> of {rows.length}</Text></Text><View style={{alignItems:'flex-end'}}><Text style={s.rankDoors}>{me.doors}</Text><Text style={s.rankDoorsLabel}>doors · goal {goals.daily_doors*scale}</Text></View></View><View style={[s.goalTrack,{backgroundColor:'rgba(255,255,255,0.15)'}]}><View style={[s.goalFill,{width:`${goalProgress(me.doors,goals.daily_doors*scale)*100}%`,backgroundColor:'#ffffff'}]}/></View><Text style={s.rankHint}>{ahead?`${ahead.doors-me.doors===0?'Tied with':`${ahead.doors-me.doors} ${ahead.doors-me.doors===1?'door':'doors'} behind`} ${ahead.name.split(' ')[0]}`:me.doors>0?'You’re leading the team.':'Knock your first door to get on the board.'}</Text></View>:null}
+  <Card style={{padding:0,gap:0}}>{rows.map((r,i)=><View key={r.user_id} style={[s.boardRow,i===rows.length-1?{borderBottomWidth:0}:null,r.user_id===userId?{backgroundColor:c.primarySoft}:null]}>
+   <View style={[s.rankBadge,i===0&&r.doors>0?{backgroundColor:'#fef3c7'}:null]}><Text style={[s.rankBadgeText,i===0&&r.doors>0?{color:'#92400e'}:null]}>{i+1}</Text></View>
+   <View style={{flex:1,gap:4}}><Text style={s.rowTitle} numberOfLines={1}>{r.name}{r.user_id===userId?' (you)':''}</Text><View style={s.goalTrack}><View style={[s.goalFill,{width:`${goalProgress(r.doors,goals.daily_doors*scale)*100}%`}]}/></View></View>
+   <View style={{alignItems:'flex-end',minWidth:72}}><Text style={s.boardDoors}>{r.doors}</Text><Text style={s.boardSub}>{r.leads} leads · {r.inspections} insp.</Text></View>
+  </View>)}{!rows.length?<View style={s.pad}><Text style={s.rowTitle}>No rankings yet</Text><Text style={s.muted}>{offline?'Connect to load the team leaderboard.':'Rankings appear once the team records doors.'}</Text></View>:null}</Card>
+  {error?<Alert tone="warning">{error}</Alert>:null}
+  <View style={s.rowBetween}><Text style={s.muted}>{updated?`Updated ${updated}`:'Not loaded yet'} · counts only</Text><Button title="Refresh" variant="ghost" size="sm" disabled={offline} onPress={onRefresh}/></View>
+ </ScrollView>;}

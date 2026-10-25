@@ -1,8 +1,8 @@
 import {useEffect,useMemo,useState,type FormEvent,type ReactNode} from 'react';
-import {ArrowDownToLine,ArrowRight,ArrowUpRight,Bell,CalendarDays,Check,CheckCircle2,ChevronRight,Clock3,DoorOpen,ExternalLink,Flag,House,Layers3,LayoutDashboard,Map,MapPin,MoreHorizontal,Navigation,Pause,Plus,Radio,RefreshCw,Route,Search,Settings2,ShieldCheck,Smartphone,Users,X,LogOut,AlertCircle,Send} from 'lucide-react';
-import {dayKey,minutesOnDay,shiftState,isStale,latestVisit,outcomeLabels,outcomeColors,outcomes,csv,type Property,type Lead,type Territory,type Member,type Dataset} from '@canvass/core';
+import {CloudHail,Trophy,Target,ArrowDownToLine,ArrowRight,ArrowUpRight,Bell,CalendarDays,Check,CheckCircle2,ChevronRight,Clock3,DoorOpen,ExternalLink,Flag,House,Layers3,LayoutDashboard,Map,MapPin,MoreHorizontal,Navigation,Pause,Plus,Radio,RefreshCw,Route,Search,Settings2,ShieldCheck,Smartphone,Users,X,LogOut,AlertCircle,Send} from 'lucide-react';
+import {dayKey,dayRange,weekRange,minutesOnDay,shiftState,isStale,latestVisit,outcomeLabels,outcomeColors,outcomes,csv,leaderboard,goalProgress,defaultGoals,hailLabel,type Property,type Lead,type Territory,type Member,type Dataset,type Goals,type HailReport} from '@canvass/core';
 import TerritoryMap from './Map';
-import {client,useWorkspace,type AdminAction} from './workspace';
+import {client,useHail,useWorkspace,type AdminAction} from './workspace';
 import {cn} from '@/lib/utils';
 import {Alert,AlertDescription,AlertTitle} from '@/components/ui/alert';
 import {Avatar,AvatarFallback} from '@/components/ui/avatar';
@@ -12,6 +12,7 @@ import {Card,CardAction,CardContent,CardDescription,CardFooter,CardHeader,CardTi
 import {Checkbox} from '@/components/ui/checkbox';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
+import {Progress} from '@/components/ui/progress';
 import {ScrollArea} from '@/components/ui/scroll-area';
 import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from '@/components/ui/select';
 import {Separator} from '@/components/ui/separator';
@@ -24,7 +25,7 @@ import {ToggleGroup,ToggleGroupItem} from '@/components/ui/toggle-group';
 import {Tooltip,TooltipContent,TooltipProvider,TooltipTrigger} from '@/components/ui/tooltip';
 
 type Page='Overview'|'Live map'|'Team'|'Territories'|'Leads'|'Timesheets';
-type Drawer={kind:'property';property:Property}|{kind:'lead';lead:Lead}|{kind:'invite'}|{kind:'territory';territory?:Territory}|{kind:'review'}|{kind:'settings'}|null;
+type Drawer={kind:'property';property:Property}|{kind:'lead';lead:Lead}|{kind:'invite'}|{kind:'territory';territory?:Territory}|{kind:'review'}|{kind:'settings'}|{kind:'goals'}|null;
 const nav=[{page:'Overview' as Page,icon:LayoutDashboard},{page:'Live map' as Page,icon:Map},{page:'Team' as Page,icon:Users},{page:'Territories' as Page,icon:Layers3},{page:'Leads' as Page,icon:DoorOpen},{page:'Timesheets' as Page,icon:Clock3}];
 const initials=(name:string)=>name.split(' ').slice(0,2).map(n=>n[0]).join('');
 const duration=(n:number)=>`${Math.floor(n/60)}h ${Math.floor(n%60)}m`;
@@ -56,8 +57,8 @@ function SignIn({onDemo}:{onDemo:()=>void}){const [error,setError]=useState(''),
 }
 
 function Workspace({mode,onExit}:{mode:'demo'|'live';onExit:()=>void}){
- const [page,setPage]=useState<Page>('Overview'),[day,setDay]=useState(dayKey(new Date())),[query,setQuery]=useState(''),[territory,setTerritory]=useState('all'),[focusedRep,setFocusedRep]=useState<string|null>(null),[activityFilter,setActivityFilter]=useState<'all'|'follow_up'>('all'),[showRoutes,setShowRoutes]=useState(true),[drawer,setDrawer]=useState<Drawer>(null),[drawPoints,setDrawPoints]=useState<number[][]|null>(null),[toast,setToast]=useState(''),[busy,setBusy]=useState(false);
- const {data,me,error,loading,mutate,resetDemo}=useWorkspace(mode,day);
+ const [page,setPage]=useState<Page>('Overview'),[day,setDay]=useState(dayKey(new Date())),[query,setQuery]=useState(''),[territory,setTerritory]=useState('all'),[focusedRep,setFocusedRep]=useState<string|null>(null),[activityFilter,setActivityFilter]=useState<'all'|'follow_up'>('all'),[showRoutes,setShowRoutes]=useState(true),[drawer,setDrawer]=useState<Drawer>(null),[drawPoints,setDrawPoints]=useState<number[][]|null>(null),[toast,setToast]=useState(''),[busy,setBusy]=useState(false),[showHail,setShowHail]=useState(true),[boardPeriod,setBoardPeriod]=useState<'day'|'week'>('day');
+ const {data,me,error,loading,mutate,resetDemo}=useWorkspace(mode,day);const hail=useHail(mode);const goals=data.goals??defaultGoals;
  useEffect(()=>{if(!toast)return;const t=setTimeout(()=>setToast(''),5000);return()=>clearTimeout(t);},[toast]);
  const reps=data.members.filter(m=>m.role==='canvasser');const byName=(id:string)=>data.members.find(m=>m.user_id===id)?.name??'Canvasser';
  const visits=useMemo(()=>data.visits.filter(v=>dayKey(v.occurred_at)===day&&(territory==='all'||data.properties.find(p=>p.id===v.property_id)?.territory_id===territory)&&(!focusedRep||v.user_id===focusedRep)),[data,day,territory,focusedRep]);
@@ -123,16 +124,20 @@ function Workspace({mode,onExit}:{mode:'demo'|'live';onExit:()=>void}){
      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
       <Card className="gap-0 overflow-hidden py-0">
        <CardHeader className="border-b py-4"><CardTitle className="font-display text-2xl">Territory overview</CardTitle><CardDescription>Know where your team is working. Routes break across tracking gaps.</CardDescription>
-        <CardAction className="flex flex-wrap gap-2"><Select value={territory} onValueChange={setTerritory}><SelectTrigger aria-label="Filter territory" className="h-9 w-44 bg-card"><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">All territories</SelectItem>{data.territories.filter(t=>!t.archived).map(t=><SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}</SelectContent></Select><Toggle variant="outline" pressed={showRoutes} onPressedChange={setShowRoutes} aria-label="Show routes" className="h-9 data-[state=on]:border-primary/30 data-[state=on]:bg-danger-soft data-[state=on]:text-primary"><Route/>Routes</Toggle></CardAction>
+        <CardAction className="flex flex-wrap gap-2"><Select value={territory} onValueChange={setTerritory}><SelectTrigger aria-label="Filter territory" className="h-9 w-44 bg-card"><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">All territories</SelectItem>{data.territories.filter(t=>!t.archived).map(t=><SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}</SelectContent></Select><Toggle variant="outline" pressed={showRoutes} onPressedChange={setShowRoutes} aria-label="Show routes" className="h-9 data-[state=on]:border-primary/30 data-[state=on]:bg-danger-soft data-[state=on]:text-primary"><Route/>Routes</Toggle><Toggle variant="outline" pressed={showHail} onPressedChange={setShowHail} aria-label="Show hail reports" className="h-9 data-[state=on]:border-cyan-600/30 data-[state=on]:bg-cyan-50 data-[state=on]:text-cyan-800"><CloudHail/>Hail{hail.reports.length?<Badge variant="secondary" className="h-5 rounded-full px-1.5">{hail.reports.length}</Badge>:null}</Toggle></CardAction>
        </CardHeader>
-       <TerritoryMap data={mapData} mode={mode} focusedRep={focusedRep} onProperty={p=>setDrawer({kind:'property',property:p})} drawPoints={null} onDrawPoint={()=>{}} showRoutes={showRoutes} selectedTerritory={territory}/>
-       <CardFooter className="flex-wrap gap-x-4 gap-y-2 bg-muted/40 py-3">{outcomes.map(o=><span key={o} className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"><OutcomeDot color={outcomeColors[o]}/>{outcomeLabels[o]}</span>)}</CardFooter>
+       <TerritoryMap data={mapData} mode={mode} focusedRep={focusedRep} onProperty={p=>setDrawer({kind:'property',property:p})} drawPoints={null} onDrawPoint={()=>{}} showRoutes={showRoutes} selectedTerritory={territory} hail={hail.reports} showHail={showHail}/>
+       <CardFooter className="flex-wrap gap-x-4 gap-y-2 bg-muted/40 py-3">{outcomes.map(o=><span key={o} className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"><OutcomeDot color={outcomeColors[o]}/>{outcomeLabels[o]}</span>)}{showHail?<span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"><span aria-hidden className="size-3 rounded-full border-2 border-dashed border-cyan-600 bg-cyan-600/15"/>Hail report (size in inches)</span>:null}</CardFooter>
       </Card>
       <Card className="gap-0 py-0">
        <CardHeader className="border-b py-4"><CardTitle className="font-display text-2xl">Team in the field</CardTitle><CardAction><Badge variant="secondary" className="rounded-full">{reps.filter(r=>r.active).length} reps</Badge></CardAction></CardHeader>
        <ScrollArea className="h-[460px]"><div className="flex flex-col">{reps.filter(r=>r.active&&r.name.toLowerCase().includes(query.toLowerCase())).map(r=><RepCard key={r.user_id} rep={r} data={data} day={day} visits={visits} selected={focusedRep===r.user_id} onClick={()=>setFocusedRep(focusedRep===r.user_id?null:r.user_id)}/>)}</div></ScrollArea>
        <CardFooter className="flex-col items-stretch gap-3 border-t py-4"><Button variant="ghost" className="justify-between" onClick={()=>{setPage('Team');setFocusedRep(null);}}>View all team members<ArrowRight/></Button><p className="flex gap-2 text-xs text-muted-foreground"><ShieldCheck className="size-4 shrink-0 text-success"/>Locations include their last update time. Breaks pause tracking.</p></CardFooter>
       </Card>
+     </div>
+     <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
+      <LeaderboardCard data={data} day={day} goals={goals} period={boardPeriod} onPeriod={setBoardPeriod} onEditGoals={()=>setDrawer({kind:'goals'})}/>
+      <StormCard reports={hail.reports} error={hail.error} mode={mode}/>
      </div>
      <Card className="gap-0 py-0">
       <CardHeader className="border-b py-4"><CardTitle className="font-display text-2xl">{activityFilter==='follow_up'?'Homeowner follow-ups':'Recent door activity'}</CardTitle><CardDescription>{activityFilter==='follow_up'?'Properties whose latest visit needs a return.':'A record of every conversation.'}</CardDescription>
@@ -202,8 +207,8 @@ function SectionLabel({children}:{children:ReactNode}){return <h4 className="mt-
 function DrawerPanel({drawer,data,mode,busy,drawPoints,setDrawPoints,byName,close,act,onStartDrawing}:{drawer:Drawer;data:Dataset;mode:'demo'|'live';busy:boolean;drawPoints:number[][]|null;setDrawPoints:(v:number[][]|null)=>void;byName:(id:string)=>string;close:()=>void;act:(a:AdminAction,m:string)=>Promise<boolean>;onStartDrawing:()=>void}){
  const [formError,setFormError]=useState('');useEffect(()=>setFormError(''),[drawer]);
  if(!drawer)return null;
- const title=drawer.kind==='property'?'Door history':drawer.kind==='lead'?'Homeowner lead':drawer.kind==='invite'?'Invite a canvasser':drawer.kind==='territory'?drawer.territory?'Edit territory':'Draw a territory':drawer.kind==='review'?'Needs your review':'Workspace connections';
- const description=drawer.kind==='invite'?'Give your canvasser access to their assigned territories and field tools.':drawer.kind==='territory'?'Click the map to place corners around the neighborhood you want your team to work.':drawer.kind==='review'?'These records are preserved. Review the context before resolving an exception.':drawer.kind==='settings'?'WE ROOF connects your field team to the office.':undefined;
+ const title=drawer.kind==='property'?'Door history':drawer.kind==='lead'?'Homeowner lead':drawer.kind==='invite'?'Invite a canvasser':drawer.kind==='territory'?drawer.territory?'Edit territory':'Draw a territory':drawer.kind==='review'?'Needs your review':drawer.kind==='goals'?'Daily goals':'Workspace connections';
+ const description=drawer.kind==='invite'?'Give your canvasser access to their assigned territories and field tools.':drawer.kind==='territory'?'Click the map to place corners around the neighborhood you want your team to work.':drawer.kind==='review'?'These records are preserved. Review the context before resolving an exception.':drawer.kind==='settings'?'WE ROOF connects your field team to the office.':drawer.kind==='goals'?'Targets for each canvasser per day. Weekly goals are five working days.':undefined;
  // Territory drawing keeps the sheet non-modal so the map behind it stays clickable.
  const drawing=drawer.kind==='territory';
  async function invite(e:FormEvent<HTMLFormElement>){e.preventDefault();const f=new FormData(e.currentTarget);const saved=await act({action:'invite',name:f.get('name'),email:f.get('email')},mode==='demo'?'Sample canvasser added':'Invitation sent');if(saved)close();}
@@ -248,6 +253,8 @@ function DrawerPanel({drawer,data,mode,busy,drawPoints,setDrawPoints,byName,clos
     {data.corrections.filter(c=>c.status==='pending').map(c=><Card key={c.id} className="gap-3 py-4"><CardHeader className="px-4"><CardTitle className="text-sm">{byName(c.user_id)} · {c.requested_minutes>0?'+':''}{c.requested_minutes} min</CardTitle><CardDescription>{c.reason}</CardDescription></CardHeader><CardFooter className="gap-2 px-4"><Button variant="outline" size="sm" disabled={busy} onClick={()=>void act({action:'correction_review',id:c.id,approved:false},'Correction rejected')}>Reject</Button><Button size="sm" disabled={busy} onClick={()=>void act({action:'correction_review',id:c.id,approved:true},'Correction approved')}>Approve</Button></CardFooter></Card>)}
    </>:null}
 
+   {drawer.kind==='goals'?<GoalsForm goals={data.goals??defaultGoals} busy={busy} onSave={async g=>{if(await act({action:'goals_save',...g},'Goals saved'))close();}}/>:null}
+
    {drawer.kind==='settings'?<>
     {[{icon:ShieldCheck,title:'Workspace & accounts',status:mode==='demo'?'Demo':'Connected',text:mode==='demo'?'This workspace uses sample data stored in this browser. Connect Supabase to enable company accounts.':'Signed in through Supabase. Company access is checked for every server request.'},{icon:Map,title:'Mapbox maps',status:import.meta.env.VITE_MAPBOX_TOKEN?'Configured':'Setup required',text:'Real street maps, territory boundaries, and downloaded maps for the field app.'},{icon:DoorOpen,title:'JobNimbus',status:mode==='demo'?'Demo':'Server configured',text:'Delivery credentials and contact/task mappings are configured on your backend. Lead delivery status appears on each homeowner record.'}].map(({icon:Icon,title,status,text})=><Card key={title} className="gap-2 py-4"><CardHeader className="px-4"><CardTitle className="flex items-center gap-2 text-sm"><span className="grid size-8 place-items-center rounded-md bg-secondary"><Icon className="size-4"/></span>{title}</CardTitle><CardAction><StatusBadge status={status}/></CardAction></CardHeader><CardContent className="px-4 text-sm text-muted-foreground">{text}</CardContent></Card>)}
     <Card className="gap-2 py-4"><CardHeader className="px-4"><CardTitle className="flex items-center gap-2 text-sm"><span className="grid size-8 place-items-center rounded-md bg-secondary"><Smartphone className="size-4"/></span>iPhone & Android</CardTitle></CardHeader><CardContent className="px-4 text-sm text-muted-foreground">Install the WE ROOF development build for your pilot. Reps sign in with their invited account and download their assigned territories before heading out.</CardContent><CardFooter className="px-4"><Button variant="link" className="h-auto p-0" asChild><a href="https://docs.expo.dev/build/introduction/" target="_blank" rel="noreferrer">Mobile build guide<ExternalLink/></a></Button></CardFooter></Card>
@@ -266,3 +273,26 @@ function CRMReconcile({lead,busy,act}:{lead:Lead;busy:boolean;act:(a:AdminAction
   <Label className="flex items-center gap-3 font-normal"><Checkbox required/>I checked these records in JobNimbus</Label>
   {error?<p className="text-sm text-destructive">{error}</p>:null}
   <Button disabled={busy}>Link verified records</Button></form>;}
+
+function GoalsForm({goals,busy,onSave}:{goals:Goals;busy:boolean;onSave:(goals:Goals)=>void}){const [value,setValue]=useState(goals),[error,setError]=useState('');
+ const fields:[keyof Goals,string,number][]=[['daily_doors','Doors knocked',1000],['daily_leads','New leads',200],['daily_inspections','Inspection requests',200]];
+ return <form className="grid gap-4" onSubmit={e=>{e.preventDefault();if(fields.some(([k,,max])=>!Number.isInteger(value[k])||value[k]<0||value[k]>max)){setError('Use whole numbers within range.');return;}onSave(value);}}>
+  {fields.map(([k,label,max])=><div key={k} className="grid gap-2"><Label htmlFor={`goal-${k}`}>{label} per day</Label><Input id={`goal-${k}`} type="number" inputMode="numeric" min={0} max={max} value={Number.isFinite(value[k])?value[k]:''} onChange={e=>setValue(v=>({...v,[k]:e.target.value===''?NaN:Number(e.target.value)}))} className="h-11"/></div>)}
+  <Alert><Target/><AlertDescription>Reps see their progress toward these goals and the team leaderboard on their phones. Rankings show counts only, never locations or homeowner details.</AlertDescription></Alert>
+  {error?<p role="alert" className="text-sm text-destructive">{error}</p>:null}
+  <Button size="lg" className="h-11" disabled={busy}><Check/>Save goals</Button></form>;}
+function LeaderboardCard({data,day,goals,period,onPeriod,onEditGoals}:{data:Dataset;day:string;goals:Goals;period:'day'|'week';onPeriod:(p:'day'|'week')=>void;onEditGoals:()=>void}){
+ const rows=leaderboard(data,period==='day'?dayRange(day):weekRange(day)),scale=period==='day'?1:5,doorGoal=goals.daily_doors*scale,leadGoal=goals.daily_leads*scale;
+ const team=rows.reduce((n,r)=>({doors:n.doors+r.doors,leads:n.leads+r.leads,inspections:n.inspections+r.inspections}),{doors:0,leads:0,inspections:0});
+ return <Card className="gap-0 py-0"><CardHeader className="border-b py-4"><CardTitle className="flex items-center gap-2 font-display text-2xl"><Trophy className="size-5 text-amber-600"/>Leaderboard</CardTitle><CardDescription>{period==='day'?'Today':'This week'} · team {team.doors} doors, {team.leads} leads, {team.inspections} inspections</CardDescription>
+  <CardAction className="flex flex-wrap gap-2"><ToggleGroup type="single" variant="outline" value={period} onValueChange={v=>{if(v)onPeriod(v as 'day'|'week');}} aria-label="Leaderboard period"><ToggleGroupItem value="day" className="h-9 px-3">Today</ToggleGroupItem><ToggleGroupItem value="week" className="h-9 px-3">Week</ToggleGroupItem></ToggleGroup><Button variant="outline" size="sm" className="h-9" onClick={onEditGoals}><Target/>Goals</Button></CardAction></CardHeader>
+  <CardContent className="divide-y px-0">{rows.map((r,i)=><div key={r.user_id} className="grid grid-cols-[2rem_minmax(0,1fr)_auto] items-center gap-3 px-6 py-3">
+   <span className={cn('grid size-8 place-items-center rounded-full font-display text-lg font-bold',i===0&&r.doors>0?'bg-amber-100 text-amber-800':'bg-muted text-muted-foreground')} aria-label={`Rank ${i+1}`}>{i+1}</span>
+   <div className="grid gap-1.5"><div className="flex items-center justify-between gap-2"><span className="flex items-center gap-2 font-semibold"><PersonAvatar name={r.name} className="size-7"/>{r.name}</span><span className="text-sm text-muted-foreground"><strong className="text-foreground">{r.doors}</strong> / {doorGoal} doors</span></div><Progress value={goalProgress(r.doors,doorGoal)*100} aria-label={`${r.name} door goal progress`} className="h-2"/></div>
+   <div className="flex gap-2"><Badge variant="secondary" className="rounded-full" title={`Lead goal ${leadGoal}`}>{r.leads} leads</Badge><Badge variant="secondary" className="rounded-full bg-info-soft text-info">{r.inspections} insp.</Badge></div>
+  </div>)}{!rows.length?<Empty title="No active canvassers" text="Invite reps to see the leaderboard."/>:null}</CardContent></Card>;}
+function StormCard({reports,error,mode}:{reports:HailReport[];error:string;mode:'demo'|'live'}){const largest=reports.reduce((m,r)=>Math.max(m,r.size_in),0);
+ return <Card className="gap-0 py-0"><CardHeader className="border-b py-4"><CardTitle className="flex items-center gap-2 font-display text-2xl"><CloudHail className="size-5 text-cyan-700"/>Storm activity</CardTitle><CardDescription>{reports.length?`${reports.length} hail reports near your territories · last 7 days · largest ${largest.toFixed(2)}″`:'Hail reports near your territories, last 7 days.'}</CardDescription></CardHeader>
+  <CardContent className="divide-y px-0">{reports.slice(0,6).map(r=><div key={r.id} className="flex items-center gap-3 px-6 py-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-cyan-50 font-display text-base font-bold text-cyan-800">{r.size_in.toFixed(1)}″</span><div className="min-w-0 flex-1"><p className="truncate font-semibold">{r.location}{r.state?`, ${r.state}`:''}</p><p className="truncate text-xs text-muted-foreground">{hailLabel(r.size_in)} · {new Date(r.occurred_at).toLocaleDateString('en-US',{month:'short',day:'numeric'})}{r.comments?` · ${r.comments}`:''}</p></div></div>)}
+   {error?<p className="px-6 py-4 text-sm text-warning">{error}</p>:!reports.length?<Empty title="No recent hail" text="Reports appear here when NOAA logs hail near a territory."/>:null}</CardContent>
+  <CardFooter className="border-t py-3 text-xs text-muted-foreground">{mode==='demo'?'Sample reports in the demo workspace.':'Source: NOAA Storm Prediction Center preliminary reports. Points, not full hail swaths.'}</CardFooter></Card>;}

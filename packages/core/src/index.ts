@@ -14,7 +14,7 @@ export type Lead = { id: string; company_id: string; visit_id: string; property_
 export type ReviewFlag = { id: string; company_id: string; visit_id: string | null; user_id: string; reason: string; resolved_at: string | null; detail: string; created_at: string };
 export type Correction = { id: string; company_id: string; shift_id: string; user_id: string; requested_minutes: number; reason: string; status: 'pending' | 'approved' | 'rejected'; created_at: string };
 export type LocationSample = Position & { id: string; company_id: string; user_id: string; shift_id: string };
-export type Dataset = { members: Member[]; territories: Territory[]; properties: Property[]; visits: Visit[]; leads: Lead[]; events: ShiftEvent[]; locations: LocationSample[]; flags: ReviewFlag[]; corrections: Correction[] };
+export type Dataset = { members: Member[]; territories: Territory[]; properties: Property[]; visits: Visit[]; leads: Lead[]; events: ShiftEvent[]; locations: LocationSample[]; flags: ReviewFlag[]; corrections: Correction[]; goals?: Goals };
 export type Command = { id: string; kind: 'shift' | 'visit' | 'location' | 'correction'; occurred_at: string; payload: Record<string, unknown> };
 export type SyncResult = { id: string; status: 'accepted' | 'rejected'; error?: string };
 export function orderedEvents(events: ShiftEvent[]) { return [...events].sort((a,b) => a.occurred_at.localeCompare(b.occurred_at) || a.id.localeCompare(b.id)); }
@@ -94,3 +94,22 @@ export function dayRange(day:string,timezone='America/New_York'):[number,number]
 }
 export function minutesOnDay(events:ShiftEvent[],day:string,until?:string) {const [start,end]=dayRange(day);return activeIntervals(events,until).reduce((n,[a,b])=>n+Math.max(0,Math.min(b,end)-Math.max(a,start))/60000,0);}
 export function routeSegments(samples:LocationSample[],events:ShiftEvent[]) {const sorted=[...samples].sort((a,b)=>a.captured_at.localeCompare(b.captured_at));const segments:LocationSample[][]=[];for(const p of sorted){if(!locationAllowed(events.filter(e=>e.shift_id===p.shift_id),p.captured_at))continue;const last=segments.at(-1)?.at(-1);if(!last||last.shift_id!==p.shift_id||Date.parse(p.captured_at)-Date.parse(last.captured_at)>120000)segments.push([p]);else segments.at(-1)!.push(p);}return segments;}
+export type Goals = { daily_doors: number; daily_leads: number; daily_inspections: number };
+export const defaultGoals: Goals = { daily_doors: 40, daily_leads: 4, daily_inspections: 2 };
+export type LeaderRow = { user_id: string; name: string; doors: number; leads: number; inspections: number };
+/** Monday-start week containing `day`, in the company timezone. */
+export function weekRange(day:string,timezone='America/New_York'):[number,number] {const noon=Date.parse(`${day}T12:00:00Z`),weekday=(new Date(noon).getUTCDay()+6)%7,monday=new Date(noon-weekday*86400000).toISOString().slice(0,10),nextMonday=new Date(noon+(7-weekday)*86400000).toISOString().slice(0,10);return [dayRange(monday,timezone)[0],dayRange(nextMonday,timezone)[0]];}
+/** Same ordering as the database leaderboard(): doors, then leads, then name. Counts only. */
+export function leaderboard(data:Pick<Dataset,'members'|'visits'|'leads'>,[from,to]:[number,number]):LeaderRow[] {
+ const inRange=(at:string)=>{const t=Date.parse(at);return t>=from&&t<to;};const visits=data.visits.filter(v=>inRange(v.occurred_at)),visitIds=new Set(visits.map(v=>v.id));
+ return data.members.filter(m=>m.role==='canvasser'&&m.active).map(m=>({user_id:m.user_id,name:m.name,doors:visits.filter(v=>v.user_id===m.user_id).length,leads:data.leads.filter(l=>l.user_id===m.user_id&&visitIds.has(l.visit_id)).length,inspections:visits.filter(v=>v.user_id===m.user_id&&v.outcome==='inspection_requested').length}))
+  .sort((a,b)=>b.doors-a.doors||b.leads-a.leads||a.name.localeCompare(b.name));
+}
+export const goalProgress=(value:number,goal:number)=>goal>0?Math.min(1,value/goal):value>0?1:0;
+/** Hail report as returned by the storm-reports function (supabase/functions/_shared/hail.ts). */
+export type HailReport = { id: string; occurred_at: string; size_in: number; latitude: number; longitude: number; location: string; county: string; state: string; comments: string; source: 'spc' | 'demo' };
+/** Size labels roofers use when talking to homeowners. */
+export function hailLabel(sizeIn:number) {
+ const known:[number,string][]=[[4.5,'softball'],[2.75,'baseball'],[2.5,'tennis ball'],[1.75,'golf ball'],[1.5,'ping pong ball'],[1.25,'half dollar'],[1,'quarter'],[0.88,'nickel'],[0.75,'penny']];
+ const name=known.find(([size])=>sizeIn>=size)?.[1];return `${sizeIn.toFixed(2)}″${name?` · ${name}`:''}`;
+}

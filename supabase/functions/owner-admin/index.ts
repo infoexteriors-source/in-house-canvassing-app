@@ -8,6 +8,11 @@ serve(async(req)=>{const {db,user,member}=await authenticate(req,true);const inp
   if(saveError){await db.auth.admin.deleteUser(data.user.id);throw new HttpError('Could not enroll invited canvasser');}
   await db.from('audit_log').insert({company_id:member.company_id,actor_id:user.id,action:'invite',record_id:data.user.id});return respond({ok:true});
  }
+ if(input.action==='goals_save'){
+  const goal=(v:unknown,max:number)=>Number.isInteger(v)&&(v as number)>=0&&(v as number)<=max;
+  if(!goal(input.daily_doors,1000)||!goal(input.daily_leads,200)||!goal(input.daily_inspections,200))throw new HttpError('Goals must be whole numbers within range');
+  const {data,error}=await db.rpc('save_company_goals',{p_owner:user.id,input:{daily_doors:input.daily_doors,daily_leads:input.daily_leads,daily_inspections:input.daily_inspections}});if(error)throw new HttpError(error.message);return respond(data);
+ }
  const allowed=['member_active','territory_save','resolve_flag','clear_dnk','correction_review','crm_retry','crm_reconcile'];if(!allowed.includes(input.action))throw new HttpError('Unknown owner action');
  if(input.action==='crm_reconcile'){
   const {data:job}=await db.from('crm_sync_jobs').select('*').eq('lead_id',input.id).eq('company_id',member.company_id).eq('status','review').single();if(!job)throw new HttpError('No CRM review job found');

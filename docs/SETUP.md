@@ -10,6 +10,7 @@ supabase db push
 supabase functions deploy sync
 supabase functions deploy owner-admin
 supabase functions deploy geocode
+supabase functions deploy storm-reports
 supabase functions deploy jobnimbus-worker
 ```
 
