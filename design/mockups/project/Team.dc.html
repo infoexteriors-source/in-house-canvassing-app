@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WE ROOF · Team leaderboard</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#B23A21}a:hover{color:#8C2715}
+button{font:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F5F2EB; color: #1E1B18; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif; font-variant-numeric: tabular-nums; display: flex; flex-direction: column; overflow: hidden;">
+  <header style="background: #1A1816; color: #FFFFFF; padding: 52px 16px 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+    <div>
+      <div style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: 1.3px; color: #86D4AE;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #86D4AE;"></span>IN THE FIELD</div>
+      <div style="font-size: 32px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.1;">3h 12m</div>
+    </div>
+    <div style="display: flex; gap: 8px;">
+      <button style="min-height: 44px; padding: 0 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.08); color: #FFFFFF; font-size: 15px; font-weight: 600;">Break</button>
+      <button style="min-height: 44px; padding: 0 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.08); color: #FFFFFF; font-size: 15px; font-weight: 600;">Clock out</button>
+    </div>
+  </header>
+
+  <div style="flex: 1; overflow: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+    <h1 style="margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -0.6px;">Team</h1>
+    <div role="tablist" aria-label="Period" style="display: flex; gap: 4px; padding: 4px; background: #EFEBE3; border-radius: 10px;">
+      <button role="tab" aria-selected="{{dayOn}}" onClick="{{pickDay}}" style="{{dayStyle}}">Today</button>
+      <button role="tab" aria-selected="{{weekOn}}" onClick="{{pickWeek}}" style="{{weekStyle}}">This week</button>
+    </div>
+
+    <section aria-label="Your rank" style="background: #1A1816; color: #FFFFFF; border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-size: 12px; font-weight: 800; letter-spacing: 1.4px; color: #CFC9BF;">YOUR RANK</div>
+      <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+        <div style="font-size: 44px; font-weight: 800; line-height: 1;">#2<span style="font-size: 16px; font-weight: 600; color: #CFC9BF;"> of 4</span></div>
+        <div style="text-align: right;"><div style="font-size: 30px; font-weight: 800; line-height: 1;">{{me.doors}}</div><div style="font-size: 13px; color: #CFC9BF;">doors · goal {{goal}}</div></div>
+      </div>
+      <div style="height: 6px; border-radius: 3px; background: rgba(255,255,255,0.15); overflow: hidden;"><div style="{{me.fill}}"></div></div>
+      <div style="font-size: 14px; font-weight: 600; color: #ECE8E1;">{{gap}}</div>
+    </section>
+
+    <section aria-label="Leaderboard" style="background: #FFFFFF; border: 1px solid #E3DED4; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+      <sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+        <div style="{{r.row}}">
+          <span style="{{r.badge}}">{{r.rank}}</span>
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+            <span style="font-size: 16px; font-weight: 700;">{{r.name}}</span>
+            <div style="height: 6px; border-radius: 3px; background: #EFEBE3; overflow: hidden;"><div style="{{r.fill}}"></div></div>
+          </div>
+          <div style="text-align: right; min-width: 72px;"><div style="font-size: 20px; font-weight: 800;">{{r.doors}}</div><div style="font-size: 12px; color: #625C54;">{{r.leads}} leads · {{r.insp}} insp.</div></div>
+        </div>
+      </sc-for>
+    </section>
+    <div style="display: flex; justify-content: space-between; align-items: center;"><span style="font-size: 14px; color: #625C54;">Updated 11:42 AM · counts only</span><button style="min-height: 44px; padding: 0 12px; border: 0; background: transparent; font-weight: 600; color: #1E1B18;">Refresh</button></div>
+  </div>
+
+  <nav aria-label="Field app" style="display: flex; gap: 4px; background: #FFFFFF; border-top: 1px solid #E3DED4; padding: 6px 8px 24px;">
+    <a href="Field.dc.html" style="flex: 1; min-height: 52px; display: grid; place-items: center; text-decoration: none; color: #625C54; font-size: 13px; font-weight: 600;">Map</a>
+    <a href="Doors.dc.html" style="flex: 1; min-height: 52px; display: grid; place-items: center; text-decoration: none; color: #625C54; font-size: 13px; font-weight: 600;">Doors</a>
+    <a href="Team.dc.html" aria-current="page" style="flex: 1; min-height: 52px; display: grid; place-items: center; text-decoration: none;"><span style="min-height: 36px; padding: 0 12px; border-radius: 18px; background: #FBEDE8; color: #B23A21; font-size: 13px; font-weight: 700; display: grid; place-items: center;">Team</span></a>
+    <a href="Hours.dc.html" style="flex: 1; min-height: 52px; display: grid; place-items: center; text-decoration: none; color: #625C54; font-size: 13px; font-weight: 600;">Hours</a>
+    <a href="Sync.dc.html" style="flex: 1; min-height: 52px; display: grid; place-items: center; text-decoration: none; color: #625C54; font-size: 13px; font-weight: 600;">Sync</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { week: false }; }
+  renderVals() {
+    var self = this, w = this.state.week, goal = w ? 200 : 40;
+    var data = w ? [['Casey Wilson', 118, 9, 4], ['Alex Morgan (you)', 104, 7, 3], ['Jordan Davis', 96, 6, 3], ['Taylor Reed', 71, 5, 2]] : [['Casey Wilson', 12, 4, 2], ['Alex Morgan (you)', 9, 2, 1], ['Jordan Davis', 9, 3, 1], ['Taylor Reed', 6, 1, 0]];
+    var seg = function (on) { return 'flex: 1; min-height: 40px; border: 0; border-radius: 8px; font-size: 14px; font-weight: 700; background: ' + (on ? '#FFFFFF' : 'transparent') + '; color: ' + (on ? '#1E1B18' : '#625C54') + '; box-shadow: ' + (on ? '0 1px 3px rgba(0,0,0,0.08)' : 'none') + ';'; };
+    var fill = function (v, c) { return 'height: 6px; border-radius: 3px; background: ' + (c || '#B23A21') + '; width: ' + Math.min(100, v / goal * 100) + '%;'; };
+    var rows = data.map(function (d, i) {
+      var me = d[0].indexOf('(you)') > 0;
+      return { rank: i + 1, name: d[0], doors: d[1], leads: d[2], insp: d[3], fill: fill(d[1]),
+        row: 'display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid #E3DED4; background: ' + (me ? '#FBEDE8' : '#FFFFFF') + ';',
+        badge: 'width: 32px; height: 32px; border-radius: 16px; display: grid; place-items: center; font-size: 15px; font-weight: 800; background: ' + (i === 0 ? '#FEF3C7' : '#EFEBE3') + '; color: ' + (i === 0 ? '#92400E' : '#625C54') + ';' };
+    });
+    var me = { doors: data[1][1], fill: fill(data[1][1], '#FFFFFF') };
+    var behind = data[0][1] - data[1][1];
+    return {
+      rows: rows, me: me, goal: goal, gap: behind + ' ' + (behind === 1 ? 'door' : 'doors') + ' behind Casey',
+      dayOn: w ? 'false' : 'true', weekOn: w ? 'true' : 'false', dayStyle: seg(!w), weekStyle: seg(w),
+      pickDay: function () { self.setState({ week: false }); }, pickWeek: function () { self.setState({ week: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

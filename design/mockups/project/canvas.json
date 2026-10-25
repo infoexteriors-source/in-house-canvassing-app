@@ -83,6 +83,14 @@
       "w": 390,
       "x": 3290,
       "y": 1980
+    },
+    "Team.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "Rep · Team leaderboard",
+      "w": 390,
+      "x": 3760,
+      "y": 1980
     }
   },
   "createdOnFiles": {
@@ -104,14 +112,14 @@
     },
     "flowNote": {
       "fill": "orange",
-      "text": "Prototype flow: Sign in → Map → Record door → (Interested / Inspection) → Homeowner details. Tab bar links Map, Doors, Hours, Sync. Desktop screens mirror the shadcn/ui dashboard in apps/dashboard. Press Play on any screen to click through.",
+      "text": "Prototype flow: Sign in → Map → Record door → (Interested / Inspection) → Homeowner details. Tab bar links Map, Doors, Team, Hours, Sync. The Map screen shows today's goals and the hail layer (tap the Hail chip). Desktop screens mirror the shadcn/ui dashboard in apps/dashboard. Press Play on any screen to click through.",
       "w": 360,
-      "x": 3760,
+      "x": 4230,
       "y": 1980
     },
     "mobileTitle": {
       "kind": "title1",
-      "maxW": 3680,
+      "maxW": 4150,
       "text": "Canvasser app · iPhone & Android",
       "w": 240,
       "x": 0,
@@ -128,7 +136,8 @@
     "Lead.dc.html",
     "Doors.dc.html",
     "Hours.dc.html",
-    "Sync.dc.html"
+    "Sync.dc.html",
+    "Team.dc.html"
   ],
   "pages": [],
   "title": "WE ROOF UI Mockups"
