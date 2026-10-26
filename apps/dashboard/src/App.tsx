@@ -17,7 +17,7 @@ import {ScrollArea} from '@/components/ui/scroll-area';
 import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from '@/components/ui/select';
 import {Separator} from '@/components/ui/separator';
 import {Sheet,SheetContent,SheetDescription,SheetHeader,SheetTitle} from '@/components/ui/sheet';
-import {Sidebar,SidebarContent,SidebarFooter,SidebarGroup,SidebarGroupContent,SidebarGroupLabel,SidebarHeader,SidebarInset,SidebarMenu,SidebarMenuBadge,SidebarMenuButton,SidebarMenuItem,SidebarProvider,SidebarRail,SidebarTrigger} from '@/components/ui/sidebar';
+import {Sidebar,SidebarContent,SidebarFooter,SidebarGroup,SidebarGroupContent,SidebarGroupLabel,SidebarHeader,SidebarInset,SidebarMenu,SidebarMenuBadge,SidebarMenuButton,SidebarMenuItem,SidebarProvider,SidebarRail,SidebarTrigger,useSidebar} from '@/components/ui/sidebar';
 import {Skeleton} from '@/components/ui/skeleton';
 import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow} from '@/components/ui/table';
 import {Toggle} from '@/components/ui/toggle';
@@ -74,6 +74,7 @@ function Workspace({mode,onExit}:{mode:'demo'|'live';onExit:()=>void}){
  const ownerName=me?.name??'Company Owner';
 
  return <SidebarProvider>
+  <CloseMobileNav page={page} drawer={drawer?.kind}/>
   <Sidebar collapsible="icon">
    <SidebarHeader className="p-3"><Brand className="group-data-[collapsible=icon]:[&>span:last-child]:hidden"/></SidebarHeader>
    <SidebarContent>
@@ -114,7 +115,21 @@ function Workspace({mode,onExit}:{mode:'demo'|'live';onExit:()=>void}){
     {error?<Alert variant="destructive"><AlertCircle/><AlertTitle>Workspace unavailable</AlertTitle><AlertDescription>{error}</AlertDescription></Alert>:null}
     {loading?<div className="grid gap-4" aria-label="Loading workspace"><div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{[0,1,2,3].map(i=><Skeleton key={i} className="h-32 rounded-xl"/>)}</div><Skeleton className="h-[460px] rounded-xl"/></div>:<>
 
-    {(page==='Overview'||page==='Live map')?<>
+    {page==='Live map'?<div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_340px]">
+     {/* Map-first layout, after Apple Maps: filters float over the map, the key sits in a floating card. */}
+     <Card className="relative gap-0 overflow-hidden py-0">
+      <TerritoryMap data={mapData} mode={mode} focusedRep={focusedRep} onProperty={p=>setDrawer({kind:'property',property:p})} drawPoints={null} onDrawPoint={()=>{}} showRoutes={showRoutes} selectedTerritory={territory} hail={hail.reports} showHail={showHail} tall/>
+      <div className="flex flex-wrap gap-2 border-t p-3 md:pointer-events-none md:absolute md:top-3 md:right-3 md:left-48 md:justify-end md:border-0 md:p-0 md:[&>*]:pointer-events-auto md:[&>*]:shadow-md"><MapFilters territories={data.territories} territory={territory} onTerritory={setTerritory} showRoutes={showRoutes} onRoutes={setShowRoutes} showHail={showHail} onHail={setShowHail} hailCount={hail.reports.length} floating/></div>
+      <div className="flex flex-wrap gap-x-3 gap-y-1.5 border-t bg-muted/40 px-3 py-2 md:absolute md:bottom-3 md:left-3 md:max-w-[calc(100%-6rem)] md:rounded-lg md:border md:bg-card/95 md:shadow-md">{outcomes.map(o=><span key={o} className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"><OutcomeDot color={outcomeColors[o]}/>{outcomeLabels[o]}</span>)}{showHail?<span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"><span aria-hidden className="size-3 rounded-full border-2 border-dashed border-cyan-600 bg-cyan-600/15"/>Hail (inches)</span>:null}</div>
+     </Card>
+     <Card className="gap-0 py-0">
+      <CardHeader className="border-b py-4"><CardTitle className="font-display text-2xl">Team in the field</CardTitle><CardDescription>Select a rep to show only their route and doors.</CardDescription></CardHeader>
+      <ScrollArea className="h-[calc(100svh-19rem)] min-h-[420px]"><div className="flex flex-col">{reps.filter(r=>r.active&&r.name.toLowerCase().includes(query.toLowerCase())).map(r=><RepCard key={r.user_id} rep={r} data={data} day={day} visits={visits} selected={focusedRep===r.user_id} onClick={()=>setFocusedRep(focusedRep===r.user_id?null:r.user_id)}/>)}</div></ScrollArea>
+      <CardFooter className="border-t py-3"><p className="flex gap-2 text-xs text-muted-foreground"><ShieldCheck className="size-4 shrink-0 text-success"/>Locations include their last update time. Breaks pause tracking.</p></CardFooter>
+     </Card>
+    </div>:null}
+
+    {page==='Overview'?<>
      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-label="Daily field metrics">
       <Stat label="Active canvassers" value={`${active}`} suffix={`/ ${reps.filter(r=>r.active).length}`} icon={<Users/>} detail={mode==='demo'?'Sample shift status':'Current shift status'}/>
       <Stat label="Doors knocked" value={visits.length.toString()} icon={<DoorOpen/>} detail={`${new Set(visits.map(v=>v.property_id)).size} unique properties`}/>
@@ -124,7 +139,7 @@ function Workspace({mode,onExit}:{mode:'demo'|'live';onExit:()=>void}){
      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_360px]">
       <Card className="gap-0 overflow-hidden py-0">
        <CardHeader className="border-b py-4"><CardTitle className="font-display text-2xl">Territory overview</CardTitle><CardDescription>Know where your team is working. Routes break across tracking gaps.</CardDescription>
-        <CardAction className="flex flex-wrap gap-2"><Select value={territory} onValueChange={setTerritory}><SelectTrigger aria-label="Filter territory" className="h-9 w-44 bg-card"><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">All territories</SelectItem>{data.territories.filter(t=>!t.archived).map(t=><SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}</SelectContent></Select><Toggle variant="outline" pressed={showRoutes} onPressedChange={setShowRoutes} aria-label="Show routes" className="h-9 data-[state=on]:border-primary/30 data-[state=on]:bg-danger-soft data-[state=on]:text-primary"><Route/>Routes</Toggle><Toggle variant="outline" pressed={showHail} onPressedChange={setShowHail} aria-label="Show hail reports" className="h-9 data-[state=on]:border-cyan-600/30 data-[state=on]:bg-cyan-50 data-[state=on]:text-cyan-800"><CloudHail/>Hail{hail.reports.length?<Badge variant="secondary" className="h-5 rounded-full px-1.5">{hail.reports.length}</Badge>:null}</Toggle></CardAction>
+        <CardAction className="flex flex-wrap gap-2"><MapFilters territories={data.territories} territory={territory} onTerritory={setTerritory} showRoutes={showRoutes} onRoutes={setShowRoutes} showHail={showHail} onHail={setShowHail} hailCount={hail.reports.length}/></CardAction>
        </CardHeader>
        <TerritoryMap data={mapData} mode={mode} focusedRep={focusedRep} onProperty={p=>setDrawer({kind:'property',property:p})} drawPoints={null} onDrawPoint={()=>{}} showRoutes={showRoutes} selectedTerritory={territory} hail={hail.reports} showHail={showHail}/>
        <CardFooter className="flex-wrap gap-x-4 gap-y-2 bg-muted/40 py-3">{outcomes.map(o=><span key={o} className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"><OutcomeDot color={outcomeColors[o]}/>{outcomeLabels[o]}</span>)}{showHail?<span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground"><span aria-hidden className="size-3 rounded-full border-2 border-dashed border-cyan-600 bg-cyan-600/15"/>Hail report (size in inches)</span>:null}</CardFooter>
@@ -296,3 +311,12 @@ function StormCard({reports,error,mode}:{reports:HailReport[];error:string;mode:
   <CardContent className="divide-y px-0">{reports.slice(0,6).map(r=><div key={r.id} className="flex items-center gap-3 px-6 py-3"><span className="grid size-10 shrink-0 place-items-center rounded-full bg-cyan-50 font-display text-base font-bold text-cyan-800">{r.size_in.toFixed(1)}″</span><div className="min-w-0 flex-1"><p className="truncate font-semibold">{r.location}{r.state?`, ${r.state}`:''}</p><p className="truncate text-xs text-muted-foreground">{hailLabel(r.size_in)} · {new Date(r.occurred_at).toLocaleDateString('en-US',{month:'short',day:'numeric'})}{r.comments?` · ${r.comments}`:''}</p></div></div>)}
    {error?<p className="px-6 py-4 text-sm text-warning">{error}</p>:!reports.length?<Empty title="No recent hail" text="Reports appear here when NOAA logs hail near a territory."/>:null}</CardContent>
   <CardFooter className="border-t py-3 text-xs text-muted-foreground">{mode==='demo'?'Sample reports in the demo workspace.':'Source: NOAA Storm Prediction Center preliminary reports. Points, not full hail swaths.'}</CardFooter></Card>;}
+
+function MapFilters({territories,territory,onTerritory,showRoutes,onRoutes,showHail,onHail,hailCount,floating=false}:{territories:Territory[];territory:string;onTerritory:(id:string)=>void;showRoutes:boolean;onRoutes:(on:boolean)=>void;showHail:boolean;onHail:(on:boolean)=>void;hailCount:number;floating?:boolean}){
+ const chip=floating?'h-10 rounded-full bg-card':'h-9';
+ return <><Select value={territory} onValueChange={onTerritory}><SelectTrigger aria-label="Filter territory" className={cn('w-44 bg-card',floating?'!h-10 rounded-full':'h-9')}><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">All territories</SelectItem>{territories.filter(t=>!t.archived).map(t=><SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}</SelectContent></Select>
+  <Toggle variant="outline" pressed={showRoutes} onPressedChange={onRoutes} aria-label="Show routes" className={cn(chip,'data-[state=on]:border-primary/30 data-[state=on]:bg-danger-soft data-[state=on]:text-primary')}><Route/>Routes</Toggle>
+  <Toggle variant="outline" pressed={showHail} onPressedChange={onHail} aria-label="Show hail reports" className={cn(chip,'data-[state=on]:border-cyan-600/30 data-[state=on]:bg-cyan-50 data-[state=on]:text-cyan-800')}><CloudHail/>Hail{hailCount?<Badge variant="secondary" className="h-5 rounded-full px-1.5">{hailCount}</Badge>:null}</Toggle></>;}
+
+/** On phones the sidebar is a sheet; close it once the owner picks a page or opens a panel. */
+function CloseMobileNav({page,drawer}:{page:Page;drawer?:string}){const {setOpenMobile}=useSidebar();useEffect(()=>{setOpenMobile(false);},[page,drawer,setOpenMobile]);return null;}
