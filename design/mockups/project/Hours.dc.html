@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WE ROOF · My field hours</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Instrument+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#B23A21}a:hover{color:#8C2715}
+button{font:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F5F2EB; color: #1E1B18; font-family: 'Instrument Sans', system-ui, sans-serif; font-variant-numeric: tabular-nums; display: flex; flex-direction: column; overflow: hidden;">
+  <header style="padding: 52px 20px 20px; background: #1A1816; color: #FFFFFF; display: flex; flex-direction: column; gap: 8px; background-image: radial-gradient(90% 120% at 100% 0%, rgba(181,54,31,0.28) 0%, rgba(181,54,31,0) 60%);">
+    <div style="font-size: 12px; font-weight: 700; letter-spacing: 1.4px; color: #CFC9BF;">MY FIELD HOURS · TODAY</div>
+    <div style="display: flex; align-items: baseline; gap: 10px;"><span style="font-family: 'Barlow Condensed', sans-serif; font-size: 64px; line-height: 0.95; font-weight: 700;">3h 12m</span><span style="font-size: 14px; color: #CFC9BF;">breaks excluded</span></div>
+    <div style="display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: rgba(255,255,255,0.08); margin-top: 8px; gap: 2px;" aria-label="Worked 8:02 to 10:30, break 10:30 to 10:45, worked 10:45 to now">
+      <span style="flex: 148; background: #4CBF8A; border-radius: 7px 0 0 7px;"></span><span style="flex: 15; background: repeating-linear-gradient(-45deg, #F2BE5C 0 3px, #C98A12 3px 6px);"></span><span style="flex: 57; background: #4CBF8A;"></span><span style="flex: 60; background: transparent;"></span>
+    </div>
+    <div style="display: flex; justify-content: space-between; font-size: 12px; color: #A8A298; font-weight: 600;"><span>8 AM</span><span>10 AM</span><span>12 PM</span><span>1 PM</span></div>
+    <div style="display: flex; gap: 14px; font-size: 12px; color: #CFC9BF; font-weight: 600;">
+      <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: #4CBF8A;"></span>Field time</span>
+      <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; border-radius: 3px; background: #F2BE5C;"></span>Break</span>
+    </div>
+  </header>
+
+  <div style="flex: 1; overflow: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 14px;">
+    <section aria-labelledby="tl" style="background: #FFFFFF; border: 1px solid #E3DED4; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 14px 16px 4px;">
+      <h2 id="tl" style="margin: 0 0 6px; font-size: 12px; letter-spacing: 1.2px; font-weight: 700; color: #625C54;">TODAY’S SHIFT</h2>
+      <sc-for list="{{events}}" as="e" hint-placeholder-count="4">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #F2EEE7;">
+          <span style="{{e.icon}}">{{e.glyph}}</span>
+          <span style="flex: 1; font-size: 15px; font-weight: 600;">{{e.label}}</span>
+          <span style="font-size: 14px; font-weight: 600; color: #36322D;">{{e.time}}</span>
+        </div>
+      </sc-for>
+    </section>
+
+    <section aria-labelledby="wk" style="background: #FFFFFF; border: 1px solid #E3DED4; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 14px 16px; display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; justify-content: space-between; align-items: baseline;"><h2 id="wk" style="margin: 0; font-size: 12px; letter-spacing: 1.2px; font-weight: 700; color: #625C54;">THIS WEEK</h2><span style="font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 700; line-height: 1;">17h 48m</span></div>
+      <div style="display: flex; align-items: flex-end; gap: 10px; height: 100px;">
+        <sc-for list="{{week}}" as="d" hint-placeholder-count="6">
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end;">
+            <span style="{{d.val}}">{{d.label}}</span>
+            <span style="{{d.bar}}"></span>
+            <span style="{{d.lab}}">{{d.day}}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-size: 13px; color: #625C54; line-height: 1.45;">Approved corrections are added separately. Your original clock-ins are always kept.</div>
+    </section>
+
+    <sc-if value="{{open}}" hint-placeholder-val="{{false}}">
+      <section aria-labelledby="corr" style="background: #FFFFFF; border: 2px solid #1E1B18; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 12px 28px -18px rgba(0,0,0,0.5);">
+        <h2 id="corr" style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 700;">Request a correction</h2>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label for="min" style="font-size: 13px; font-weight: 700;">Minutes to add or subtract</label>
+          <input id="min" inputmode="numeric" value="+15" style="min-height: 54px; padding: 0 16px; border: 1px solid #D9D3C8; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); font: inherit; font-size: 17px; color: #1E1B18;">
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <label for="why" style="font-size: 13px; font-weight: 700;">Reason</label>
+          <textarea id="why" rows="2" style="border: 1px solid #D9D3C8; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding: 12px 14px; font: inherit; font-size: 16px; color: #1E1B18; resize: none;">Forgot to end my break at 10:45.</textarea>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button onClick="{{toggle}}" style="flex: 1; min-height: 52px; border-radius: 10px; border: 1px solid #D9D3C8; background: #FFFFFF; color: #1E1B18; font-size: 15px; font-weight: 700;">Cancel</button>
+          <button onClick="{{toggle}}" style="flex: 2; min-height: 52px; border-radius: 10px; border: 0; background: #B23A21; color: #FFFFFF; font-size: 15px; font-weight: 700; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">Send to owner</button>
+        </div>
+      </section>
+    </sc-if>
+    <sc-if value="{{closed}}" hint-placeholder-val="{{true}}">
+      <button onClick="{{toggle}}" style="min-height: 52px; border-radius: 10px; border: 1px solid #D9D3C8; background: #FFFFFF; color: #1E1B18; font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>Request time correction</button>
+    </sc-if>
+    <button style="min-height: 58px; border-radius: 10px; border: 0; background: #1A1816; color: #FFFFFF; font-size: 16px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="5" width="14" height="14" rx="2"></rect></svg>Clock out</button>
+  </div>
+
+  <nav aria-label="Field app" style="display: flex; gap: 4px; background: #FFFFFF; border-top: 1px solid #E3DED4; padding: 6px 8px 24px;">
+    <a href="Field.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 12px; font-weight: 600; color: #625C54;"><span style="width: 56px; height: 30px; border-radius: 15px; display: grid; place-items: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"></path><path d="M9 3v15M15 6v15"></path></svg></span>Map</a>
+    <a href="Doors.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 12px; font-weight: 600; color: #625C54;"><span style="width: 56px; height: 30px; border-radius: 15px; display: grid; place-items: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17"></path><path d="M14.5 12h.01"></path></svg></span>Doors</a>
+    <a href="Team.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 12px; font-weight: 600; color: #625C54;"><span style="width: 56px; height: 30px; border-radius: 15px; display: grid; place-items: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.7V17c0 .6-.5 1-1 1.2-1.2.5-2 2-2 3.8"></path><path d="M14 14.7V17c0 .6.5 1 1 1.2 1.2.5 2 2 2 3.8"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg></span>Team</a>
+    <a href="Hours.dc.html" aria-current="page" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 12px; font-weight: 700; color: #B23A21;"><span style="width: 56px; height: 30px; border-radius: 15px; background: #FBEDE8; display: grid; place-items: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>Hours</a>
+    <a href="Sync.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 12px; font-weight: 600; color: #625C54;"><span style="position: relative; width: 56px; height: 30px; border-radius: 15px; display: grid; place-items: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M21 3v5h-5"></path><path d="M3 21v-5h5"></path></svg><span style="position: absolute; top: -2px; right: 6px; min-width: 18px; height: 18px; box-sizing: border-box; padding: 0 5px; border-radius: 9px; background: #B23A21; color: #FFFFFF; font-size: 11px; font-weight: 700; display: grid; place-items: center; border: 2px solid #FFFFFF;">3</span></span>Sync</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { open: false }; }
+  renderVals() {
+    var self = this;
+    var icon = function (bg, fg) { return 'width: 30px; height: 30px; border-radius: 9px; background: ' + bg + '; color: ' + fg + '; display: grid; place-items: center; font-size: 13px; font-weight: 700; flex-shrink: 0;'; };
+    var events = [
+      { label: 'Clocked in', time: '8:02 AM', glyph: '▶', icon: icon('#E3F0E8', '#1B4E3B') },
+      { label: 'Break started', time: '10:30 AM', glyph: 'Ⅱ', icon: icon('#FCEFD6', '#5A3400') },
+      { label: 'Break ended', time: '10:45 AM', glyph: '▶', icon: icon('#FCEFD6', '#5A3400') },
+      { label: 'On shift now', time: '11:44 AM', glyph: '●', icon: icon('#E3F0E8', '#1B4E3B') }
+    ];
+    var hrs = [['Mon', 3.2, true], ['Tue', 0, false], ['Wed', 4.6, false], ['Thu', 5.1, false], ['Fri', 4.9, false], ['Sat', 0, false]];
+    var week = hrs.map(function (h) {
+      var px = Math.max(4, Math.round(h[1] / 6 * 62));
+      return {
+        day: h[0], label: h[1] ? h[1].toFixed(1) : '',
+        val: 'font-size: 11px; font-weight: 700; color: ' + (h[2] ? '#B23A21' : '#625C54') + ';',
+        bar: 'width: 100%; max-width: 32px; height: ' + px + 'px; border-radius: 7px; background: ' + (h[2] ? '#B23A21' : h[1] ? '#CFC8BB' : '#EFEBE3') + ';' + (h[2] ? ' box-shadow: 0 6px 12px -6px #B23A21;' : ''),
+        lab: 'font-size: 12px; font-weight: ' + (h[2] ? '700' : '500') + '; color: ' + (h[2] ? '#1E1B18' : '#625C54') + ';'
+      };
+    });
+    return { events: events, week: week, open: this.state.open, closed: !this.state.open, toggle: function () { self.setState({ open: !self.state.open }); } };
+  }
+}
+</script>
+</body>
+</html>

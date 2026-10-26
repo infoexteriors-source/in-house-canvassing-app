@@ -14,7 +14,7 @@
     "mobile": "npm run start -w @canvass/mobile",
     "bootstrap": "node scripts/bootstrap.mjs",
     "crm:work": "node scripts/crm-worker.mjs",
-    "check:server": "deno check --config supabase/functions/deno.json supabase/functions/sync/index.ts supabase/functions/owner-admin/index.ts supabase/functions/geocode/index.ts supabase/functions/jobnimbus-worker/index.ts",
+    "check:server": "deno check --config supabase/functions/deno.json supabase/functions/sync/index.ts supabase/functions/owner-admin/index.ts supabase/functions/geocode/index.ts supabase/functions/storm-reports/index.ts supabase/functions/jobnimbus-worker/index.ts",
     "test:db": "node scripts/test-db.mjs"
   },
   "devDependencies": {

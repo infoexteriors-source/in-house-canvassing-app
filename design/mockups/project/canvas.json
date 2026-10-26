@@ -1,0 +1,144 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "DoNotKnock.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "Rep · Do-not-knock warning",
+      "w": 390,
+      "x": 1410,
+      "y": 1980
+    },
+    "Doors.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "Rep · Recorded doors",
+      "w": 390,
+      "x": 2350,
+      "y": 1980
+    },
+    "Field.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "Rep · Territory map (on shift)",
+      "w": 390,
+      "x": 470,
+      "y": 1980
+    },
+    "Hours.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "Rep · My field hours",
+      "w": 390,
+      "x": 2820,
+      "y": 1980
+    },
+    "Lead.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "Rep · Homeowner & inspection",
+      "w": 390,
+      "x": 1880,
+      "y": 1980
+    },
+    "Leads.dc.html": {
+      "expand": "fill",
+      "h": 1060,
+      "is_interactive": true,
+      "title": "Owner · Leads & CRM delivery",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "Login.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "Rep · Sign in",
+      "w": 390,
+      "x": 0,
+      "y": 1980
+    },
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 1560,
+      "title": "Owner · Overview",
+      "w": 1440,
+      "x": 0,
+      "y": 0,
+      "is_interactive": true
+    },
+    "Record.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "Rep · Record a door",
+      "w": 390,
+      "x": 940,
+      "y": 1980
+    },
+    "Sync.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "Rep · Offline & sync",
+      "w": 390,
+      "x": 3290,
+      "y": 1980
+    },
+    "Team.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "Rep · Team leaderboard",
+      "w": 390,
+      "x": 3760,
+      "y": 1980
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-10-05T12:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "desktopTitle": {
+      "kind": "title1",
+      "maxW": 2960,
+      "text": "Owner dashboard · desktop",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "flowNote": {
+      "fill": "orange",
+      "text": "Prototype flow: Sign in → Map → Record door → (Interested / Inspection) → Homeowner details. Tab bar links Map, Doors, Team, Hours, Sync. The Map screen shows today's goals and the hail layer (tap the Hail chip). Desktop screens mirror the shadcn/ui dashboard in apps/dashboard. Press Play on any screen to click through.",
+      "w": 360,
+      "x": 4230,
+      "y": 1980
+    },
+    "mobileTitle": {
+      "kind": "title1",
+      "maxW": 4150,
+      "text": "Canvasser app · iPhone & Android",
+      "w": 240,
+      "x": 0,
+      "y": 1680
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Leads.dc.html",
+    "Login.dc.html",
+    "Field.dc.html",
+    "Record.dc.html",
+    "DoNotKnock.dc.html",
+    "Lead.dc.html",
+    "Doors.dc.html",
+    "Hours.dc.html",
+    "Sync.dc.html",
+    "Team.dc.html"
+  ],
+  "pages": [],
+  "title": "WE ROOF UI Mockups"
+}

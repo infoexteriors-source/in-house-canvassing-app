@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WE ROOF · Territory map</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#B23A21}a:hover{color:#8C2715}
+button{font:inherit;cursor:pointer}
+@keyframes wr-pulse{0%{transform:scale(.5);opacity:.6}100%{transform:scale(2.6);opacity:0}}
+.wr-pulse{animation:wr-pulse 2s ease-out infinite}
+@media (prefers-reduced-motion:reduce){.wr-pulse{animation:none;opacity:0}}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #EBE8DF; color: #1E1B18; font-family: -apple-system, 'SF Pro Text', system-ui, sans-serif; font-variant-numeric: tabular-nums; display: flex; flex-direction: column; overflow: hidden; position: relative;">
+
+  <header style="background: #1A1816; color: #FFFFFF; padding: 52px 16px 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; z-index: 3;">
+    <div>
+      <div style="{{statusStyle}}"><span style="{{statusDot}}"></span>{{statusLabel}}</div>
+      <div style="font-size: 32px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.1;">3h 12m</div>
+    </div>
+    <div style="display: flex; gap: 8px;">
+      <button onClick="{{toggleBreak}}" style="{{breakBtn}}">{{breakLabel}}</button>
+      <button style="min-height: 44px; padding: 0 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.08); color: #FFFFFF; font-size: 15px; font-weight: 600;">Clock out</button>
+    </div>
+  </header>
+  <sc-if value="{{onBreak}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="background: #FBF0D6; color: #4A2B00; font-size: 14px; font-weight: 600; padding: 12px 16px; border-bottom: 1px solid #E8C786; z-index: 2;">Location tracking is paused. Break time isn’t counted.</div>
+  </sc-if>
+
+  <div style="flex: 1; position: relative; overflow: hidden;">
+    <sc-for list="{{houses}}" as="h" hint-placeholder-count="30"><div style="{{h}}"></div></sc-for>
+    <sc-for list="{{roads}}" as="r" hint-placeholder-count="5"><div style="{{r}}"></div></sc-for>
+    <div style="position: absolute; left: 20px; top: 60px; width: 350px; height: 360px; border: 2px dashed #147B70; border-radius: 4px; background: rgba(20,123,112,0.07);"></div>
+    <sc-if value="{{showHail}}" hint-placeholder-val="{{true}}">
+      <sc-for list="{{hail}}" as="h" hint-placeholder-count="2"><div style="{{h.area}}"><div style="{{h.core}}">{{h.label}}</div></div></sc-for>
+    </sc-if>
+    <sc-for list="{{pins}}" as="p" hint-placeholder-count="20"><a href="{{p.href}}" aria-label="{{p.label}}" style="{{p.hit}}"><span style="{{p.style}}">{{p.mark}}</span></a></sc-for>
+    <span class="wr-pulse" style="position: absolute; left: 172px; top: 214px; width: 20px; height: 20px; border-radius: 50%; background: rgba(52,91,214,0.5);"></span>
+    <div aria-label="Your location" style="position: absolute; left: 171px; top: 213px; width: 22px; height: 22px; box-sizing: border-box; border-radius: 50%; background: #345BD6; border: 3.5px solid #FFFFFF; box-shadow: 0 2px 6px rgba(0,0,0,0.35);"></div>
+
+    <div style="position: absolute; top: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; gap: 8px;">
+      <span style="min-height: 40px; display: inline-flex; align-items: center; padding: 0 14px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3DED4; font-size: 14px; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.12);">Oakwood Heights</span>
+      <button role="switch" aria-checked="{{hailAria}}" onClick="{{toggleHail}}" style="{{hailChip}}">Hail · 2</button>
+    </div>
+
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; background: #FFFFFF; border-radius: 20px 20px 0 0; padding: 8px 16px 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 -4px 16px rgba(0,0,0,0.15);">
+      <span style="align-self: center; width: 40px; height: 5px; border-radius: 3px; background: #D9D3C8;"></span>
+      <div style="display: flex; gap: 12px;">
+        <sc-for list="{{goals}}" as="g" hint-placeholder-count="3">
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+            <div style="font-size: 22px; font-weight: 800;">{{g.value}}<span style="font-size: 14px; font-weight: 600; color: #625C54;"> / {{g.goal}}</span></div>
+            <div style="height: 6px; border-radius: 3px; background: #EFEBE3; overflow: hidden;"><div style="{{g.fill}}"></div></div>
+            <div style="font-size: 12px; font-weight: 600; color: #625C54;">{{g.label}}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px 12px;">
+        <sc-for list="{{legend}}" as="l" hint-placeholder-count="5"><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #36322D;"><span style="{{l.dot}}"></span>{{l.label}}</span></sc-for>
+      </div>
+      <sc-if value="{{showHail}}" hint-placeholder-val="{{true}}"><div style="font-size: 13px; font-weight: 600; color: #155E75; background: #ECFEFF; padding: 6px 10px; border-radius: 8px;">Latest hail: 1.75″ · golf ball · Oakwood Heights · Oct 23</div></sc-if>
+      <a href="Record.dc.html" style="min-height: 56px; border-radius: 10px; background: #B23A21; color: #FFFFFF; font-size: 17px; font-weight: 600; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">Record door here</a>
+      <button style="min-height: 44px; border: 0; background: transparent; font-size: 15px; font-weight: 600; color: #1E1B18;">Download maps for offline</button>
+    </div>
+  </div>
+
+  <nav aria-label="Field app" style="display: flex; gap: 4px; background: #FFFFFF; border-top: 1px solid #E3DED4; padding: 6px 8px 24px;">
+    <a href="Field.dc.html" aria-current="page" style="flex: 1; min-height: 52px; display: grid; place-items: center; text-decoration: none;"><span style="min-height: 36px; padding: 0 12px; border-radius: 18px; background: #FBEDE8; color: #B23A21; font-size: 13px; font-weight: 700; display: grid; place-items: center;">Map</span></a>
+    <a href="Doors.dc.html" style="flex: 1; min-height: 52px; display: grid; place-items: center; text-decoration: none; color: #625C54; font-size: 13px; font-weight: 600;">Doors</a>
+    <a href="Team.dc.html" style="flex: 1; min-height: 52px; display: grid; place-items: center; text-decoration: none; color: #625C54; font-size: 13px; font-weight: 600;">Team</a>
+    <a href="Hours.dc.html" style="flex: 1; min-height: 52px; display: grid; place-items: center; text-decoration: none; color: #625C54; font-size: 13px; font-weight: 600;">Hours</a>
+    <a href="Sync.dc.html" style="flex: 1; min-height: 52px; display: grid; place-items: center; text-decoration: none; color: #625C54; font-size: 13px; font-weight: 600;"><span style="display: inline-flex; align-items: center; gap: 6px;">Sync<span style="min-width: 18px; height: 18px; border-radius: 9px; background: #B23A21; color: #FFFFFF; font-size: 11px; font-weight: 700; display: grid; place-items: center;">3</span></span></a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { onBreak: false, hail: true }; }
+  renderVals() {
+    var self = this, b = this.state.onBreak, h = this.state.hail;
+    var OC = { no_answer: ['#64748b', 'No answer'], interested: ['#147b70', 'Interested'], follow_up: ['#b27708', 'Follow-up'], inspection_requested: ['#345bd6', 'Inspection'], do_not_knock: ['#bd3e3e', 'Do not knock'], not_interested: ['#a36547', 'Not interested'], existing_customer: ['#7b52aa', 'Customer'] };
+    var road = ' background: #F8F7F1; box-shadow: 0 0 0 2px #D3D2C7;';
+    var roads = [140, 276, 410].map(function (y) { return 'position: absolute; left: 0; top: ' + y + 'px; width: 390px; height: 18px;' + road; })
+      .concat([96, 290].map(function (x) { return 'position: absolute; top: 0; left: ' + x + 'px; width: 18px; height: 600px;' + road; }));
+    var houses = [];
+    [92, 120, 172, 200, 228, 256, 308, 336, 362, 390].forEach(function (y) { [44, 140, 186, 232, 336].forEach(function (x) { houses.push('position: absolute; left: ' + (x - 13) + 'px; top: ' + (y - 9) + 'px; width: 26px; height: 18px; border-radius: 2px; background: #D3D1C5; border: 1px solid #C3C2B5; box-sizing: border-box;'); }); });
+    var seq = ['no_answer', null, 'interested', 'no_answer', 'not_interested', null, 'follow_up', 'inspection_requested', 'no_answer', null, 'do_not_knock', 'existing_customer', null, 'no_answer', 'not_interested', null, 'no_answer', 'follow_up'];
+    var pins = [], k = 0;
+    [106, 186, 242, 322, 376].forEach(function (y) { [44, 140, 186, 232, 336].forEach(function (x) {
+      var o = seq[k % seq.length]; k++;
+      var hit = 'position: absolute; left: ' + (x - 15) + 'px; top: ' + (y - 15) + 'px; width: 30px; height: 30px; display: grid; place-items: center; text-decoration: none;';
+      if (!o) { pins.push({ href: 'Record.dc.html', label: 'Not visited', mark: '', hit: hit, style: 'width: 14px; height: 14px; box-sizing: border-box; border-radius: 50%; background: #FFFFFF; border: 2.5px solid #8A847B;' }); return; }
+      pins.push({ href: o === 'do_not_knock' ? 'DoNotKnock.dc.html' : 'Record.dc.html', label: OC[o][1], mark: o === 'do_not_knock' ? '×' : o === 'inspection_requested' ? '✓' : '', hit: hit, style: 'width: 18px; height: 18px; box-sizing: border-box; border-radius: 50%; background: ' + OC[o][0] + '; border: 2.5px solid #FFFFFF; box-shadow: 0 1px 4px rgba(0,0,0,0.3); color: #FFFFFF; font-size: 11px; line-height: 13px; text-align: center; font-weight: 700;' });
+    }); });
+    var hailPt = function (x, y, size) { var r = 18 + (size - 0.75) * 12; return { label: size.toFixed(1), area: 'position: absolute; left: ' + (x - r) + 'px; top: ' + (y - r) + 'px; width: ' + (2 * r) + 'px; height: ' + (2 * r) + 'px; border-radius: 50%; background: rgba(8,145,178,0.16); border: 1.5px solid #0891B2; box-sizing: border-box; display: grid; place-items: center;', core: 'width: 22px; height: 22px; border-radius: 50%; background: #0E7490; border: 2px solid #FFFFFF; color: #FFFFFF; font-size: 9px; font-weight: 700; display: grid; place-items: center; box-sizing: border-box;' }; };
+    var goals = [['Doors', 9, 40], ['Leads', 2, 4], ['Inspections', 1, 2]].map(function (g) { return { label: g[0], value: g[1], goal: g[2], fill: 'height: 6px; border-radius: 3px; background: #B23A21; width: ' + Math.min(100, g[1] / g[2] * 100) + '%;' }; });
+    var legend = ['no_answer', 'interested', 'follow_up', 'inspection_requested', 'do_not_knock'].map(function (o) { return { label: OC[o][1], dot: 'width: 11px; height: 11px; border-radius: 50%; background: ' + OC[o][0] + '; box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 3px rgba(0,0,0,0.1);' }; });
+    return {
+      onBreak: b, showHail: h, houses: houses, roads: roads, pins: pins, hail: [hailPt(250, 150, 1.75), hailPt(70, 300, 1.0)], goals: goals, legend: legend,
+      statusLabel: b ? 'ON BREAK' : 'IN THE FIELD',
+      statusStyle: 'display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: 1.3px; color: ' + (b ? '#F2BE5C' : '#86D4AE') + ';',
+      statusDot: 'width: 8px; height: 8px; border-radius: 50%; background: ' + (b ? '#F2BE5C' : '#86D4AE') + ';',
+      breakLabel: b ? 'Resume' : 'Break',
+      breakBtn: 'min-height: 44px; padding: 0 12px; border-radius: 8px; font-size: 15px; font-weight: 600; border: 1px solid ' + (b ? '#B23A21' : 'rgba(255,255,255,0.22)') + '; background: ' + (b ? '#B23A21' : 'rgba(255,255,255,0.08)') + '; color: #FFFFFF;',
+      toggleBreak: function () { self.setState({ onBreak: !b }); },
+      hailAria: h ? 'true' : 'false', toggleHail: function () { self.setState({ hail: !h }); },
+      hailChip: 'min-height: 40px; padding: 0 14px; border-radius: 20px; font-size: 14px; font-weight: 600; border: 1px solid ' + (h ? '#67E8F9' : '#E3DED4') + '; background: ' + (h ? '#ECFEFF' : '#FFFFFF') + '; color: ' + (h ? '#155E75' : '#1E1B18') + '; box-shadow: 0 2px 8px rgba(0,0,0,0.12);'
+    };
+  }
+}
+</script>
+</body>
+</html>

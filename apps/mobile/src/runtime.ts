@@ -2,7 +2,7 @@ import {createClient} from '@supabase/supabase-js';
 import * as SecureStore from 'expo-secure-store';
 import * as SQLite from 'expo-sqlite';
 import * as Crypto from 'expo-crypto';
-import {Outbox,type QueueEntry,type Dataset,type Member,type Command,type SyncResult,type ShiftEvent,type Position,locationAllowed,shiftState} from '@canvass/core';
+import {Outbox,type QueueEntry,type Dataset,type Member,type Command,type SyncResult,type ShiftEvent,type Position,type LeaderRow,type Goals,type HailReport,defaultGoals,locationAllowed,shiftState} from '@canvass/core';
 const url=process.env.EXPO_PUBLIC_SUPABASE_URL,key=process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 export const configured=Boolean(url&&key);
 const authStorage={getItem:(key:string)=>SecureStore.getItemAsync(key),setItem:(key:string,value:string)=>SecureStore.setItemAsync(key,value),removeItem:(key:string)=>SecureStore.deleteItemAsync(key)};
@@ -41,3 +41,14 @@ export async function refresh(){if(!supabase)throw Error('Connect Supabase befor
 }
 export async function capture(position:Position){const state=await loadState(),events=latestEvents(state);if(!state.user?.active||shiftState(events)!=='active'||!locationAllowed(events,position.captured_at))return;const c=command('location',{shift_id:events[0].shift_id,latitude:position.latitude,longitude:position.longitude,accuracy:position.accuracy},position.captured_at);await outbox.add(c);await updateState(s=>({...s,data:{...s.data,locations:[...s.data.locations.slice(-99),{...position,id:c.id,company_id:state.user!.company_id,user_id:state.user!.user_id,shift_id:events[0].shift_id}]}}));try{await sync();}catch{/* Durable outbox retains the sample. */}}
 export async function clearLocal(){const entries=await outbox.entries();if(entries.length)throw Error('Sync pending work before signing out.');const db=await database();await db.runAsync('DELETE FROM kv');await supabase?.auth.signOut();}
+/** Team rankings are counts only (see the leaderboard() database function). The last copy is kept for offline viewing. */
+export type TeamBoard={period:'day'|'week';rows:LeaderRow[];goals:Goals;fetched_at:string};
+export const loadBoard=(period:'day'|'week')=>read<TeamBoard|null>(`board:${period}`,null);
+export async function fetchBoard(period:'day'|'week'){if(!supabase)throw Error('Connect Supabase first.');
+ const [{data:rows,error},{data:goals,error:goalsError}]=await Promise.all([supabase.rpc('leaderboard',{p_period:period}),supabase.from('company_goals').select('daily_doors,daily_leads,daily_inspections').maybeSingle()]);
+ if(error||goalsError)throw Error('Leaderboard unavailable. Showing the last saved copy.');
+ const board:TeamBoard={period,rows:((rows??[]) as LeaderRow[]).map(r=>({...r,doors:Number(r.doors),leads:Number(r.leads),inspections:Number(r.inspections)})),goals:goals??defaultGoals,fetched_at:new Date().toISOString()};
+ await write(`board:${period}`,board);return board;}
+export type HailCache={reports:HailReport[];fetched_at:string};
+export const loadHail=()=>read<HailCache|null>('hail',null);
+export async function fetchHail(){if(!supabase)throw Error('Connect Supabase first.');const {data,error}=await supabase.functions.invoke('storm-reports',{body:{days:7}});if(error||data?.error)throw Error('Hail reports unavailable.');const cache:HailCache={reports:data.reports??[],fetched_at:new Date().toISOString()};await write('hail',cache);return cache;}

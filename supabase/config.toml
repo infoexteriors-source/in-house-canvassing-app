@@ -23,3 +23,5 @@ verify_jwt = false
 verify_jwt = false
 [functions.geocode]
 verify_jwt = false
+[functions.storm-reports]
+verify_jwt = false

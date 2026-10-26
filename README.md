@@ -42,7 +42,7 @@ See [docs/VALIDATION.md](docs/VALIDATION.md) for completed checks and the device
 
 ## Project layout
 
-- `apps/dashboard`: React/Vite owner dashboard, demo data, and authenticated company mode.
+- `apps/dashboard`: React/Vite owner dashboard, demo data, and authenticated company mode. UI is built with [shadcn/ui](https://ui.shadcn.com) on Tailwind CSS v4; components live in `src/components/ui`, the WE ROOF theme in `src/index.css`. Add components with `npx shadcn@latest add <name>` from `apps/dashboard`.
 - `apps/mobile`: Expo/React Native field app, SQLite offline journal, SecureStore authentication, downloaded maps, and shift-scoped tracking.
 - `packages/core`: shared records, time calculations, GPS checks, route-gap handling, CSV export, and outbox logic.
 - `supabase`: PostgreSQL/PostGIS migration, policies, transactional ingestion, authenticated owner functions, geocoding, CRM worker, and scheduler setup.

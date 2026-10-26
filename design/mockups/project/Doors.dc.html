@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>WE ROOF · Recorded doors</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Instrument+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#B23A21}a:hover{color:#8C2715}
+button{font:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #F5F2EB; color: #1E1B18; font-family: 'Instrument Sans', system-ui, sans-serif; font-variant-numeric: tabular-nums; display: flex; flex-direction: column; overflow: hidden;">
+  <header style="padding: 52px 20px 14px; background: #FFFFFF; border-bottom: 1px solid #E3DED4; display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between;">
+      <div>
+        <h1 style="margin: 0; font-family: 'Barlow Condensed', sans-serif; font-size: 40px; line-height: 1; font-weight: 700;">Doors</h1>
+        <div style="font-size: 14px; color: #625C54; margin-top: 2px;">Oakwood Heights · your visits</div>
+      </div>
+      <div style="text-align: right;"><div style="font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 700; line-height: 1;">38</div><div style="font-size: 12px; color: #625C54; font-weight: 600;">today</div></div>
+    </div>
+    <label style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1px solid #D9D3C8; border-radius: 12px; background: #F5F2EB; color: #625C54;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Search addresses</span>
+      <input type="search" placeholder="Search address" style="border: 0; background: transparent; outline: none; flex: 1; font: inherit; font-size: 16px; color: #1E1B18; min-width: 0;">
+    </label>
+    <div role="tablist" aria-label="Filter doors" style="display: flex; gap: 4px; padding: 4px; background: #EFEBE3; border-radius: 12px;">
+      <sc-for list="{{filters}}" as="f" hint-placeholder-count="3">
+        <button role="tab" aria-selected="{{f.on}}" onClick="{{f.pick}}" style="{{f.style}}">{{f.label}}<span style="{{f.countStyle}}">{{f.count}}</span></button>
+      </sc-for>
+    </div>
+  </header>
+
+  <ul style="list-style: none; margin: 0; padding: 12px 14px; flex: 1; overflow: auto; display: flex; flex-direction: column; gap: 8px;">
+    <sc-for list="{{rows}}" as="r" hint-placeholder-count="7">
+      <li>
+        <a href="Record.dc.html" style="display: flex; gap: 12px; align-items: center; padding: 12px 14px; text-decoration: none; color: #1E1B18; min-height: 44px; background: #FFFFFF; border: 1px solid #E8E3DA; border-radius: 14px; box-shadow: 0 1px 0 rgba(0,0,0,0.03);">
+          <span style="{{r.swatch}}">{{r.mark}}</span>
+          <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-size: 16px; font-weight: 700;">{{r.address}}</span>
+            <span style="font-size: 13px; color: #36322D;">{{r.outcome}} · {{r.when}}</span>
+            <sc-if value="{{r.due}}" hint-placeholder-val="{{false}}"><span style="{{r.dueStyle}}">{{r.due}}</span></sc-if>
+          </span>
+          <span style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+            <span style="{{r.syncStyle}}"><span style="{{r.syncDot}}"></span>{{r.sync}}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A8A298" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"></path></svg>
+          </span>
+        </a>
+      </li>
+    </sc-for>
+  </ul>
+
+  <nav aria-label="Field app" style="display: flex; gap: 4px; background: #FFFFFF; border-top: 1px solid #E3DED4; padding: 6px 8px 24px;">
+    <a href="Field.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 12px; font-weight: 600; color: #625C54;"><span style="width: 56px; height: 30px; border-radius: 15px; display: grid; place-items: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"></path><path d="M9 3v15M15 6v15"></path></svg></span>Map</a>
+    <a href="Doors.dc.html" aria-current="page" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 12px; font-weight: 700; color: #B23A21;"><span style="width: 56px; height: 30px; border-radius: 15px; background: #FBEDE8; display: grid; place-items: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17"></path><path d="M14.5 12h.01"></path></svg></span>Doors</a>
+    <a href="Team.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 12px; font-weight: 600; color: #625C54;"><span style="width: 56px; height: 30px; border-radius: 15px; display: grid; place-items: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.7V17c0 .6-.5 1-1 1.2-1.2.5-2 2-2 3.8"></path><path d="M14 14.7V17c0 .6.5 1 1 1.2 1.2.5 2 2 2 3.8"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg></span>Team</a>
+    <a href="Hours.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 12px; font-weight: 600; color: #625C54;"><span style="width: 56px; height: 30px; border-radius: 15px; display: grid; place-items: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>Hours</a>
+    <a href="Sync.dc.html" style="flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; font-size: 12px; font-weight: 600; color: #625C54;"><span style="position: relative; width: 56px; height: 30px; border-radius: 15px; display: grid; place-items: center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M21 3v5h-5"></path><path d="M3 21v-5h5"></path></svg><span style="position: absolute; top: -2px; right: 6px; min-width: 18px; height: 18px; box-sizing: border-box; padding: 0 5px; border-radius: 9px; background: #B23A21; color: #FFFFFF; font-size: 11px; font-weight: 700; display: grid; place-items: center; border: 2px solid #FFFFFF;">3</span></span>Sync</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { f: 'today' }; }
+  renderVals() {
+    var self = this;
+    var OC = { no_answer: ['#64748b', 'No answer', ''], not_interested: ['#a36547', 'Not interested', ''], follow_up: ['#b27708', 'Follow-up', ''], interested: ['#147b70', 'Interested', ''], inspection_requested: ['#345bd6', 'Inspection requested', ''], existing_customer: ['#7b52aa', 'Existing customer', ''], do_not_knock: ['#bd3e3e', 'Do not knock', '×'] };
+    var data = [
+      ['1418 Maple Street', 'inspection_requested', '11:42 AM', '', 'phone', 'today'],
+      ['1422 Maple Street', 'no_answer', '11:38 AM', '', 'phone', 'today'],
+      ['1430 Maple Street', 'not_interested', '11:24 AM', '', 'phone', 'today'],
+      ['1406 Maple Street', 'follow_up', '11:02 AM', 'Follow up tomorrow', 'synced', 'today'],
+      ['1302 Oakwood Avenue', 'interested', '10:51 AM', '', 'synced', 'today'],
+      ['1310 Oakwood Avenue', 'existing_customer', '10:40 AM', '', 'synced', 'today'],
+      ['1298 Oakwood Avenue', 'no_answer', '10:33 AM', '', 'synced', 'today'],
+      ['1215 Willow Lane', 'follow_up', 'Oct 2', 'Due today', 'synced', 'past'],
+      ['1221 Willow Lane', 'follow_up', 'Sep 30', 'Overdue · 2 days', 'synced', 'past']
+    ];
+    var keepFn = { today: function (d) { return d[5] === 'today'; }, follow: function (d) { return d[1] === 'follow_up'; }, all: function () { return true; } };
+    var filters = [['today', 'Today'], ['follow', 'Follow-ups'], ['all', 'All']].map(function (f) {
+      var on = self.state.f === f[0];
+      return {
+        label: f[1], count: String(data.filter(keepFn[f[0]]).length), on: on ? 'true' : 'false',
+        pick: function () { self.setState({ f: f[0] }); },
+        style: 'flex: 1; min-height: 40px; border-radius: 9px; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 0; background: ' + (on ? '#FFFFFF' : 'transparent') + '; color: ' + (on ? '#1E1B18' : '#625C54') + '; box-shadow: ' + (on ? '0 1px 2px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.06)' : 'none') + ';',
+        countStyle: 'font-size: 11px; padding: 1px 6px; border-radius: 10px; background: ' + (on ? '#1E1B18' : '#DCD6CB') + '; color: ' + (on ? '#FFFFFF' : '#36322D') + ';'
+      };
+    });
+    var rows = data.filter(keepFn[self.state.f]).map(function (d) {
+      var o = OC[d[1]], phone = d[4] === 'phone', overdue = d[3].indexOf('Overdue') === 0;
+      return {
+        address: d[0], outcome: o[1], when: d[2], due: d[3], mark: o[2],
+        swatch: 'width: 30px; height: 30px; flex-shrink: 0; border-radius: ' + (d[1] === 'do_not_knock' ? '8px' : '50%') + '; background: ' + o[0] + '; color: #FFFFFF; display: grid; place-items: center; font-weight: 700; ',
+        dueStyle: 'align-self: flex-start; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: ' + (overdue ? '#FBEDE8' : '#FCEFD6') + '; color: ' + (overdue ? '#8C2715' : '#5A3400') + ';',
+        sync: phone ? 'On phone' : 'Synced',
+        syncStyle: 'display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; white-space: nowrap; background: ' + (phone ? '#FCEFD6' : '#E3F0E8') + '; color: ' + (phone ? '#5A3400' : '#1B4E3B') + ';',
+        syncDot: 'width: 6px; height: 6px; border-radius: 50%; background: ' + (phone ? '#C98A12' : '#24684F') + ';'
+      };
+    });
+    return { filters: filters, rows: rows };
+  }
+}
+</script>
+</body>
+</html>

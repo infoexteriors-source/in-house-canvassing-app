@@ -1,7 +1,7 @@
 import {useEffect,useState,useCallback} from 'react';
 import {createClient,type SupabaseClient} from '@supabase/supabase-js';
-import {dayRange,type Dataset,type Member} from '@canvass/core';
-import {makeDemo} from './demo';
+import {dayRange,defaultGoals,type Dataset,type HailReport,type Member} from '@canvass/core';
+import {demoHail,makeDemo} from './demo';
 const url=import.meta.env.VITE_SUPABASE_URL,key=import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 export const client:SupabaseClient|null=url&&key?createClient(url,key):null;
 const demoKey='fieldwork.demo.v1';
@@ -17,7 +17,7 @@ export function useWorkspace(mode:'demo'|'live',day:string) {
   try{
    const tables=[['members','memberships'],['territories','territories'],['properties','properties'],['visits','visits'],['leads','leads'],['events','shift_events'],['locations','location_samples'],['flags','review_flags'],['corrections','time_corrections']] as const;
    const values=await Promise.all(tables.map(async([name,table])=>{const rows:unknown[]=[];let offset=0;while(true){let query=client!.from(table).select('*').order(name==='members'?'user_id':'id').range(offset,offset+999);if(name==='locations')query=query.gte('captured_at',new Date(dayRange(day)[0]).toISOString()).lt('captured_at',new Date(dayRange(day)[1]).toISOString());const {data:part,error}=await query;if(error)throw error;rows.push(...part);if(part.length<1000)break;offset+=1000;}return [name,rows];}));
-   const next=Object.fromEntries(values) as Dataset;const {data:auth}=await client.auth.getUser();const member=next.members.find(m=>m.user_id===auth.user?.id);if(!member?.active||member.role!=='owner')throw Error('An active owner account is required for this dashboard.');setData(next);setMe(member);
+   const next=Object.fromEntries(values) as Dataset;const {data:goals,error:goalsError}=await client.from('company_goals').select('daily_doors,daily_leads,daily_inspections').maybeSingle();if(goalsError)throw goalsError;next.goals=goals??defaultGoals;const {data:auth}=await client.auth.getUser();const member=next.members.find(m=>m.user_id===auth.user?.id);if(!member?.active||member.role!=='owner')throw Error('An active owner account is required for this dashboard.');setData(next);setMe(member);
   }catch(e){setError(e instanceof Error?e.message:'Could not load the workspace.');}finally{setLoading(false);}
  },[mode,day]);
  useEffect(()=>{void reload();if(mode!=='live'||!client)return;let timer:ReturnType<typeof setTimeout>;const channel=client.channel('owner-workspace').on('postgres_changes',{event:'*',schema:'public'},()=>{clearTimeout(timer);timer=setTimeout(()=>void reload(),400);}).subscribe();return()=>{clearTimeout(timer);void client.removeChannel(channel);};},[reload,mode]);
@@ -32,9 +32,16 @@ export function useWorkspace(mode:'demo'|'live',day:string) {
    if(input.action==='clear_dnk')d.properties=d.properties.map(p=>p.id===input.id?{...p,do_not_knock:false,version:p.version+1}:p);
    if(input.action==='correction_review')d.corrections=d.corrections.map(c=>c.id===input.id?{...c,status:input.approved?'approved':'rejected'}:c);
    if(input.action==='crm_reconcile')d.leads=d.leads.map(l=>l.id===input.id?{...l,sync_status:'pending',remote_contact_id:String(input.remote_contact_id)}:l);
+   if(input.action==='goals_save')d.goals={daily_doors:Number(input.daily_doors),daily_leads:Number(input.daily_leads),daily_inspections:Number(input.daily_inspections)};
    if(input.action==='crm_retry')d.leads=d.leads.map(l=>l.id===input.id?{...l,sync_status:'pending'}:l);
    return d;
   });
  }
  return {data,me,loading,error,reload,mutate,resetDemo:()=>setData(makeDemo())};
+}
+/** Hail reports near company territories. Demo mode uses labelled sample reports. */
+export function useHail(mode:'demo'|'live'){
+ const [reports,setReports]=useState<HailReport[]>(()=>mode==='demo'?demoHail():[]),[error,setError]=useState('');
+ useEffect(()=>{if(mode!=='live'||!client)return;let alive=true;void client.functions.invoke('storm-reports',{body:{days:7}}).then(({data,error})=>{if(!alive)return;if(error||data?.error)setError('Hail reports are unavailable right now.');else setReports(data?.reports??[]);});return()=>{alive=false;};},[mode]);
+ return {reports,error};
 }
